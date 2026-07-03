@@ -134,11 +134,21 @@ async def process_and_route_signal(signal: TradeSignal) -> dict:
         return {"status": "pending_approval", "reason": "User approval required", "signal": payload}
 
     # A. Account state
-    account_state = {"balance": 10000.0, "equity": 10000.0, "daily_dd_pct": 0.0, "weekly_dd_pct": 0.0, "online": False}
+    paper_balance = float(os.getenv("PAPER_BALANCE", "10000.0"))
+    account_state = {"balance": paper_balance, "equity": paper_balance, "daily_dd_pct": 0.0, "weekly_dd_pct": 0.0, "online": False}
     data = await _get("http://mt5_bridge:5558/account_state")
     if data:
         account_state.update(data)
         account_state["online"] = True
+        # For paper mode, if the MT5 bridge returns balance=0.0 (demo/test environment with no funded account),
+        # fall back to the configured PAPER_BALANCE so risk checks use a meaningful simulated balance.
+        if mode != "live" and float(account_state.get("balance", 0.0)) <= 0.0:
+            logger.warning(
+                f"MT5 account_state reports balance=0.0. Falling back to PAPER_BALANCE={paper_balance} for paper risk calculations."
+            )
+            account_state["balance"] = paper_balance
+            account_state["equity"] = paper_balance
+
 
     # B. Open positions
     open_positions = []
@@ -357,6 +367,10 @@ async def approve_pending_signal(signal_id: str):
     data["status"] = "approved_by_user"
     signal = TradeSignal.from_dict(data)
     
+    # Clean up locks to allow re-processing
+    redis_client.delete(redis_key)
+    redis_client.delete(f"hermes:processed_signals:{signal_id}")
+    
     # Process signal again (will bypass approval check and execute)
     return await process_and_route_signal(signal)
 
@@ -375,7 +389,7 @@ async def reject_pending_signal(signal_id: str):
     
     logger.info(f"Signal {signal_id} rejected by user.")
     redis_client.delete(redis_key)
-    redis_client.set(f"hermes:processed_signals:{signal_id}", "rejected_by_user", ex=86400)
+    redis_client.delete(f"hermes:processed_signals:{signal_id}")
     
     append_signal_log(REJECTED_LOG_FILE, signal.to_dict(), {"reason": "Rejected manually by user"})
     return {"status": "rejected", "signal_id": signal_id}

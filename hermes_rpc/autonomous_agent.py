@@ -553,10 +553,30 @@ Output exactly this JSON structure, no other text:
         result = post(f"{MCP_URL}/signal", signal, timeout=15)
         if result:
             log.info(f"[PAPER] Signal sent: {signal['direction']} {signal.get('lots')} lots @ {signal.get('entry_price')}")
+            
+            # Format execution verdict
+            verdict = result.get("status", "unknown")
+            reason = result.get("reason", "none provided")
+            
+            # Write structured decision log
             write_vault(
-                f"03_TRADE_JOURNAL/paper/{date_str()}_trade_{state['cycle']:04d}.md",
-                f"## Paper Trade Signal\n\n```json\n{json.dumps(signal, indent=2)}\n```\n\n## Research Basis\n\n{research[:800]}",
-                {"type": "paper_trade", "direction": signal["direction"]}
+                f"03_TRADE_JOURNAL/decisions/{date_str()}_{signal['signal_id']}_decision.md",
+                f"# Trade Decision: {signal['signal_id']}\n\n"
+                f"**Timestamp**: {datetime.utcnow().isoformat()}Z\n"
+                f"**Instrument**: {signal['instrument']} | **Session**: {signal['session']}\n\n"
+                f"## 1. Execution Verdict\n"
+                f"- **Status**: `{verdict}`\n"
+                f"- **Reason**: {reason}\n\n"
+                f"## 2. Signal Parameters\n"
+                f"```json\n{json.dumps(signal, indent=2)}\n```\n\n"
+                f"## 3. Context & Reasoning\n"
+                f"### LLM Thoughts / Agent Notes\n"
+                f"> {signal.get('agent_notes', 'No notes provided.')}\n\n"
+                f"### Research Basis\n"
+                f"{research}\n\n"
+                f"### Prompt Reference\n"
+                f"```text\n{prompt}\n```",
+                {"type": "decision_log", "direction": signal["direction"], "verdict": verdict}
             )
         else:
             log.warning("[PAPER] Signal POST returned no response.")

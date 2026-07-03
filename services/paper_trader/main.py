@@ -3,6 +3,7 @@ import sys
 import json
 import asyncio
 import time
+import random
 from datetime import datetime
 from typing import List, Dict, Any, Optional
 from pathlib import Path
@@ -39,6 +40,7 @@ app.add_middleware(
 # Configuration
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
 MT5_BRIDGE_URL = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
+SIM_REJECT_RATE = float(os.getenv("SIM_REJECT_RATE", "0.015"))
 
 # Redis configuration block
 logger.info(f"Connecting paper trader to Redis at {REDIS_URL}...")
@@ -75,6 +77,14 @@ def model_to_dict(m: BaseModel) -> Dict[str, Any]:
     if hasattr(m, "model_dump"):
         return m.model_dump()
     return m.dict()
+
+def get_point_size(instrument: str) -> float:
+    instr = instrument.upper()
+    if "JPY" in instr or "XAU" in instr or "XAG" in instr:
+        return 0.01
+    elif "BTC" in instr or "ETH" in instr or "US30" in instr or "SPX" in instr or "NAS" in instr:
+        return 1.0
+    return 0.00001
 
 
 async def check_active_positions():
@@ -115,17 +125,21 @@ async def check_active_positions():
             high = float(latest_bar.get("high", 0.0))
             low = float(latest_bar.get("low", 0.0))
             close = float(latest_bar.get("close", 0.0))
+            spread_pts = float(latest_bar.get("spread", 0.0))
+            point_size = get_point_size(instrument)
+            spread_price = spread_pts * point_size
             
             sl = float(pos["sl"])
             tp = float(pos["tp"])
             direction = pos["direction"].lower()
             
-            # Check exit criteria
+            # Check exit criteria using Bid/Ask logic
             hit_sl = False
             hit_tp = False
             exit_price = 0.0
             reason = ""
             
+            # For Long positions, we exit at the Bid price (which is the low/high directly)
             if direction in ["long", "buy"]:
                 if low <= sl and high >= tp:
                     hit_sl = True
@@ -139,16 +153,19 @@ async def check_active_positions():
                     hit_tp = True
                     exit_price = tp
                     reason = "tp"
+            # For Short positions, we exit at the Ask price (Bid + Spread)
             else: # short/sell
-                if high >= sl and low <= tp:
+                ask_high = high + spread_price
+                ask_low = low + spread_price
+                if ask_high >= sl and ask_low <= tp:
                     hit_sl = True
                     exit_price = sl
                     reason = "sl"
-                elif high >= sl:
+                elif ask_high >= sl:
                     hit_sl = True
                     exit_price = sl
                     reason = "sl"
-                elif low <= tp:
+                elif ask_low <= tp:
                     hit_tp = True
                     exit_price = tp
                     reason = "tp"
@@ -204,11 +221,31 @@ async def startup_event():
 
 @app.get("/health")
 async def health():
+    # Actively probe bridge on every health call so the duration is always accurate,
+    # even when there are no open positions for the background loop to check.
+    bridge_online = False
+    try:
+        resp = requests.get(f"{MT5_BRIDGE_URL}/health", timeout=3)
+        if resp.status_code == 200:
+            bridge_online = True
+    except Exception:
+        bridge_online = False
+
+    global bridge_fail_since
+    now = time.time()
+    if bridge_online:
+        bridge_fail_since = None
+    else:
+        if bridge_fail_since is None:
+            bridge_fail_since = now
+
     return {
-        "status": "ok", 
+        "status": "ok",
         "timestamp": datetime.utcnow().isoformat() + "Z",
-        "bridge_fail_duration_seconds": 0 if bridge_fail_since is None else (time.time() - bridge_fail_since)
+        "bridge_online": bridge_online,
+        "bridge_fail_duration_seconds": 0 if bridge_fail_since is None else int(now - bridge_fail_since)
     }
+
 
 
 @app.post("/signal")
@@ -231,6 +268,24 @@ async def receive_signal(signal: TradeSignalInput):
         return {"status": "exists", "position_id": pos_id, "data": existing}
 
     logger.info(f"Broker received signal: Instrument {signal.instrument}, Side {signal.direction}, Lots {signal.lots}")
+    
+    # 3. Simulate Rejection
+    if random.random() < SIM_REJECT_RATE:
+        logger.warning(f"Paper broker simulated order rejection for signal {pos_id}")
+        return {"status": "error", "error": "Order rejected by simulated broker"}
+        
+    # 4. Simulate Slippage on Entry (0.1 to 1.5 pips against the trader)
+    point_size = get_point_size(payload["instrument"])
+    # 1 pip = 10 points typically. Slippage of 0.1 to 1.5 pips = 1 to 15 points
+    slippage_points = random.uniform(1, 15)
+    slippage_price = slippage_points * point_size
+    
+    if payload["direction"].lower() in ["long", "buy"]:
+        payload["entry_price"] += slippage_price
+    else:
+        payload["entry_price"] -= slippage_price
+        
+    logger.info(f"Simulated slippage applied: {slippage_points:.1f} points. New entry: {payload['entry_price']:.5f}")
     
     # Write into SQLite
     pos_id = db.open_position(payload)
