@@ -25,10 +25,13 @@ def fetch_history(n=500, instrument='XAUUSD'):
                 return trades[-n:] if len(trades) > n else trades
     except Exception as e:
         print(f"Native history unavailable, falling back to ZMQ: {e}")
-        
-    r = requests.get('http://localhost:5558/live_history', params={'n': n, 'instrument': instrument}, timeout=20)
-    r.raise_for_status()
-    return r.json()
+    def fetch_history(n=500, instrument='XAUUSD'):
+        try:
+            r = requests.get('http://localhost:5558/live_history', params={'n': n, 'instrument': instrument}, timeout=20)
+            r.raise_for_status()
+            return r.json()
+        except Exception as exc:
+            raise RuntimeError(f'MT5 bridge unreachable at localhost:5558: {exc}')
 
 
 def parse_time(ts):

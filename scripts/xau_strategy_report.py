@@ -91,6 +91,12 @@ def summaries(trades):
     }
 
 
+def raw_deal_summary(deals):
+    closes = [d for d in deals if 'tp' in (d.get('comment', '') or '').lower() or 'sl' in (d.get('comment', '') or '').lower()]
+    pnl_sum = sum(float(d.get('profit', 0) or 0) for d in closes)
+    return {'marked_rows': len(closes), 'gross_pnl': float(pnl_sum)}
+
+
 def build_daily_df(start='2020-01-01', end='2026-06-04'):
     ticker = yf.Ticker('GC=F')
     df = ticker.history(start=start, end=end, interval='1d', auto_adjust=False)
@@ -157,21 +163,32 @@ def backtest_pullback(df: pd.DataFrame):
     }
 
 
-def write_html(path: Path, live_summary, backtest, sessions):
+def write_html(path: Path, live_summary, backtest, sessions, raw=None):
+    if not sessions and raw:
+        live_block = f"""<ul>
+<li>closed session trades: 0</li>
+<li>raw marked rows with tp/sl: {raw['marked_rows']}</li>
+<li>raw gross PnL: {raw['gross_pnl']:.2f}</li>
+</ul>
+<p>Note: live-history tickets are single-row ticket history; trade pairing could not reconstruct hedge sessions automatically.</p>"""
+    else:
+        live_block = f"""<ul>
+<li>closed trades: {live_summary['closed']}</li>
+<li>total net PnL: {live_summary['total_net_pnl']:.2f}</li>
+<li>win rate: {live_summary['win_rate']:.2%}</li>
+<li>profit factor: {live_summary['profit_factor']:.2f}</li>
+</ul>"""
     rows = ''
     for t in sessions:
         rows += f"<tr><td>{t['ticket']}</td><td>{t['open_time']}</td><td>{t['close_time']}</td><td>{t['direction']}</td><td>{t['open_lots']:.2f}</td><td>{t['open_price']:.2f}</td><td>{t['close_price']:.2f}</td><td>{t['net_pnl']:.2f}</td><td>{t['comment']}</td></tr>"
+    if not rows and raw:
+        rows = '<tr><td colspan="9">No paired sessions; show raw marked tickets instead: ' + str(raw['marked_rows']) + ' rows.</td></tr>'
     html = f"""<!doctype html>
 <html><head><meta charset='utf-8'><title>Hermes XAUUSD Strategy Report</title>
 <style>body{{font-family:Arial,sans-serif;margin:20px}}table{{border-collapse:collapse;width:100%}}th,td{{border:1px solid #cdd3db;padding:6px 8px;font-size:13px}}th{{background:#f4f7fb}}</style></head><body>
 <h1>Hermes XAUUSD strategy report</h1>
 <h2>Live history summary</h2>
-<ul>
-<li>closed trades: {live_summary['closed']}</li>
-<li>total net PnL: {live_summary['total_net_pnl']:.2f}</li>
-<li>win rate: {live_summary['win_rate']:.2%}</li>
-<li>profit factor: {live_summary['profit_factor']:.2f}</li>
-</ul>
+{live_block}
 <h2>2020-2026 backtest summary</h2>
 <ul>
 <li>trades: {backtest['trades_count']}</li>
@@ -187,17 +204,16 @@ def write_html(path: Path, live_summary, backtest, sessions):
 
 def main():
     deals = load_deals()
-    trades = build_trades(deals)
-    live_summary = summaries(trades)
+    sessions = build_trades(deals)
+    live_summary = summaries(sessions) if sessions else raw_deal_summary(deals)
     df = build_daily_df()
     backtest = backtest_pullback(df)
-    # artifacts
     with open(RND / 'xau_closed_trades_latest.json', 'w', encoding='utf-8') as f:
         json.dump({'summary': live_summary, 'trades': [{
             **t,
             'open_time': t['open_time'].isoformat() if isinstance(t['open_time'], datetime) else str(t['open_time']),
             'close_time': t['close_time'].isoformat() if isinstance(t['close_time'], datetime) else str(t['close_time']),
-        } for t in trades]}, f, indent=2)
+        } for t in sessions]}, f, indent=2)
     with open(RND / 'xau_backtest_pullback_2020-2026.json', 'w', encoding='utf-8') as f:
         json.dump(backtest, f, indent=2)
     strat_text = """CONFIG = dict(
@@ -210,7 +226,7 @@ def main():
     confluence='OB/FVG/atr-volume-expansion',
 )"""
     (STRAT / 'gold_nbc_pullback_v2.py').write_text(strat_text, encoding='utf-8')
-    write_html(REPORTS / 'xau_strategy_report.html', live_summary, backtest, trades)
+    write_html(REPORTS / 'xau_strategy_report.html', live_summary, backtest, sessions)
     print('done')
     print(json.dumps({'live': live_summary, 'backtest': backtest}, indent=2))
 
