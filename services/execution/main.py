@@ -136,7 +136,14 @@ async def process_and_route_signal(signal: TradeSignal) -> dict:
     # A. Account state
     paper_balance = float(os.getenv("PAPER_BALANCE", "10000.0"))
     account_state = {"balance": paper_balance, "equity": paper_balance, "daily_dd_pct": 0.0, "weekly_dd_pct": 0.0, "online": False}
-    data = await _get("http://mt5_bridge:5558/account_state")
+    
+    native_url = os.getenv("NATIVE_MT5_URL", "http://host.docker.internal:7779")
+    bridge_url = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
+    
+    data = await _get(f"{native_url}/api/native/account")
+    if not data or data.get("error"):
+        data = await _get(f"{bridge_url}/account_state")
+        
     if data:
         account_state.update(data)
         account_state["online"] = True
@@ -153,15 +160,19 @@ async def process_and_route_signal(signal: TradeSignal) -> dict:
     # B. Open positions
     open_positions = []
     if mode == "live":
-        data = await _get("http://mt5_bridge:5558/positions")
+        data = await _get(f"{native_url}/api/native/positions")
+        if not data or data.get("error"):
+            data = await _get(f"{bridge_url}/positions")
+        if data and isinstance(data, dict) and "positions" in data:
+            data = data["positions"]
     else:
         data = await _get("http://paper_trader:5561/positions")
     if data and isinstance(data, list):
         open_positions = data
 
-    # C. Calendar
+    # C. Calendar (only available on ZMQ bridge currently)
     calendar_events = []
-    data = await _get("http://mt5_bridge:5558/calendar", timeout=2)
+    data = await _get(f"{bridge_url}/calendar", timeout=2)
     if data and isinstance(data, list):
         calendar_events = data
 
@@ -311,7 +322,12 @@ async def trigger_emergency_kill(flatten: Optional[bool] = False):
             
         # B. Flatten Live Positions
         try:
-            live_positions = await _get("http://mt5_bridge:5558/positions")
+            live_positions = await _get(f"{native_url}/api/native/positions")
+            if live_positions and isinstance(live_positions, dict) and "positions" in live_positions:
+                live_positions = live_positions["positions"]
+            if not live_positions:
+                live_positions = await _get(f"{bridge_url}/positions")
+                
             if isinstance(live_positions, list):
                 for pos in live_positions:
                     ticket = pos.get("ticket")

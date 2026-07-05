@@ -789,10 +789,17 @@ async function executeDashboardTool(name: string, args: any): Promise<string> {
       return JSON.stringify({ error: "Could not fetch price" });
     }
     if (name === "get_account_state") {
-      const r = await fetchWithTimeout("http://mt5_bridge:5558/account_state", {}, 5000);
-      if (r.ok) {
-        const data = await r.json();
-        return JSON.stringify(data);
+      try {
+        const nativeUrl = process.env.NATIVE_MT5_URL || "http://host.docker.internal:7779";
+        const nativeRes = await fetchWithTimeout(`${nativeUrl}/api/native/account`, {}, 3000);
+        if (nativeRes.ok) {
+          const d = await nativeRes.json();
+          if (!d.error) return JSON.stringify(d);
+        }
+        const r = await fetchWithTimeout("http://mt5_bridge:5558/account_state", {}, 5000);
+        if (r.ok) return JSON.stringify(await r.json());
+      } catch (e) {
+        console.log("Error fetching account state:", e);
       }
       return JSON.stringify({ error: "Could not fetch account state" });
     }
