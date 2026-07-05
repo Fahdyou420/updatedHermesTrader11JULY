@@ -13,3 +13,9 @@ hermes_rpc/__pycache__/
 node_modules/
 
 node_modules/
+
+data/rnd/
+reports/
+data/trades/
+data/market_data/
+.obsidian/
