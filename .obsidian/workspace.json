@@ -185,6 +185,8 @@
   },
   "active": "9fd4e64719bd472b",
   "lastOpenFiles": [
+    "reports/xau_strategy_report.html",
+    "data/rnd/xau_backtest_pullback_2020-2026.json",
     "scripts/xau_strategy_report.py",
     "data/rnd/mt5_init_readme_2026-07-05.md",
     "scripts/xau_sessions_extract.py",
@@ -196,8 +198,6 @@
     "reports/xau_mt5_closed_trades_review.html",
     "data/rnd/xau_closed_trades_latest.json",
     "data/rnd/xau_live_history_latest.json",
-    "scripts/xau_live_history_review.py",
-    "services/mt5_bridge/__pycache__/mt5_history_service.cpython-311.pyc",
     "reports/xau_strategy_backtest_2020-2026.md",
     "reports/xauusd_mt5_live_history_2026-07-05.md",
     "reports/xauusd_jul1-3_2026_study.md",
