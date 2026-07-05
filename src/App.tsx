@@ -124,7 +124,7 @@ export default function App() {
 
   useEffect(() => {
     fetchAllData();
-    const interval = setInterval(fetchAllData, 15000);
+    const interval = setInterval(fetchAllData, 3000);
     
     // SSE for Live Logs
     const evtSource = new EventSource("/api/logs/stream");

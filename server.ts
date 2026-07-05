@@ -283,8 +283,8 @@ app.get("/api/status", async (_req, res) => {
   } catch { mt5EaConnected = false; }
 
   const [ollama, rpc, chroma] = await Promise.all([
-    check("http://host.docker.internal:11434/api/tags"),
-    check("http://host.docker.internal:7778/health"),
+    check("http://host.docker.internal:11434/api/tags").then(ok => ok ? true : check("http://market-ollama:11434/api/tags")),
+    check("http://host.docker.internal:7779/health"),
     check("http://chromadb:8000/api/v1/heartbeat")
   ]);
 

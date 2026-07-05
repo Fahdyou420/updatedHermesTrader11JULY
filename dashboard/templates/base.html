@@ -124,7 +124,7 @@
     <footer class="flex-none bg-gray-950 border-t border-gray-900 px-6 py-2 flex items-center justify-between text-xs font-mono text-gray-400/80">
         <div class="flex items-center space-x-5" 
              hx-get="/api/status" 
-             hx-trigger="load, every 10s" 
+             hx-trigger="load, every 3s" 
              hx-swap="innerHTML">
             <!-- Polled via HTMX -->
             <div class="flex items-center space-x-2">
@@ -180,7 +180,7 @@
                 if (el) el.textContent = 'XAUUSD: --';
             }
         }
-        setInterval(updateGoldPrice, 5000);
+        setInterval(updateGoldPrice, 2000);
         updateGoldPrice();
 
         async function updateLlmStatus() {
@@ -200,7 +200,7 @@
                 else dot.className = 'w-2 h-2 rounded-full bg-gray-500';
             } catch(e) {}
         }
-        setInterval(updateLlmStatus, 5000);
+        setInterval(updateLlmStatus, 2000);
         updateLlmStatus();
     </script>
 </body>

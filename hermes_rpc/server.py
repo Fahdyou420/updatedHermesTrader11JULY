@@ -409,6 +409,23 @@ def write_memory(content: str) -> Dict[str, Any]:
         logger.error(f"Failed performing memory bookkeeping: {e}")
         return {"success": False, "error": str(e)}
 
+def curl_endpoint(url: str, method: str = "GET") -> Dict[str, Any]:
+    """Test and fetch data from API endpoints using HTTP requests."""
+    logger.info(f"Executing CURL tool: {method} {url}")
+    try:
+        if method.upper() == "POST":
+            resp = requests.post(url, timeout=10)
+        else:
+            resp = requests.get(url, timeout=10)
+        
+        try:
+            return resp.json()
+        except:
+            return {"status": resp.status_code, "text": resp.text[:500]}
+    except Exception as e:
+        logger.error(f"CURL tool error: {e}")
+        return {"error": str(e)}
+
 # ==========================================
 # TOOL DISPATCH AND EXECUTION MANAGER
 # ==========================================
@@ -452,6 +469,8 @@ async def execute_tool_by_name(tool_name: str, params: Dict[str, Any]) -> Dict[s
             return {"success": True, "result": await _run(get_economic_calendar)}
         elif tool_name == "write_memory":
             return await _run(write_memory, **params)
+        elif tool_name == "curl":
+            return {"success": True, "result": await _run(curl_endpoint, **params)}
         else:
             return {"success": False, "error": f"Tool '{tool_name}' not registered on host."}
     except TypeError as te:
@@ -464,25 +483,43 @@ async def execute_tool_by_name(tool_name: str, params: Dict[str, Any]) -> Dict[s
 
 async def process_potential_tool_call_in_text(text: str):
     """
-    Seeks markers `[TOOL: name] {json} [/TOOL]` and executes corresponding tools.
+    Seeks markers `[TOOL: name] {json} [/TOOL]` and `<tool_call>...</tool_call>`
+    and executes corresponding tools.
     """
-    pattern = r"\[TOOL:\s*(\w+)\]\s*(\{[\s\S]*?\})\s*\[/TOOL\]"
-    matches = re.finditer(pattern, text)
-    
     results = []
-    for match in matches:
+    
+    # 1. Parse Legacy JSON Bracket Format
+    json_pattern = r"\[TOOL:\s*(\w+)\]\s*(\{[\s\S]*?\})\s*\[/TOOL\]"
+    for match in re.finditer(json_pattern, text):
         t_name = match.group(1).strip()
-        p_str = match.group(2).strip()
-        logger.info(f"Detected inline auto-tool execution statement inside output text block: {t_name}")
-        
         try:
-            params = json.loads(p_str)
+            params = json.loads(match.group(2).strip())
+            logger.info(f"Detected legacy JSON tool execution: {t_name}")
             result = await execute_tool_by_name(t_name, params)
-            logger.info(f"Auto-tool execution complete. Outcome: {result}")
             results.append(f"\n\n[System: Tool {t_name} returned -> {json.dumps(result)}]")
         except Exception as e:
-            logger.error(f"Failed parsing/invoking inline tool {t_name}: {e}")
+            logger.error(f"Failed parsing legacy tool {t_name}: {e}")
             results.append(f"\n\n[System: Tool {t_name} failed -> {e}]")
+
+    # 2. Parse XML <tool_call> Format
+    xml_pattern = r"<tool_call>\s*<function=([\w_]+)>(.*?)</function>\s*</tool_call>"
+    for match in re.finditer(xml_pattern, text, re.DOTALL | re.IGNORECASE):
+        t_name = match.group(1).strip()
+        params_text = match.group(2)
+        
+        params = {}
+        param_pattern = r"<parameter=([\w_]+)>(.*?)</parameter>"
+        for p_match in re.finditer(param_pattern, params_text, re.DOTALL | re.IGNORECASE):
+            params[p_match.group(1).strip()] = p_match.group(2).strip()
+            
+        logger.info(f"Detected XML tool execution: {t_name} with params {params}")
+        try:
+            result = await execute_tool_by_name(t_name, params)
+            results.append(f"\n\n[System: Tool {t_name} returned -> {json.dumps(result)}]")
+        except Exception as e:
+            logger.error(f"Failed executing XML tool {t_name}: {e}")
+            results.append(f"\n\n[System: Tool {t_name} failed -> {e}]")
+            
     return "".join(results)
 
 # ==========================================

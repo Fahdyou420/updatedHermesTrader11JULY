@@ -163,12 +163,28 @@ def backtest_pullback(df: pd.DataFrame):
     }
 
 
+def normalize_live_summary(live_summary):
+    return {
+        'sessions': live_summary.get('sessions', live_summary.get('closed', 0)),
+        'closed': live_summary.get('closed', live_summary.get('sessions', 0)),
+        'total_net_pnl': live_summary.get('total_net_pnl', live_summary.get('net_pnl', 0.0)),
+        'win_rate': live_summary.get('win_rate', 0.0),
+        'profit_factor': live_summary.get('profit_factor', 0.0),
+        'avg_win': live_summary.get('avg_win', 0.0),
+        'avg_loss': live_summary.get('avg_loss', 0.0),
+        'max_drawdown': live_summary.get('max_drawdown', 0.0),
+        'raw_marked_rows': live_summary.get('marked_rows', None),
+        'raw_gross_pnl': live_summary.get('gross_pnl', None),
+    }
+
+
 def write_html(path: Path, live_summary, backtest, sessions, raw=None):
+    live_summary = normalize_live_summary(live_summary)
     if not sessions and raw:
         live_block = f"""<ul>
 <li>closed session trades: 0</li>
-<li>raw marked rows with tp/sl: {raw['marked_rows']}</li>
-<li>raw gross PnL: {raw['gross_pnl']:.2f}</li>
+<li>raw marked rows with tp/sl: {live_summary['raw_marked_rows'] if live_summary['raw_marked_rows'] is not None else 'n/a'}</li>
+<li>raw gross PnL: {live_summary['raw_gross_pnl']:.2f if live_summary['raw_gross_pnl'] is not None else 'n/a'}</li>
 </ul>
 <p>Note: live-history tickets are single-row ticket history; trade pairing could not reconstruct hedge sessions automatically.</p>"""
     else:

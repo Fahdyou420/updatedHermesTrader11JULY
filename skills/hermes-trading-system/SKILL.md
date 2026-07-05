@@ -306,7 +306,14 @@ Instead, use the new **Native MT5 REST API** exposed by the Hermes MCP Server on
 - Open positions: `http://localhost:7779/api/native/positions`
 - Paired trade history: `http://localhost:7779/api/native/history?days=30`
 
-This native integration uses the official Python `MetaTrader5` package against the live terminal database, yielding perfectly paired trades, full persistence across reboots, and no manual ZMQ parsing. All scripts, agents, and services should prefer these native endpoints over bridge endpoints.
+This native integration uses the official Python `MetaTrader5` package against the live terminal database, yielding perfectly paired trades, full persistence across reboots, and no manual ZMQ parsing. All scripts, agents, services, and dashboard UIs should prefer these native endpoints over bridge endpoints. ZMQ bridge port `5558` is fully deprecated and must not be used for bars, history, positions, account state, or health.
+
+## Native MT5 Endpoints (7779)
+- Health: `http://localhost:7779/health`
+- Account state: `http://localhost:7779/api/native/account`
+- Open positions: `http://localhost:7779/api/native/positions`
+- Paired trade history: `http://localhost:7779/api/native/history?days=30&instrument=XAUUSD`
+- Latest bars: `http://localhost:7779/api/native/latest_bars?instrument=XAUUSD&tf=M15&n=50`
 
 ## Native MT5 Commands Reference
 ```bash
@@ -318,14 +325,22 @@ curl http://localhost:7779/api/native/positions
 
 # paired history
 curl "http://localhost:7779/api/native/history?days=30&instrument=XAUUSD"
+
+# latest bars
+curl "http://localhost:7779/api/native/latest_bars?instrument=XAUUSD&tf=M15&n=50"
 ```
 
 ## XAUUSD Strategy Workflow
-1. Review paired trade history from `http://localhost:7779/api/native/history?days=30`
+1. Review paired trade history from `http://localhost:7779/api/native/history?days=30&instrument=XAUUSD`
 2. Analyze win/loss distribution, failure modes, and setup quality
-3. Run candidate backtests from `scripts/xau_native_strategy_report.py`
+3. Run native-only M15/D1 backtests from `scripts/xau_native_probe_backtest.py` and save outputs under:
+   - `data/rnd/xau_native_backtest_matrix_m15_d1.json`
+   - `data/rnd/xau_native_closed_trades_latest.json`
+   - `reports/xau_native_strategy_report.md`
 4. Use the best strategy config from `data/strategies/gold_breakout.py`
 5. Save strategy review notes in `reports/xau_native_strategy_report.md`
+6. Refresh dashboards and external stores from native metrics only.
+
 
 ## Start / Stop
 Use `scripts/start_all.ps1` to bring the full stack online. If RPC fails to start, run `scripts/start_hermes_rpc.ps1` explicitly.
