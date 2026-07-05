@@ -299,16 +299,33 @@ python -c "import requests,json; r=requests.post('http://localhost:7779/mcp',jso
 ```
 
 ## MT5 Integration / History Access
-**CRITICAL**: The old ZMQ bridge (`/live_history` on port 5558) is deprecated for history and account state because it suffers from single-row tickets and loses data on reboot. 
-Instead, you MUST use the new **Native MT5 REST API** exposed by the MCP Server on port `7779` (`http://localhost:7779/api/native/history`, `/api/native/account`, `/api/native/positions`). 
-This native integration uses the official Python `MetaTrader5` package to query the terminal's database directly, guaranteeing perfectly paired trades and full persistence. All automated python scripts and services in the stack now prefer `NATIVE_MT5_URL` over `MT5_BRIDGE_URL`.
+**CRITICAL**: The legacy ZMQ bridge `/live_history` on port `5558` is deprecated for history, account state, and open positions. It suffers from single-row tickets and loses data on reboot. Do not use it for history reads, and do not build static archives around it.
 
-## XAUUSD Daily Strategy Workflow
-1. Review live history / closed trades using `scripts/xau_live_history_review.py`
-2. Run candidate matrix using `scripts/xau_daily_backtest_matrix.py`
-3. Use best strategy config from `data/strategies/gold_breakout.py`
-4. Update strategy weights from `reports/xau_strategy_report.md`
-5. Archive history daily via `data/rnd/` snapshots
+Instead, use the new **Native MT5 REST API** exposed by the Hermes MCP Server on port `7779`:
+- Account state: `http://localhost:7779/api/native/account`
+- Open positions: `http://localhost:7779/api/native/positions`
+- Paired trade history: `http://localhost:7779/api/native/history?days=30`
+
+This native integration uses the official Python `MetaTrader5` package against the live terminal database, yielding perfectly paired trades, full persistence across reboots, and no manual ZMQ parsing. All scripts, agents, and services should prefer these native endpoints over bridge endpoints.
+
+## Native MT5 Commands Reference
+```bash
+# account state
+curl http://localhost:7779/api/native/account
+
+# open positions
+curl http://localhost:7779/api/native/positions
+
+# paired history
+curl "http://localhost:7779/api/native/history?days=30&instrument=XAUUSD"
+```
+
+## XAUUSD Strategy Workflow
+1. Review paired trade history from `http://localhost:7779/api/native/history?days=30`
+2. Analyze win/loss distribution, failure modes, and setup quality
+3. Run candidate backtests from `scripts/xau_native_strategy_report.py`
+4. Use the best strategy config from `data/strategies/gold_breakout.py`
+5. Save strategy review notes in `reports/xau_native_strategy_report.md`
 
 ## Start / Stop
 Use `scripts/start_all.ps1` to bring the full stack online. If RPC fails to start, run `scripts/start_hermes_rpc.ps1` explicitly.

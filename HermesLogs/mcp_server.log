@@ -15,3 +15,4 @@
 2026-07-05 16:53:34,658 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
 2026-07-05 16:54:16,533 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
 2026-07-05 17:35:03,337 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
+2026-07-05 17:53:24,501 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
