@@ -14,6 +14,18 @@ REPORTS.mkdir(parents=True, exist_ok=True)
 
 
 def fetch_history(n=500, instrument='XAUUSD'):
+    try:
+        r = requests.get('http://localhost:7779/api/native/history', params={'days': 30}, timeout=10)
+        if r.ok:
+            data = r.json()
+            if not data.get('error'):
+                trades = data.get('trades', [])
+                if instrument:
+                    trades = [t for t in trades if t.get('symbol', '').upper() == instrument.upper()]
+                return trades[-n:] if len(trades) > n else trades
+    except Exception as e:
+        print(f"Native history unavailable, falling back to ZMQ: {e}")
+        
     r = requests.get('http://localhost:5558/live_history', params={'n': n, 'instrument': instrument}, timeout=20)
     r.raise_for_status()
     return r.json()

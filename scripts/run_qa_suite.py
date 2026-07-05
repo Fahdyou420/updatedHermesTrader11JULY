@@ -100,6 +100,22 @@ except Exception as e:
     add_result("B. localhost:5558/health", "FAIL", str(e), str(e))
 
 try:
+    r7b = requests.get("http://localhost:7779/health", timeout=10)
+    raw7b = r7b.text
+    add_result("B. localhost:7779/health (Native)", "PASS" if r7b.status_code == 200 else "FAIL",
+               f"status_code={r7b.status_code}", raw7b)
+except Exception as e:
+    add_result("B. localhost:7779/health (Native)", "FAIL", str(e), str(e))
+
+try:
+    r7c = requests.get("http://localhost:7779/api/native/account", timeout=10)
+    raw7c = r7c.text
+    add_result("B. localhost:7779/api/native/account (Native)", "PASS" if r7c.status_code == 200 else "FAIL",
+               f"status_code={r7c.status_code}", raw7c)
+except Exception as e:
+    add_result("B. localhost:7779/api/native/account (Native)", "FAIL", str(e), str(e))
+
+try:
     r8 = requests.get("http://localhost:5558/latest_bars?instrument=XAUUSD&tf=M15&n=10", timeout=10)
     raw8 = r8.text
     add_result("B. localhost:5558/latest_bars", "PASS" if r8.status_code == 200 else "FAIL",

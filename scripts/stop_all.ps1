@@ -1,4 +1,4 @@
-﻿# Hermes Trading Agent - System Auto-Stop Controller
+# Hermes Trading Agent - System Auto-Stop Controller
 # Halts all background containers and kills native uvicorn host service loops securely
 
 $ErrorActionPreference = "Continue"
@@ -39,7 +39,7 @@ foreach ($p in $PythonProcs) {
     try {
         # Check command line arguments to see if it belongs to hermes_rpc
         $CmdLine = (Get-CimInstance Win32_Process -Filter "ProcessId = $($p.Id)").CommandLine
-        if ($CmdLine -match "hermes_rpc" -or $CmdLine -match "server:app") {
+        if ($CmdLine -match "hermes_rpc" -or $CmdLine -match "server:app" -or $CmdLine -match "hermes_mcp_server") {
             Stop-Process -Id $p.Id -Force -ErrorAction SilentlyContinue
             Write-Host "  [-] Severed Hermes Python Host process [PID $($p.Id)]" -ForegroundColor DarkRed
             $KilledCount++

@@ -1,4 +1,4 @@
-﻿# Hermes Trading Agent - Windows Host Environment Setup
+# Hermes Trading Agent - Windows Host Environment Setup
 # This PowerShell script prepares your Windows environment for the Hermes Trading Agent system.
 
 $ErrorActionPreference = "Stop"
@@ -55,6 +55,9 @@ try {
     # Run pip directly to avoid activation overheads
     & $PipPath install --upgrade pip
     & $PipPath install -r hermes_rpc/requirements.txt
+    if (Test-Path requirements-host.txt) {
+        & $PipPath install -r requirements-host.txt
+    }
     Write-Host "[+] Hermes RPC Server dependencies installed successfully." -ForegroundColor Green
 } catch {
     Write-Error "[-] Failed to install python packages: $_"
@@ -131,6 +134,7 @@ Write-Host ""
 Write-Host "[*] Configuring Windows Firewall rules for Hermes ports..." -ForegroundColor Yellow
 $FirewallRules = @(
     @{ Name = "Hermes RPC 7778";      Port = 7778 },
+    @{ Name = "Hermes MCP 7779";      Port = 7779 },
     @{ Name = "Hermes ZMQ Data 5555"; Port = 5555 },
     @{ Name = "Hermes ZMQ Draw 5556"; Port = 5556 },
     @{ Name = "Hermes ZMQ Order 5557";Port = 5557 }

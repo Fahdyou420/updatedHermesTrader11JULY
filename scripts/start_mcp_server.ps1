@@ -53,7 +53,8 @@ if (-not $env:HERMES_INSTRUMENT)   { $env:HERMES_INSTRUMENT  = "XAUUSD" }
 if (-not $env:MAX_RISK_PCT)        { $env:MAX_RISK_PCT       = "1.0" }
 if (-not $env:MAX_DAILY_DD)        { $env:MAX_DAILY_DD       = "3.0" }
 
-pip install yfinance uvicorn fastapi -q
+# Install host-native dependencies (MetaTrader5 is Windows-only, not in Docker requirements.txt)
+pip install yfinance uvicorn fastapi MetaTrader5 -q
 
 Write-Host ""
 Write-Host "[*] Configuration:" -ForegroundColor Cyan
@@ -64,6 +65,7 @@ Write-Host "    Instrument: $env:HERMES_INSTRUMENT" -ForegroundColor Gray
 Write-Host "    Max risk:   $env:MAX_RISK_PCT%  |  Daily DD halt: $env:MAX_DAILY_DD%" -ForegroundColor Gray
 Write-Host ""
 Write-Host "[OK] Starting on http://localhost:7779/mcp" -ForegroundColor Green
+Write-Host "[OK] Native MT5 REST API on http://localhost:7779/api/native/" -ForegroundColor Green
 Write-Host ""
 
 python hermes_mcp_server.py

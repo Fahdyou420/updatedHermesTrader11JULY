@@ -1,4 +1,4 @@
-﻿# Hermes Trading Agent - System Auto-Start Controller
+# Hermes Trading Agent - System Auto-Start Controller
 # Bootstraps the entire multi-service ecosystem (RPC, Docker stack, MCP server, dashboard)
 
 $ErrorActionPreference = "Stop"
@@ -30,7 +30,7 @@ try {
 # 2. Start Trading MCP Server (port 7779) - exposes tools to Hermes Desktop Agent
 Write-Host ""
 Write-Host "[*] Launching Trading MCP Server (Hermes Desktop Agent connects here)..." -ForegroundColor Yellow
-$McpCommand = "Set-Location '$ExecutionPath'; pip install yfinance uvicorn fastapi -q; python hermes_mcp_server.py"
+$McpCommand = "Set-Location '$ExecutionPath'; pip install yfinance uvicorn fastapi MetaTrader5 -q; python hermes_mcp_server.py"
 try {
     Start-Process powershell.exe -ArgumentList "-NoExit","-NoProfile","-ExecutionPolicy","Bypass","-Command",$McpCommand -WindowStyle Minimized
     Write-Host "[+] Trading MCP Server launched on port 7779." -ForegroundColor Green
@@ -81,9 +81,10 @@ Write-Host "         HERMES SYSTEM PIPELINES ARE NOW ONLINE          " -Foregrou
 Write-Host "=========================================================" -ForegroundColor Green
 Write-Host " * Hermes RPC (tools)   :  [ON] -> http://localhost:7778" -ForegroundColor Green
 Write-Host " * Trading MCP Server   :  [ON] -> http://localhost:7779/mcp" -ForegroundColor Cyan
+Write-Host " * MT5 Native REST API  :  [ON] -> http://localhost:7779/api/native/" -ForegroundColor Cyan
 Write-Host " * Redis                :  [ON] -> port 6379" -ForegroundColor Green
 Write-Host " * ChromaDB             :  [ON] -> port 8000" -ForegroundColor Green
-Write-Host " * MT5 Bridge           :  [ON] -> ZMQ port 5555 + HTTP 5558" -ForegroundColor Green
+Write-Host " * MT5 ZMQ Bridge       :  [ON] -> ZMQ port 5555 + HTTP 5558" -ForegroundColor Green
 Write-Host " * Paper Trader         :  [ON] -> port 5561" -ForegroundColor Green
 Write-Host " * Flask Dashboard      :  [ON] -> http://localhost:8080" -ForegroundColor Green
 Write-Host " * React Dashboard      :  [ON] -> http://localhost:3000" -ForegroundColor Green
