@@ -9,3 +9,7 @@ __pycache__/
 *.pyc
 *.pyo
 hermes_rpc/__pycache__/
+
+node_modules/
+
+node_modules/

@@ -18,16 +18,36 @@ from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
+from dotenv import load_dotenv
+load_dotenv(override=True)  # override=True ensures .env wins over stale system/user env vars
 import uvicorn
+
+try:
+    import MetaTrader5 as mt5
+except ImportError:
+    mt5 = None
 
 app = FastAPI(title="Hermes Trading MCP Server", version="1.1")
 
+def _ensure_mt5():
+    if mt5 is None:
+        return False, "MetaTrader5 Python package is not installed."
+    if not mt5.initialize():
+        return False, f"MT5 initialize() failed, error code: {mt5.last_error()}"
+    return True, "OK"
+
 # ── Full configuration surface — every knob overridable via .env ─────────────
-MT5_URL     = os.getenv("MT5_BRIDGE_URL",   "http://localhost:5558")
-PAPER_URL   = os.getenv("PAPER_TRADER_URL", "http://localhost:5561")
-PREPROC_URL = os.getenv("PREPROCESSOR_URL", "http://localhost:5559")
-BACKTEST_URL= os.getenv("BACKTESTER_URL",   "http://localhost:5560")
-MCP_URL     = os.getenv("MCP_BRIDGE_URL",   "http://localhost:5562")
+# When running natively on the Windows host, internal Docker DNS (e.g. mt5_bridge) 
+# won't resolve. We map them to localhost where the ports are published.
+def _local_url(url: str) -> str:
+    import re
+    return re.sub(r'http://([a-zA-Z0-9_]+):', r'http://localhost:', url)
+
+MT5_URL     = _local_url(os.getenv("MT5_BRIDGE_URL",   "http://localhost:5558"))
+PAPER_URL   = _local_url(os.getenv("PAPER_TRADER_URL", "http://localhost:5561"))
+PREPROC_URL = _local_url(os.getenv("PREPROCESSOR_URL", "http://localhost:5559"))
+BACKTEST_URL= _local_url(os.getenv("BACKTESTER_URL",   "http://localhost:5560"))
+MCP_URL     = _local_url(os.getenv("MCP_BRIDGE_URL",   "http://localhost:5562"))
 
 # Where Hermes Desktop looks for its own config — used so skills created via
 # natural language land exactly where Hermes Desktop will find them.
@@ -153,6 +173,15 @@ TOOLS = [
      "description": "Health of all trading services and whether the MT5 EA is actively connected.",
      "inputSchema": {"type": "object", "properties": {}}},
 
+    {"name": "get_native_account_info",
+     "description": "Fetch live account info (balance, equity, margin, free_margin, leverage) directly from the local MT5 terminal using the native Python integration.",
+     "inputSchema": {"type": "object", "properties": {}}},
+
+    {"name": "get_native_trade_history",
+     "description": "Fetch closed deals/trade history directly from the local MT5 terminal. Returns profit, commission, volume, and symbol details for analysis.",
+     "inputSchema": {"type": "object", "properties": {
+         "days": {"type": "integer", "default": 30, "description": "Number of past days to retrieve closed trades for."}}}},
+
     {"name": "draw_on_chart",
      "description": "Draw a single object on the MT5 chart. Types: rect, hline, trendline, arrow, label. Colors: green, red, blue, orange, cyan, magenta, yellow.",
      "inputSchema": {"type": "object", "required": ["type", "id", "cmd"],
@@ -269,10 +298,15 @@ def _yfinance_bars(instrument, timeframe, n):
         return {"error": f"No yfinance data for {ticker}"}
     bars = []
     for ts, row in df.tail(n).iterrows():
+        def _scalar(v):
+            try:
+                return float(v)
+            except Exception:
+                return float(v.iloc[0])
         bars.append({"timestamp": int(ts.timestamp()), "instrument": instrument,
-                     "timeframe": timeframe, "open": float(row["Open"]),
-                     "high": float(row["High"]), "low": float(row["Low"]),
-                     "close": float(row["Close"]), "volume": int(row.get("Volume", 0)),
+                     "timeframe": timeframe, "open": _scalar(row["Open"]),
+                     "high": _scalar(row["High"]), "low": _scalar(row["Low"]),
+                     "close": _scalar(row["Close"]), "volume": int(_scalar(row.get("Volume", 0))),
                      "source": "yfinance"})
     return bars
 
@@ -340,13 +374,16 @@ def handle_tool(name, args):
         return _post(f"{PAPER_URL}/close/{args.get('ticket')}", {})
 
     elif name == "run_backtest":
-        return _post(f"{BACKTEST_URL}/run", {
+        return _post(f"{BACKTEST_URL}/backtest", {
+            "strategy_id":   args.get("strategy_id", f"bt_{int(datetime.utcnow().timestamp())}"),
+            "name":          args.get("name", "Manual Backtest"),
             "instrument":    args.get("instrument", "XAUUSD"),
             "timeframe":     args.get("timeframe", "M15"),
-            "strategy_type": args.get("strategy_type", "smc_ob_entry"),
-            "entry_logic":   args.get("entry_logic", ""),
-            "sl_type":       args.get("sl_type", "structure"),
-            "tp_type":       args.get("tp_type", "fvg_fill"),
+            "session_filter": args.get("session_filter", ["london", "newyork", "overlap"]),
+            "entry_logic":      {"type": args.get("strategy_type", "smc_ob_entry"),
+                                 "description": args.get("entry_logic", "")},
+            "sl_logic":         {"type": args.get("sl_type", "structure"), "value": 15},
+            "tp_logic":         {"type": args.get("tp_type", "fvg_fill"), "value": 30},
             "risk_pct":      float(args.get("risk_pct", 1.0)),
             "lookback_bars": int(args.get("lookback_bars", 500))
         }, timeout=120)
@@ -371,6 +408,26 @@ def handle_tool(name, args):
             "mcp_bridge":   chk(f"{MCP_URL}/health"),
             "timestamp":    datetime.utcnow().isoformat() + "Z"
         }
+
+    elif name == "get_native_account_info":
+        ok, msg = _ensure_mt5()
+        if not ok: return {"error": msg}
+        acc = mt5.account_info()
+        if acc is None: return {"error": f"Failed to get account info, error: {mt5.last_error()}"}
+        return acc._asdict()
+
+    elif name == "get_native_trade_history":
+        ok, msg = _ensure_mt5()
+        if not ok: return {"error": msg}
+        days = int(args.get("days", 30))
+        from_date = datetime.utcnow().timestamp() - (days * 24 * 60 * 60)
+        to_date = datetime.utcnow().timestamp() + (24 * 60 * 60) # pad 1 day ahead
+        deals = mt5.history_deals_get(from_date, to_date)
+        if deals is None:
+            return {"error": f"Failed to get trade history, error: {mt5.last_error()}"}
+        # Filter out balance entries, keep real trades
+        trades = [d._asdict() for d in deals if d.type in (0, 1) and d.symbol] 
+        return {"total_found": len(trades), "trades": trades}
 
     elif name == "draw_on_chart":
         return _post(f"{MCP_URL}/draw", args)

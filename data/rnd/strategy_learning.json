@@ -1,0 +1,326 @@
+[
+  {
+    "started_at": "2026-07-05 13:23:24+00:00",
+    "baselines": [
+      {
+        "_note": "Builtins implied from codebase because MCP list returned empty"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257808\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:28+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"mis",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_ob_reaction_1783257809\",\"name\":\"Learning ob_reaction\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"ob_reaction\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"t",
+        "score": -1000.0,
+        "strategy_type": "ob_reaction"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_bos_retest_1783257809\",\"name\":\"Learning bos_retest\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"bos_retest\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type",
+        "score": -1000.0,
+        "strategy_type": "bos_retest"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_choch_confirm_1783257809\",\"name\":\"Learning choch_confirm\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"choch_confirm\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_bars\":1000",
+        "score": -1000.0,
+        "strategy_type": "choch_confirm"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_ob_fvg_confluent_1783257809\",\"name\":\"Learning ob_fvg_confluent\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"ob_fvg_confluent\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_b",
+        "score": -1000.0,
+        "strategy_type": "ob_fvg_confluent"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_liquidity_sweep_reversal_1783257809\",\"name\":\"Learning liquidity_sweep_reversal\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"liquidity_sweep_reversal\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"r",
+        "score": -1000.0,
+        "strategy_type": "liquidity_sweep_reversal"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_killzone_ob_entry_1783257809\",\"name\":\"Learning killzone_ob_entry\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"killzone_ob_entry\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookbac",
+        "score": -1000.0,
+        "strategy_type": "killzone_ob_entry"
+      }
+    ],
+    "variants": [
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field req",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_000"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field r",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_001"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_002"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_003"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_004"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"ms",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_005"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field requ",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_006"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field re",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_007"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_008"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_009"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_010"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_011"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field requ",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_012"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field re",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_013"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_014"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_015"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_016"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_017"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field re",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_018"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field ",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_019"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_020"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"ms",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_021"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_022"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.25,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"m",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_023"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field req",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_024"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field r",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_025"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_026"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_027"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_028"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":0.5,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"ms",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_029"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field req",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_030"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field r",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_031"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_032"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_low\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_033"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\"",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_034"
+      },
+      {
+        "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"structure_high\"},\"tp_logic\":{\"type\":\"fixed\"},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"ms",
+        "score": -1000.0,
+        "strategy_type": "fvg_fill",
+        "is_variant": true,
+        "variant_lane": "variant_035"
+      }
+    ],
+    "learned": [],
+    "best_baseline": {
+      "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257808\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:28+00:00\"},\"sl_logic\":{\"type\":\"atr\",\"value\":15,\"multiplier\":1.5},\"tp_logic\":{\"type\":\"atr\",\"value\":30,\"multiplier\":3.0},\"risk_pct\":1.0,\"lookback_bars\":1000}},{\"type\":\"mis",
+      "score": -1000.0,
+      "strategy_type": "fvg_fill"
+    },
+    "best_variant": {
+      "error": "422: {\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"max_trades_per_day\"],\"msg\":\"Field required\",\"input\":{\"strategy_id\":\"learn_fvg_fill_1783257809\",\"name\":\"Learning fvg_fill\",\"instrument\":\"XAUUSD\",\"timeframe\":\"M5\",\"session_filter\":[\"london\",\"newyork\",\"overlap\"],\"entry_logic\":{\"type\":\"fvg_fill\",\"description\":\"Learning run 2026-07-05 13:23:29+00:00\"},\"sl_logic\":{\"type\":\"atr\"},\"tp_logic\":{\"type\":\"atr\"},\"risk_pct\":0.25,\"lookback_bars\":500}},{\"type\":\"missing\",\"loc\":[\"body\",\"spread_gate_pips\"],\"msg\":\"Field req",
+      "score": -1000.0,
+      "strategy_type": "fvg_fill",
+      "is_variant": true,
+      "variant_lane": "variant_000"
+    },
+    "strategies_attempted": 7,
+    "baseline_results": 7,
+    "variant_results": 36,
+    "reports": [
+      "C:\\Users\\user\\Desktop\\hermes_claude\\reports\\strategy_learning_20260705_132329.md"
+    ],
+    "upgrades": [
+      "Baseline execution reads every builtin/custom strategy from `list_strategies`",
+      "Variant sweep scans ATR and fixed structure SL/TP combinations plus lookback/risk grid",
+      "Learned scaffolds are written to `/data/strategies` and are immediately backtestable",
+      "Reports are human-readable Markdown in `/reports` and machine-readable in this `strategy_learning.json` ledger"
+    ],
+    "error": null,
+    "finished_at": "2026-07-05 13:23:29+00:00"
+  }
+]

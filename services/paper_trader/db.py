@@ -207,18 +207,18 @@ class PaperTradeDB:
         losses = [t for t in trades if t["pnl_r"] <= 0]
         
         num_wins = len(wins)
-        win_rate = (num_wins / total_trades) * 100.0
+        win_rate = (num_wins / total_trades)
         
         avg_win_r = (sum(t["pnl_r"] for t in wins) / num_wins) if num_wins > 0 else 0.0
         avg_loss_r = (sum(abs(t["pnl_r"]) for t in losses) / len(losses)) if losses else 0.0
         
         # Expectancy formula in R multiple
-        expectancy_r = (win_rate / 100.0) * avg_win_r - ((100.0 - win_rate) / 100.0) * avg_loss_r
+        expectancy_r = win_rate * avg_win_r - (1.0 - win_rate) * avg_loss_r
         
         # Profit Factor
         gross_profits = sum(t["pnl_r"] for t in wins)
         gross_losses = sum(abs(t["pnl_r"]) for t in losses)
-        profit_factor = gross_profits / gross_losses if gross_losses > 0 else (gross_profits if gross_profits > 0 else 1.0)
+        profit_factor = gross_profits / gross_losses if gross_losses > 0 else (999.99 if gross_profits > 0 else 1.0)
         
         # Max Drawdown calculation using running cumulative R multiples
         running_equity = 100.0 # start at nominal 100 R baseline
@@ -337,7 +337,7 @@ class PaperTradeDB:
                 avg_win = (sum(st_wins) / len(st_wins)) if st_wins else 0.0
                 avg_loss = (sum(abs(p) for p in st_losses) / len(st_losses)) if st_losses else 0.0
                 expectancy = (win_rate * avg_win) - ((1.0 - win_rate) * avg_loss)
-                profit_factor = sum(st_wins) / sum(abs(p) for p in st_losses) if sum(abs(p) for p in st_losses) > 0 else (sum(st_wins) if st_wins else 1.0)
+                profit_factor = sum(st_wins) / sum(abs(p) for p in st_losses) if sum(abs(p) for p in st_losses) > 0 else (999.99 if st_wins else 1.0)
                 
                 perf_list.append({
                     "strategy_id": sid,

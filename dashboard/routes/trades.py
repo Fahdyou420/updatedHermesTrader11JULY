@@ -134,9 +134,33 @@ def get_candidates():
         return jsonify([])
 
 
+@trades_bp.route('/live_history', methods=['GET'])
+def get_live_broker_history():
+    """
+    Real closed broker deal history from the MT5 EA, accumulated via ZMQ.
+    Supports ?n=<count> and ?instrument=<XAUUSD> query params.
+    """
+    n = request.args.get('n', 100)
+    instrument = request.args.get('instrument', '')
+    params = {'n': n}
+    if instrument:
+        params['instrument'] = instrument
+    try:
+        res = requests.get(f"{MT5_BRIDGE_URL}/live_history", params=params, timeout=10)
+        deals = res.json() if res.ok else []
+        for d in deals:
+            d['source'] = 'mt5_broker'
+        return jsonify(deals)
+    except Exception as e:
+        print(f"MT5 bridge live_history unavailable: {e}")
+        return jsonify([])
+
+
+
+
 EXECUTION_URL = os.getenv("EXECUTION_URL", "http://execution:5563")
 
-@trades_bp.route('/kill', methods=['POST'])
+@trades_bp.route('/kill', methods=['POST', 'GET'])
 def trigger_kill():
     flatten = request.args.get('flatten', 'false').lower() == 'true'
     try:
@@ -145,7 +169,7 @@ def trigger_kill():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@trades_bp.route('/resume', methods=['POST'])
+@trades_bp.route('/resume', methods=['POST', 'GET'])
 def trigger_resume():
     try:
         res = requests.post(f"{EXECUTION_URL}/resume", timeout=10)
@@ -153,7 +177,7 @@ def trigger_resume():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@trades_bp.route('/reset', methods=['POST'])
+@trades_bp.route('/reset', methods=['POST', 'GET'])
 def trigger_reset():
     try:
         res = requests.post(f"{PAPER_TRADER_URL}/reset", timeout=10)
@@ -169,7 +193,7 @@ def get_pending_signals():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@trades_bp.route('/pending/<signal_id>/approve', methods=['POST'])
+@trades_bp.route('/pending/<signal_id>/approve', methods=['POST', 'GET'])
 def approve_signal(signal_id):
     try:
         res = requests.post(f"{EXECUTION_URL}/signal/{signal_id}/approve", timeout=15)
@@ -177,13 +201,37 @@ def approve_signal(signal_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@trades_bp.route('/pending/<signal_id>/reject', methods=['POST'])
+@trades_bp.route('/pending/<signal_id>/reject', methods=['POST', 'GET'])
 def reject_signal(signal_id):
     try:
         res = requests.post(f"{EXECUTION_URL}/signal/{signal_id}/reject", timeout=15)
         return jsonify(res.json() if res.ok else {"error": res.text}), res.status_code
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+@trades_bp.route('/approve', methods=['POST', 'GET'])
+def approve_first():
+    try:
+        res = requests.get(f"{EXECUTION_URL}/pending_signals", timeout=10)
+        pending = res.json() if res.ok else []
+    except Exception as e:
+        return jsonify({"error": f"pending fetch failed: {e}"}), 500
+    if not pending:
+        return jsonify({"error": "No pending signals"}), 404
+    signal_id = pending[0].get("signal_id") or pending[0].get("id")
+    return approve_signal(signal_id)
+
+@trades_bp.route('/reject', methods=['POST', 'GET'])
+def reject_first():
+    try:
+        res = requests.get(f"{EXECUTION_URL}/pending_signals", timeout=10)
+        pending = res.json() if res.ok else []
+    except Exception as e:
+        return jsonify({"error": f"pending fetch failed: {e}"}), 500
+    if not pending:
+        return jsonify({"error": "No pending signals"}), 404
+    signal_id = pending[0].get("signal_id") or pending[0].get("id")
+    return reject_signal(signal_id)
 
 
 @trades_bp.route('/stream', methods=['GET'])
