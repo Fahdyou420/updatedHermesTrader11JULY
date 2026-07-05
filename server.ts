@@ -275,10 +275,10 @@ app.get("/api/status", async (_req, res) => {
   // mt5 check reads the real ea_connected field — not just HTTP 200
   let mt5EaConnected = false;
   try {
-    const mt5r = await fetchWithTimeout("http://mt5_bridge:5558/health", {}, 1500);
+    const mt5r = await fetchWithTimeout("http://host.docker.internal:7779/health", {}, 1500);
     if (mt5r.ok) {
       const mt5data = await mt5r.json();
-      mt5EaConnected = mt5data.ea_connected === true;
+      mt5EaConnected = mt5data.ea_connected === true || mt5data.terminal_connected === true;
     }
   } catch { mt5EaConnected = false; }
 
@@ -310,7 +310,7 @@ app.get("/api/market", async (_req, res) => {
   // Run preprocessor and MT5 bars in PARALLEL to halve endpoint latency
   const [smcResult, barsResult] = await Promise.allSettled([
     fetchWithTimeout("http://preprocessor:5559/smc_analysis?instrument=XAUUSD&tf=M15&n=300", {}, 5000),
-    fetchWithTimeout("http://mt5_bridge:5558/latest_bars?instrument=XAUUSD&tf=M15&n=50", {}, 6000)
+    fetchWithTimeout("http://host.docker.internal:7779/api/native/latest_bars?instrument=XAUUSD&tf=M15&n=50", {}, 6000)
   ]);
   try {
     if (smcResult.status === "fulfilled" && smcResult.value.ok) {

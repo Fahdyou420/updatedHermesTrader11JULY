@@ -1114,6 +1114,44 @@ def api_native_positions(symbol: str = ""):
     return JSONResponse({"total": len(positions), "positions": [p._asdict() for p in positions]})
 
 
+@app.get("/health")
+def api_health():
+    """Health check for MT5 connectivity."""
+    ok, _ = _ensure_mt5()
+    return JSONResponse({"ea_connected": ok, "terminal_connected": ok, "status": "ok" if ok else "error"})
+
+
+@app.get("/api/native/latest_bars")
+def api_native_latest_bars(instrument: str = "XAUUSD", tf: str = "M15", n: int = 50):
+    """REST endpoint: native MT5 latest bars for dashboard."""
+    ok, msg = _ensure_mt5()
+    if not ok:
+        return JSONResponse({"error": msg}, status_code=503)
+    
+    tf_map = {
+        "M1": mt5.TIMEFRAME_M1, "M5": mt5.TIMEFRAME_M5, 
+        "M15": mt5.TIMEFRAME_M15, "M30": mt5.TIMEFRAME_M30,
+        "H1": mt5.TIMEFRAME_H1, "H4": mt5.TIMEFRAME_H4,
+        "D1": mt5.TIMEFRAME_D1
+    }
+    mt5_tf = tf_map.get(tf.upper(), mt5.TIMEFRAME_M15)
+    rates = mt5.copy_rates_from_pos(instrument, mt5_tf, 0, n)
+    if rates is None:
+        return JSONResponse({"error": f"MT5 copy_rates_from_pos failed: {mt5.last_error()}"}, status_code=500)
+    
+    bars = []
+    for r in rates:
+        bars.append({
+            "time": int(r['time']),
+            "open": float(r['open']),
+            "high": float(r['high']),
+            "low": float(r['low']),
+            "close": float(r['close']),
+            "tick_volume": int(r['tick_volume'])
+        })
+    return JSONResponse(bars)
+
+
 if __name__ == "__main__":
     port = int(os.getenv("MCP_TRADING_PORT", "7779"))
     print(f"\nHermes Trading MCP Server on http://localhost:{port}/mcp")

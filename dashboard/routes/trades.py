@@ -54,10 +54,22 @@ def get_positions():
         print(f"Paper Trader offline: {e}")
 
     try:
+        res = requests.get(f"{NATIVE_MT5_URL}/api/native/positions", timeout=3)
+        if res.ok:
+            data = res.json()
+            native = data.get("positions", [])
+            for p in native:
+                p["source"] = "native"
+            combined.extend(native)
+            return jsonify(combined)
+    except Exception as e:
+        print(f"Native MT5 positions unavailable: {e}")
+
+    try:
         res = requests.get(f"{MT5_BRIDGE_URL}/positions", timeout=5)
         live = res.json() if res.ok else []
         for p in live:
-            p["source"] = "mt5_live"
+            p["source"] = "zmq_bridge"
         combined.extend(live)
     except Exception as e:
         print(f"MT5 bridge positions unavailable: {e}")

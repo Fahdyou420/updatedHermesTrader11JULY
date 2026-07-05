@@ -28,6 +28,7 @@ app.register_blueprint(rnd_bp, url_prefix='/api/rnd')
 
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
 MT5_BRIDGE_URL = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
+NATIVE_MT5_URL = os.getenv("NATIVE_MT5_URL", "http://host.docker.internal:7779")
 PREPROCESSOR_URL = os.getenv("PREPROCESSOR_URL", "http://preprocessor:5559")
 PAPER_TRADER_URL = os.getenv("PAPER_TRADER_URL", "http://paper_trader:5561")
 HERMES_RPC_URL = os.getenv("HERMES_RPC_URL", "http://host.docker.internal:7778")
@@ -110,7 +111,11 @@ def system_status():
 
 @app.route('/api/market/price', methods=['GET'])
 def get_market_price():
-    """Live price from MT5 bridge."""
+    """Live price from MT5."""
+    data = _get(f"{NATIVE_MT5_URL}/api/native/latest_bars?instrument=XAUUSD&tf=M15&n=1", timeout=3)
+    if data and isinstance(data, list) and len(data) > 0:
+        return jsonify({"price": data[-1].get("close", 0.0)})
+        
     data = _get(f"{MT5_BRIDGE_URL}/latest_bars?instrument=XAUUSD&tf=M15&n=1", timeout=5)
     if data and isinstance(data, list) and len(data) > 0:
         return jsonify({"price": data[-1].get("close", 0.0)})
