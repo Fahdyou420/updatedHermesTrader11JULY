@@ -298,6 +298,21 @@ python -c "import requests,json; r=requests.post('http://localhost:7779/mcp',jso
 python -c "import requests,json; r=requests.post('http://localhost:7779/mcp',json={'jsonrpc':'2.0','id':1,'method':'tools/call','params':{'name':'get_smc_analysis','arguments':{'instrument':'BTCUSD','timeframe':'M15','n':300}}}); print(r.status_code); print(r.text)"
 ```
 
+## MT5 Integration / History Access
+**CRITICAL**: The old ZMQ bridge (`/live_history` on port 5558) is deprecated for history and account state because it suffers from single-row tickets and loses data on reboot. 
+Instead, you MUST use the new **Native MT5 REST API** exposed by the MCP Server on port `7779` (`http://localhost:7779/api/native/history`, `/api/native/account`, `/api/native/positions`). 
+This native integration uses the official Python `MetaTrader5` package to query the terminal's database directly, guaranteeing perfectly paired trades and full persistence. All automated python scripts and services in the stack now prefer `NATIVE_MT5_URL` over `MT5_BRIDGE_URL`.
+
+## XAUUSD Daily Strategy Workflow
+1. Review live history / closed trades using `scripts/xau_live_history_review.py`
+2. Run candidate matrix using `scripts/xau_daily_backtest_matrix.py`
+3. Use best strategy config from `data/strategies/gold_breakout.py`
+4. Update strategy weights from `reports/xau_strategy_report.md`
+5. Archive history daily via `data/rnd/` snapshots
+
+## Start / Stop
+Use `scripts/start_all.ps1` to bring the full stack online. If RPC fails to start, run `scripts/start_hermes_rpc.ps1` explicitly.
+
 ## Notes
 
 - MT5 EA heartbeat window is 30 seconds. If `ea_connected: false`, that usually means no EA heartbeat in the last 30s, not necessarily a dead bridge.
