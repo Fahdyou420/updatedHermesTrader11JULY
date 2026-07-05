@@ -182,6 +182,23 @@ TOOLS = [
      "inputSchema": {"type": "object", "properties": {
          "days": {"type": "integer", "default": 30, "description": "Number of past days to retrieve closed trades for."}}}},
 
+    {"name": "get_native_positions",
+     "description": "Fetch all currently open positions directly from the local MT5 terminal. Returns real broker positions with ticket, symbol, type, volume, price_open, sl, tp, profit, swap, commission.",
+     "inputSchema": {"type": "object", "properties": {
+         "symbol": {"type": "string", "default": "", "description": "Optional symbol filter e.g. XAUUSD. Leave empty for all."}}}},
+
+    {"name": "send_native_order",
+     "description": "Execute a trade order directly on the MT5 broker via the native Python API. Bypasses ZMQ/EA entirely for zero-latency execution. Supports BUY, SELL, and position close.",
+     "inputSchema": {"type": "object", "required": ["action", "symbol", "volume"],
+         "properties": {
+             "action":  {"type": "string", "enum": ["BUY", "SELL", "CLOSE"], "description": "Trade action"},
+             "symbol":  {"type": "string", "description": "Trading instrument e.g. XAUUSD"},
+             "volume":  {"type": "number", "description": "Lot size e.g. 0.01"},
+             "sl":      {"type": "number", "default": 0, "description": "Stop loss price (0 = none)"},
+             "tp":      {"type": "number", "default": 0, "description": "Take profit price (0 = none)"},
+             "ticket":  {"type": "integer", "default": 0, "description": "Position ticket to close (required for CLOSE action)"},
+             "comment": {"type": "string", "default": "hermes_native", "description": "Order comment for tracking"}}}},
+
     {"name": "draw_on_chart",
      "description": "Draw a single object on the MT5 chart. Types: rect, hline, trendline, arrow, label. Colors: green, red, blue, orange, cyan, magenta, yellow.",
      "inputSchema": {"type": "object", "required": ["type", "id", "cmd"],
@@ -428,6 +445,77 @@ def handle_tool(name, args):
         # Filter out balance entries, keep real trades
         trades = [d._asdict() for d in deals if d.type in (0, 1) and d.symbol] 
         return {"total_found": len(trades), "trades": trades}
+
+    elif name == "get_native_positions":
+        ok, msg = _ensure_mt5()
+        if not ok: return {"error": msg}
+        symbol = args.get("symbol", "")
+        positions = mt5.positions_get(symbol=symbol) if symbol else mt5.positions_get()
+        if positions is None:
+            return {"error": f"Failed to get positions, error: {mt5.last_error()}"}
+        return {"total": len(positions), "positions": [p._asdict() for p in positions]}
+
+    elif name == "send_native_order":
+        ok, msg = _ensure_mt5()
+        if not ok: return {"error": msg}
+        action_str = args.get("action", "BUY").upper()
+        symbol = args.get("symbol", "")
+        volume = float(args.get("volume", 0.01))
+        sl = float(args.get("sl", 0))
+        tp = float(args.get("tp", 0))
+        comment = args.get("comment", "hermes_native")
+        ticket = int(args.get("ticket", 0))
+
+        if action_str == "CLOSE":
+            if not ticket:
+                return {"error": "ticket is required for CLOSE action"}
+            pos = mt5.positions_get(ticket=ticket)
+            if not pos:
+                return {"error": f"No open position with ticket {ticket}"}
+            p = pos[0]
+            close_type = mt5.ORDER_TYPE_SELL if p.type == 0 else mt5.ORDER_TYPE_BUY
+            price = mt5.symbol_info_tick(p.symbol).bid if p.type == 0 else mt5.symbol_info_tick(p.symbol).ask
+            request_obj = {
+                "action": mt5.TRADE_ACTION_DEAL,
+                "symbol": p.symbol,
+                "volume": p.volume,
+                "type": close_type,
+                "position": ticket,
+                "price": price,
+                "deviation": 20,
+                "magic": 123456,
+                "comment": comment,
+                "type_time": mt5.ORDER_TIME_GTC,
+                "type_filling": mt5.ORDER_FILLING_IOC,
+            }
+        else:
+            order_type = mt5.ORDER_TYPE_BUY if action_str == "BUY" else mt5.ORDER_TYPE_SELL
+            tick = mt5.symbol_info_tick(symbol)
+            if tick is None:
+                return {"error": f"Cannot get tick for {symbol}. Is it available in Market Watch?"}
+            price = tick.ask if action_str == "BUY" else tick.bid
+            request_obj = {
+                "action": mt5.TRADE_ACTION_DEAL,
+                "symbol": symbol,
+                "volume": volume,
+                "type": order_type,
+                "price": price,
+                "sl": sl if sl else 0.0,
+                "tp": tp if tp else 0.0,
+                "deviation": 20,
+                "magic": 123456,
+                "comment": comment,
+                "type_time": mt5.ORDER_TIME_GTC,
+                "type_filling": mt5.ORDER_FILLING_IOC,
+            }
+
+        result = mt5.order_send(request_obj)
+        if result is None:
+            return {"error": f"order_send returned None, error: {mt5.last_error()}"}
+        result_dict = result._asdict()
+        if result.retcode != mt5.TRADE_RETCODE_DONE:
+            return {"error": f"Order failed: retcode={result.retcode}, comment={result.comment}", "details": result_dict}
+        return {"success": True, "order": result_dict}
 
     elif name == "draw_on_chart":
         return _post(f"{MCP_URL}/draw", args)
@@ -973,12 +1061,63 @@ async def mcp_endpoint(request: Request):
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "server": "hermes-trading-mcp", "port": 7779}
+    mt5_ok = False
+    if mt5 is not None:
+        try:
+            ok, _ = _ensure_mt5()
+            mt5_ok = ok
+        except Exception:
+            pass
+    return {"status": "ok", "server": "hermes-trading-mcp", "port": 7779, "native_mt5": mt5_ok}
+
+
+# ── Plain REST API endpoints for Dashboard consumption ───────────────────────
+# These are NOT MCP/JSON-RPC — they're simple GET/POST routes that the
+# Docker-based dashboard can call via http://host.docker.internal:7779/api/native/*
+
+@app.get("/api/native/account")
+def api_native_account():
+    """REST endpoint: native MT5 account info for dashboard."""
+    ok, msg = _ensure_mt5()
+    if not ok:
+        return JSONResponse({"error": msg}, status_code=503)
+    acc = mt5.account_info()
+    if acc is None:
+        return JSONResponse({"error": f"MT5 account_info failed: {mt5.last_error()}"}, status_code=500)
+    return JSONResponse(acc._asdict())
+
+
+@app.get("/api/native/history")
+def api_native_history(days: int = 30):
+    """REST endpoint: native MT5 closed trade history for dashboard."""
+    ok, msg = _ensure_mt5()
+    if not ok:
+        return JSONResponse({"error": msg}, status_code=503)
+    from_ts = datetime.utcnow().timestamp() - (days * 86400)
+    to_ts = datetime.utcnow().timestamp() + 86400
+    deals = mt5.history_deals_get(from_ts, to_ts)
+    if deals is None:
+        return JSONResponse({"error": f"MT5 history_deals_get failed: {mt5.last_error()}"}, status_code=500)
+    trades = [d._asdict() for d in deals if d.type in (0, 1) and d.symbol]
+    return JSONResponse({"total": len(trades), "trades": trades})
+
+
+@app.get("/api/native/positions")
+def api_native_positions(symbol: str = ""):
+    """REST endpoint: native MT5 open positions for dashboard."""
+    ok, msg = _ensure_mt5()
+    if not ok:
+        return JSONResponse({"error": msg}, status_code=503)
+    positions = mt5.positions_get(symbol=symbol) if symbol else mt5.positions_get()
+    if positions is None:
+        return JSONResponse({"error": f"MT5 positions_get failed: {mt5.last_error()}"}, status_code=500)
+    return JSONResponse({"total": len(positions), "positions": [p._asdict() for p in positions]})
 
 
 if __name__ == "__main__":
     port = int(os.getenv("MCP_TRADING_PORT", "7779"))
     print(f"\nHermes Trading MCP Server on http://localhost:{port}/mcp")
+    print(f"Native MT5 REST API on http://localhost:{port}/api/native/")
     print("Add to ~/.hermes/config.yaml:")
     print("  mcp_servers:")
     print("    hermes_trading:")

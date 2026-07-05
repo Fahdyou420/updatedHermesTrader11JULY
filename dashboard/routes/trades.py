@@ -8,6 +8,7 @@ trades_bp = Blueprint('trades', __name__)
 
 PAPER_TRADER_URL = os.getenv("PAPER_TRADER_URL", "http://paper_trader:5561")
 MT5_BRIDGE_URL    = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
+NATIVE_MT5_URL    = os.getenv("NATIVE_MT5_URL", "http://host.docker.internal:7779")
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
 TRADES_DATA_DIR = os.getenv("TRADES_DATA_DIR", "/data/trades")
 
@@ -65,13 +66,28 @@ def get_positions():
 
 @trades_bp.route('/account', methods=['GET'])
 def get_account():
-    """Real MT5 account state: balance, equity, margin, profit."""
+    """Real MT5 account state: balance, equity, margin, profit.
+    Tries native Python bridge first (faster, more reliable), falls back to ZMQ."""
+    # Try native MT5 first
+    try:
+        res = requests.get(f"{NATIVE_MT5_URL}/api/native/account", timeout=3)
+        if res.ok:
+            data = res.json()
+            if not data.get("error"):
+                data["source"] = "native"
+                return jsonify(data)
+    except Exception as e:
+        print(f"Native MT5 account unavailable, falling back to ZMQ: {e}")
+
+    # Fallback to ZMQ bridge
     try:
         res = requests.get(f"{MT5_BRIDGE_URL}/account_state", timeout=5)
-        return jsonify(res.json() if res.ok else {})
+        data = res.json() if res.ok else {}
+        data["source"] = "zmq_bridge"
+        return jsonify(data)
     except Exception as e:
-        print(f"MT5 bridge account_state unavailable: {e}")
-        return jsonify({"balance": 0, "equity": 0, "margin": 0, "profit": 0})
+        print(f"MT5 bridge account_state also unavailable: {e}")
+        return jsonify({"balance": 0, "equity": 0, "margin": 0, "profit": 0, "source": "unavailable"})
 
 @trades_bp.route('/history', methods=['GET'])
 def get_history():
@@ -97,17 +113,28 @@ def get_stats():
     except Exception as e:
         print(f"Paper Trader offline: {e}")
 
-    # Overlay real account balance/equity from MT5 — this is what actually matters
+    # Overlay real account balance/equity — try native first, fall back to ZMQ
+    acc = None
     try:
-        res = requests.get(f"{MT5_BRIDGE_URL}/account_state", timeout=5)
+        res = requests.get(f"{NATIVE_MT5_URL}/api/native/account", timeout=3)
         if res.ok:
             acc = res.json()
-            if acc.get("balance"):
-                stats["balance"] = acc["balance"]
-            if acc.get("equity"):
-                stats["equity"] = acc["equity"]
-    except Exception as e:
-        print(f"MT5 bridge account_state unavailable: {e}")
+    except Exception:
+        pass
+
+    if not acc or acc.get("error"):
+        try:
+            res = requests.get(f"{MT5_BRIDGE_URL}/account_state", timeout=5)
+            if res.ok:
+                acc = res.json()
+        except Exception as e:
+            print(f"Both native and ZMQ account unavailable: {e}")
+
+    if acc and not acc.get("error"):
+        if acc.get("balance"):
+            stats["balance"] = acc["balance"]
+        if acc.get("equity"):
+            stats["equity"] = acc["equity"]
 
     return jsonify(stats)
 
@@ -137,11 +164,33 @@ def get_candidates():
 @trades_bp.route('/live_history', methods=['GET'])
 def get_live_broker_history():
     """
-    Real closed broker deal history from the MT5 EA, accumulated via ZMQ.
-    Supports ?n=<count> and ?instrument=<XAUUSD> query params.
+    Real closed broker deal history.
+    Tries native MT5 Python bridge first (more reliable), falls back to ZMQ EA.
+    Supports ?n=<count> and ?days=<days> and ?instrument=<XAUUSD> query params.
     """
-    n = request.args.get('n', 100)
+    n = int(request.args.get('n', 100))
+    days = int(request.args.get('days', 30))
     instrument = request.args.get('instrument', '')
+
+    # Try native MT5 first
+    try:
+        res = requests.get(f"{NATIVE_MT5_URL}/api/native/history", params={'days': days}, timeout=5)
+        if res.ok:
+            data = res.json()
+            if not data.get("error"):
+                trades = data.get("trades", [])
+                # Filter by instrument if specified
+                if instrument:
+                    trades = [t for t in trades if t.get('symbol', '').upper() == instrument.upper()]
+                # Limit to n
+                trades = trades[-n:] if len(trades) > n else trades
+                for t in trades:
+                    t['source'] = 'native'
+                return jsonify(trades)
+    except Exception as e:
+        print(f"Native MT5 history unavailable, falling back to ZMQ: {e}")
+
+    # Fallback to ZMQ bridge
     params = {'n': n}
     if instrument:
         params['instrument'] = instrument
@@ -149,11 +198,29 @@ def get_live_broker_history():
         res = requests.get(f"{MT5_BRIDGE_URL}/live_history", params=params, timeout=10)
         deals = res.json() if res.ok else []
         for d in deals:
-            d['source'] = 'mt5_broker'
+            d['source'] = 'zmq_bridge'
         return jsonify(deals)
     except Exception as e:
-        print(f"MT5 bridge live_history unavailable: {e}")
+        print(f"MT5 bridge live_history also unavailable: {e}")
         return jsonify([])
+
+
+@trades_bp.route('/native_positions', methods=['GET'])
+def get_native_positions():
+    """Real broker open positions via native MT5 Python bridge."""
+    symbol = request.args.get('symbol', '')
+    try:
+        params = {'symbol': symbol} if symbol else {}
+        res = requests.get(f"{NATIVE_MT5_URL}/api/native/positions", params=params, timeout=5)
+        if res.ok:
+            data = res.json()
+            positions = data.get("positions", [])
+            for p in positions:
+                p['source'] = 'native'
+            return jsonify(positions)
+    except Exception as e:
+        print(f"Native MT5 positions unavailable: {e}")
+    return jsonify([])
 
 
 

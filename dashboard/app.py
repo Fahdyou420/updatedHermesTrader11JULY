@@ -31,6 +31,7 @@ MT5_BRIDGE_URL = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
 PREPROCESSOR_URL = os.getenv("PREPROCESSOR_URL", "http://preprocessor:5559")
 PAPER_TRADER_URL = os.getenv("PAPER_TRADER_URL", "http://paper_trader:5561")
 HERMES_RPC_URL = os.getenv("HERMES_RPC_URL", "http://host.docker.internal:7778")
+NATIVE_MT5_URL = os.getenv("NATIVE_MT5_URL", "http://host.docker.internal:7779")
 CHROMADB_URL = os.getenv("CHROMADB_URL", "http://chromadb:8000")
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://host.docker.internal:11434")
 
@@ -84,6 +85,15 @@ def system_status():
     chroma_ok = check(f"{CHROMADB_URL}/api/v1/heartbeat") or check(f"{CHROMADB_URL}/api/v2/auth")
     obsidian_ok = os.path.exists("/data/obsidian")
 
+    # Native MT5 bridge health
+    native_mt5_ok = False
+    try:
+        r = requests.get(f"{NATIVE_MT5_URL}/health", timeout=2)
+        if r.status_code == 200:
+            native_mt5_ok = bool(r.json().get("native_mt5", False))
+    except Exception:
+        pass
+
     status = lambda ok: "connected" if ok else "disconnected"
     mt5_status = status(mt5_ok)
 
@@ -91,6 +101,7 @@ def system_status():
         "ollama": status(ollama_ok),
         "hermesRpc": status(rpc_ok),
         "mt5Zmq": {"data": mt5_status, "draw": mt5_status, "order": mt5_status},
+        "mt5Native": status(native_mt5_ok),
         "redis": status(redis_ok),
         "chromaDb": status(chroma_ok),
         "obsidian": status(obsidian_ok)
