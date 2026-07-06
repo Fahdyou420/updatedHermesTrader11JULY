@@ -15,16 +15,13 @@ Use this skill whenever the user asks about the Hermes trading system, asks to r
 
 ## Summary
 
-This repo/stack is a containerised trading workflow:
+This repo/stack is a containerised trading workflow with a **native-first access policy**:
 
-- MT5 EA emits market bars and trade signals over ZeroMQ.
-- `hermes_mt5_bridge` exposes REST on `localhost:5558`.
-- `hermes_preprocessor` enriches bars + computes SMC on `localhost:5559`.
-- `hermes_backtester` runs strategy simulations on `localhost:5560`.
-- `hermes_paper_trader` manages paper positions on `localhost:5561`.
-- `hermes_execution` is the order router / risk gatekeeper on `localhost:5563`.
-- `hermes_mcp_bridge` handles chart draws + signal ingestion on `localhost:5562`.
-- `hermes_mcp_server` converts those services into MCP tools on `localhost:7779/mcp`.
+- MT5 EA bars, history, account state, and positions must be accessed through the **Native MT5 REST API** on `localhost:7779`.
+- Legacy ZMQ bridge port `5558` is **fully deprecated for data reads**: do **not** use it for bars, history, positions, account state, or health checks.
+- `hermes_backtester` runs on `localhost:5560`, but accepts only symbol/timeframe datasets present in its loaded market data; missing datasets return `404` rather than fallback data.
+- `hermes_paper_trader` is on `localhost:5561`, gated by `mode: paper`.
+- `hermes_mcp_server` exposes both native data endpoints and tool wrappers on `localhost:7779`.
 - `hermes_dashboard` is the Flask UI on `localhost:8080`.
 
 ## Symbols
@@ -74,21 +71,18 @@ mcp_servers:
 ### 1. Health check
 
 ```bash
-docker ps --format '{{.Names}}\t{{.Status}}\t{{.Ports}}'
+docker ps --format '{{.Names}}\\t{{.Status}}\\t{{.Ports}}'
 curl http://localhost:7779/health
-curl http://localhost:5558/health
-curl http://localhost:5559/health
 curl http://localhost:5560/health
 curl http://localhost:5561/health
-curl http://localhost:5562/health
-curl http://localhost:5563/health
 curl http://localhost:8080/health
 ```
 
 Expected healthy state:
-- 13+ containers `Up`
-- All `/health` endpoints return `200` JSON
-- `localhost:5558/health` should ideally report `ea_connected: true` if MT5 is running
+- Required containers `Up` for visible services
+- `/health` endpoints return `200` JSON
+- Paper trade signals are sent to `localhost:5561/signal` with `mode=paper`
+- Native endpoints on `localhost:7779` respond for `account`, `positions`, `history`, and `latest_bars`
 
 ### 2. Market data probe
 
@@ -108,15 +102,18 @@ Expected result: object with `fvg`, `order_blocks`, `bos`, `choch`, `liquidity`.
 
 ### 4. Backtest
 
-Call MCP tool `run_full_backtest` with:
+Use the native backtester service on `localhost:5560/backtest` **only after** checking available data:
 
-```json
-{"instrument":"BTCUSD","timeframe":"M15","strategy_type":"smc_ob_entry","lookback_bars":500,"risk_pct":1.0}
+```bash
+ls data/market_data/BTCUSD_*.json
+ls data/market_data/XAUUSD_*.json
 ```
 
-Also try `smc_fvg_fill` and `smc_liquidity_sweep`.
+Expected result may be `200` with zero trades if the symbol/timeframe dataset is empty; do **not** treat 404 as a transient error.
 
-Expected result: real bars count, trades list, `verdict: APPROVED/REJECTED` with non-zero stats.
+Also try `smc_fvg_fill`, `smc_liquidity_sweep`, and any strategies under `data/strategies/`.
+
+Document exact `win_rate`, `total_trades`, `expectancy_r`, `max_drawdown_pct`, `profit_factor`, and verdict `APPROVED/REJECTED`.
 
 ### 5. Paper status / lifecycle
 
@@ -132,6 +129,10 @@ Send a paper trade via MCP `send_paper_trade`:
 ```json
 {"instrument":"BTCUSD","direction":"BUY","entry_price":107500,"sl":107000,"tp":108800,"lots":0.01,"notes":"retest probe"}
 ```
+
+Required fields for `/signal` on `localhost:5561`:
+- `instrument`, `direction`, `entry_price`, `sl`, `tp`, `strategy_id`, `setup_type`, `session`, `timeframe`
+- Optional fields ignored by the broker: `signal_id`, `timestamp`, `entry_type`, `lots`, `mode`, `r_ratio`, `confidence`, `agent_notes`, `status`
 
 Confirm new position appears in `/positions`, then close with `close_position`.
 
@@ -254,21 +255,22 @@ Subagent task shape:
 Goal: Monitor Hermes trading system and report state changes / failures.
 Context:
 - Workdir: C:\Users\user\Desktop\hermes_claude
-- Check: docker ps, /health endpoints, paper trader /stats, /positions
+- Check: docker ps, native /health on 7779, paper trader /health and /stats, backtester /results or docker logs timestamps
 - Report: current state, diffs from last check, recommended actions
 - Do NOT modify anything without user approval
 ```
 
 ### Suggested cadence
 - 5–15 minute intervals for container health.
-- After any MT5 session open, re-check `ea_connected` and latest bars freshness.
+- After any MT5 session open, re-check native account/positions/history freshness.
+- Treat any `/backtest` `404 No matching bar data available` as a **primary finding**, not noise.
 
 ### Example invocation
 
 ```json
 {
   "goal": "Run Hermes system monitoring health check.",
-  "context": "Workdir: C:\\Users\\user\\Desktop\\hermes_claude. Check docker ps, /health for ports 5558/5559/5560/5561/5562/7779/8080, /stats and /positions on paper trader. Summarise state in 5-10 bullet points.",
+  "context": "Workdir: C:\\Users\\user\\Desktop\\hermes_claude. Check docker ps, native /health on 7779, paper trader /health and /stats, backtester docker logs timestamps. Summarise state in 5-10 bullet points.",
   "toolsets": ["terminal", "file"]
 }
 ```
