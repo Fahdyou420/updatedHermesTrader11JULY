@@ -1,0 +1,9 @@
+
+[notice] A new release of pip available: 22.3 -> 26.1.2
+[notice] To update, run: python.exe -m pip install --upgrade pip
+INFO:     Will watch for changes in these directories: ['C:\\Users\\user\\Desktop\\hermes_claude']
+INFO:     Uvicorn running on http://0.0.0.0:7778 (Press CTRL+C to quit)
+INFO:     Started reloader process [20000] using WatchFiles
+INFO:     Started server process [9852]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

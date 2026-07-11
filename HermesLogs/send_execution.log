@@ -1,0 +1,23 @@
+2026-07-06 14:13:44,872 | INFO | ============================================================
+2026-07-06 14:13:44,873 | INFO | Hermes Layer 4 Execution Engine starting
+2026-07-06 14:13:44,873 | INFO | Watching : C:\Users\user\Desktop\hermes_claude\scripts\live_trader
+2026-07-06 14:13:44,873 | INFO | Log      : C:\Users\user\Desktop\hermes_claude\HermesLogs\send_execution.log
+2026-07-06 14:13:44,873 | INFO | MCP      : http://localhost:7779/mcp
+2026-07-06 14:13:44,873 | INFO | Tick     : 60s
+2026-07-06 14:13:44,873 | INFO | ============================================================
+2026-07-06 14:13:46,935 | INFO | Day-start equity recorded: 98000.03 USD
+2026-07-06 14:13:51,066 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932201146, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:14:55,211 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932265309, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:15:59,314 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932329422, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:17:03,436 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932393544, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:18:07,555 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932457659, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:19:11,677 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932521775, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:20:15,764 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932585884, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:21:19,854 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932649961, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:22:23,969 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932714070, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:23:28,084 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932778186, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:24:32,209 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932842309, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:25:39,104 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932908197, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:26:43,222 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 932973321, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:27:47,342 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 933037443, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}
+2026-07-06 14:28:51,437 | INFO | FLEET | get_open_positions -> {"jsonrpc": "2.0", "id": 933101553, "result": {"content": [{"type": "text", "text": "{\n  \"total\": 0,\n  \"positions\": []\n}"}]}}

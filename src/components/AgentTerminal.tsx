@@ -31,6 +31,7 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [sessionLabel, setSessionLabel] = useState('session-1');
 
   useEffect(() => {
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -56,7 +57,6 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
     addLine('input', trimmed);
     setInput('');
 
-    // Slash command processing
     if (trimmed.startsWith('/')) {
       const parts = trimmed.split(' ');
       const action = parts[0].toLowerCase();
@@ -143,7 +143,6 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
           }
           addLine('tool-call', `Injecting custom tick event to ZeroMQ DATA channel: XAUUSD Price -> $${targetPrice}. Watching for liquidity sweep validation...`);
           
-          // Trigger a POST call on server to notify a sweep or log event
           try {
             await fetch('/api/logs', {
               method: 'POST',
@@ -163,7 +162,6 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
           break;
       }
     } else {
-      // Natural language query to Hermes (Nous Portal / Gemini / Ollama)
       addLine('tool-call', 'Directing prompt request to Hermes LLM Core (Nous/Gemini/Ollama)...');
       setIsTyping(true);
       
@@ -198,19 +196,17 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
       {/* Console Title Bar */}
       <div id="terminal-bar" className="flex items-center justify-between bg-slate-900/30 backdrop-blur-sm border-b border-white/5 px-4 py-3 shrink-0">
         <div id="terminal-bar-left" className="flex items-center space-x-2">
-          <div className="flex space-x-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500/80 block"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-amber-500/80 block"></span>
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500/80 block"></span>
+          <div className="flex items-center space-x-1.5">
+            <div className="w-2.5 h-2.5 rounded-full bg-emerald-400/90 shadow-[0_0_8px_rgba(52,211,153,0.45)]"/>
+            <div className="w-2.5 h-2.5 rounded-full bg-amber-400/90 shadow-[0_0_8px_rgba(251,191,36,0.45)]"/>
+            <div className="w-2.5 h-2.5 rounded-full bg-rose-400/90 shadow-[0_0_8px_rgba(251,113,133,0.45)]"/>
           </div>
-          <span className="text-[10px] font-mono font-bold tracking-wider text-cyan-455 ml-2">HERMES CLI CONSOLE (V0.15.2)</span>
+          <span className="text-[11px] font-mono font-semibold text-slate-200 ml-2">Agent Terminal</span>
+          <span className="text-[10px] font-mono text-slate-500 hidden sm:inline">{new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
         </div>
-        <div id="terminal-bar-right" className="flex items-center space-x-4 text-[9px] text-slate-500 font-mono">
-          <span className="flex items-center space-x-1">
-            <span className="w-1.5 h-1.5 rounded-full bg-cyan-450 animate-ping"></span>
-            <span className="text-cyan-400 font-bold lowercase tracking-normal">host integrated</span>
-          </span>
-          <span className="bg-slate-900/40 border border-white/5 px-2 py-0.5 rounded text-slate-400">Nous/Gemini/Ollama</span>
+        <div id="terminal-bar-right" className="flex items-center space-x-2">
+          <button onClick={() => setTerminalLines([])} className="text-[10px] font-mono text-slate-400 hover:text-slate-200">Clear</button>
+          <button onClick={() => { if (scrollRef.current) scrollRef.current.scrollIntoView({ behavior: 'smooth' }); }} className="text-[10px] font-mono text-slate-400 hover:text-slate-200">Jump to end</button>
         </div>
       </div>
 
@@ -303,32 +299,35 @@ export default function AgentTerminal({ logs, onAddLog }: AgentTerminalProps) {
         <div id="logs-sidepanel" className="hidden md:flex flex-col w-72 bg-slate-900/5 border-l border-white/5 overflow-hidden">
           <div className="bg-slate-900/20 p-2.5 border-b border-white/5 h-11 flex items-center space-x-2 shrink-0">
             <Activity className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-[9px] font-mono font-bold tracking-widest text-slate-450 uppercase">Redis & ZMQ Event Log</span>
+            <span className="text-[9px] font-mono font-bold tracking-widest text-slate-450 uppercase">Event Log</span>
           </div>
           <div className="flex-1 overflow-y-auto p-3 space-y-2 max-h-[440px]">
             {logs.slice().reverse().map(log => {
               const getLogLevelColor = (level: string) => {
                 switch (level) {
-                  case 'SUCCESS': return 'text-emerald-450 font-semibold';
-                  case 'WARNING': return 'text-amber-500 font-semibold';
-                  case 'ERROR': return 'text-rose-500 font-semibold';
-                  default: return 'text-cyan-400 font-semibold';
+                  case 'SUCCESS': return 'text-emerald-450';
+                  case 'WARNING': return 'text-amber-500';
+                  case 'ERROR': return 'text-rose-500';
+                  default: return 'text-cyan-400';
                 }
               };
-
               return (
-                <div id={log.id} key={log.id} className="p-2 rounded-sm bg-slate-900/10 border border-white/5 text-[9px] font-mono leading-tight hover:border-cyan-500/20 transition-all">
-                  <div className="flex justify-between text-[8px] text-slate-650 mb-1">
-                    <span>{log.source}</span>
-                    <span>{new Date(log.timestamp).toLocaleTimeString()}</span>
+                <div key={log.id} className="border border-white/5 rounded p-2 bg-slate-900/10 hover:bg-slate-900/20 transition">
+                  <div className="flex items-center space-x-2 mb-0.5">
+                    <span className="text-[9px] text-slate-500 font-mono">{new Date(log.timestamp).toLocaleTimeString()}</span>
+                    <span className={`text-[9px] font-mono font-bold uppercase ${getLogLevelColor(log.level)}`}>{log.level}</span>
                   </div>
-                  <p className="text-slate-400 break-words line-clamp-3">
-                    <span className={`${getLogLevelColor(log.level)} mr-1`}>● {log.level}</span>
-                    {truncateText(log.text, 80)}
-                  </p>
+                  <div className="text-[11px] text-slate-300 leading-relaxed">{log.text}</div>
                 </div>
-              );
+              )
             })}
+            {logs.length === 0 && (
+              <div className="text-slate-500 italic text-center mt-6 text-[10px]">No events yet.</div>
+            )}
+          </div>
+          <div className="p-2.5 border-t border-white/5 flex items-center justify-between text-[10px] text-slate-500 font-mono">
+            <span>Session: {sessionLabel}</span>
+            <button onClick={() => onAddLog('Session reset requested.', 'WARNING', 'TERMINAL')} className="hover:text-slate-300">Reset session</button>
           </div>
         </div>
       </div>

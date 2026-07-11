@@ -10,7 +10,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
-const PORT = 3000;
+const PORT = parseInt(process.env.PORT || "3000", 10) || 3000;
 app.use(express.json());
 
 // ─── LLM Providers (3-tier fallback: Nous Portal → Gemini → Ollama) ──────────
@@ -69,7 +69,13 @@ try {
 }
 
 // ─── Redis Clients (State & Pub/Sub) ──────────────────────────────────────────
-const redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
+const redisUrl = (() => {
+  const isWindows = process.platform === 'win32';
+  const envUrl = process.env.REDIS_URL;
+  if (!envUrl) return isWindows ? 'redis://127.0.0.1:6379' : 'redis://redis:6379';
+  if (isWindows && envUrl.includes('redis://redis:')) return 'redis://127.0.0.1:6379';
+  return envUrl;
+})();
 const redisClient = createClient({ url: redisUrl });
 const redisSub = createClient({ url: redisUrl });
 
@@ -282,16 +288,17 @@ app.get("/api/status", async (_req, res) => {
     }
   } catch { mt5EaConnected = false; }
 
-  const [ollama, rpc, chroma] = await Promise.all([
+  const [ollama, dashStatus, chroma] = await Promise.all([
     check("http://host.docker.internal:11434/api/tags").then(ok => ok ? true : check("http://market-ollama:11434/api/tags")),
-    check("http://host.docker.internal:7779/health"),
+    fetchWithTimeout("http://hermes_dashboard:8080/api/status", {}, 5000).then((r) => r.ok ? r.json() : {}).catch(() => ({})),
     check("http://chromadb:8000/api/v1/heartbeat")
   ]);
 
   const mt5s = mt5EaConnected ? "connected" : "disconnected";
+  const hermesRpc = (dashStatus as { hermesRpc?: string }).hermesRpc === "connected" ? "connected" : "disconnected";
   res.json({
     ollama: ollama ? "connected" : "disconnected",
-    hermesRpc: rpc ? "connected" : "disconnected",
+    hermesRpc,
     mt5Zmq: { data: mt5s, draw: mt5s, order: mt5s },
     redis: "connected",
     chromaDb: chroma ? "connected" : "disconnected",
@@ -723,6 +730,62 @@ app.get("/api/errors", async (_req, res) => {
     if (r.ok) return res.json(await r.json());
   } catch (_) {}
   res.json([]);
+});
+
+app.get("/api/strategies", async (_req, res) => {
+  try {
+    const packPath = path.join(process.cwd(), "data", "rnd", "xau_native_strategy_pack.json");
+    const fs = await import("fs");
+    if (fs.existsSync(packPath)) {
+      const raw = JSON.parse(fs.readFileSync(packPath, "utf-8"));
+      const cards = Array.isArray(raw) ? raw : ((raw.strategies && Array.isArray(raw.strategies)) ? raw.strategies : ((raw.cards && Array.isArray(raw.cards)) ? raw.cards : [raw]));
+      res.json({ items: cards.map((card: any) => ({ ...(card || {}), source: "local", status: (card || {}).status || "ready" })) });
+      return;
+    }
+  } catch {}
+  res.json({ items: [] });
+});
+
+app.get("/api/trades/stats", async (_req, res) => {
+  try {
+    const r = await fetchWithTimeout("http://paper_trader:5561/history?n=500", {}, 3000);
+    if (!r.ok) return res.json({ totalTrades: 0, wins: 0, losses: 0, net: 0, winsR: "0%", lossesR: "0%" });
+    const history = await r.json();
+    const trades = Array.isArray(history) ? history : [];
+    const closed = trades.filter((t: any) => t.close_price && t.entry_price);
+    const wins = closed.filter((t: any) => t.close_price > t.entry_price);
+    const losses = closed.filter((t: any) => t.close_price <= t.entry_price);
+    const net = closed.reduce((sum: number, t: any) => sum + ((t.close_price - t.entry_price) * (t.direction === 'short' ? -1 : 1) * 100), 0);
+    res.json({
+      totalTrades: closed.length,
+      wins: wins.length,
+      losses: losses.length,
+      net,
+      winsR: closed.length ? `${((wins.length/closed.length)*100).toFixed(1)}%` : '0%',
+      lossesR: closed.length ? `${((losses.length/closed.length)*100).toFixed(1)}%` : '0%'
+    });
+  } catch {
+    res.json({ totalTrades: 0, wins: 0, losses: 0, net: 0, winsR: "0%", lossesR: "0%" });
+  }
+});
+
+app.get("/api/logs/system", async (_req, res) => {
+  try {
+    const { execSync } = await import("child_process");
+    const dockerLogs = execSync("docker compose logs --tail 100 hermes_mcp_server pill_bridge mt5_bridge 2>/dev/null || true", { encoding: "utf-8" });
+    const mt5Log = fs.existsSync(path.join(process.cwd(), "HermesLogs", "hermes_mcp_server.log")) ? fs.readFileSync(path.join(process.cwd(), "HermesLogs", "hermes_mcp_server.log"), "utf-8").slice(-1000) : "";
+    res.json({ docker: dockerLogs.split("\n").slice(-50), mt5: mt5Log.split("\n").slice(-50), app: [] });
+  } catch (err) {
+    res.json({ docker: [], mt5: [], app: [String(err)] });
+  }
+});
+
+app.get("/api/kanban/state", async (_req, res) => {
+  try {
+    const r = await fetchWithTimeout("http://dashboard:8080/api/kanban/state", {}, 3000);
+    if (r.ok) return res.json(await r.json());
+  } catch (_) {}
+  res.json({ columns: { todo: [], in_progress: [], review: [], done: [] }, next_id: 1 });
 });
 
 // ─── LLM Analysis endpoint (3-tier fallback: Nous Portal → Gemini → Ollama) ──

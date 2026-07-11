@@ -1,0 +1,15 @@
+[2026-07-05T21:48:24.429375+00:00] ============================================================
+[2026-07-05T21:48:24.429375+00:00] SPRINT START 2026-07-05T21:48:24.429375+00:00
+[2026-07-05T21:48:24.430376+00:00] ============================================================
+[2026-07-05T21:48:24.654987+00:00] Execution service health: {'status': 'ok', 'timestamp': '2026-07-05T21:48:24.652215Z', 'kill_switch_active': False}
+[2026-07-05T21:48:26.701049+00:00] Native health: {'status': 'ok', 'server': 'hermes-trading-mcp', 'port': 7779, 'native_mt5': True}
+[2026-07-05T21:48:26.701049+00:00] Safety check: {"paper_mode": true, "kill_switch": false, "safe_to_start": true}
+[2026-07-05T21:48:26.702049+00:00] [LANE1] Starting continuous MTF trading loop
+[2026-07-05T21:48:26.702049+00:00] [LANE1] Background thread started
+[2026-07-05T21:48:26.703050+00:00] [LANE1] MTF cycle 1 at 2026-07-05T21:48:26.703050+00:00
+[2026-07-05T21:48:26.703050+00:00] [LANE2] Starting cross-timeframe backtest sweep
+[2026-07-05T21:48:26.711074+00:00] [LANE2] Backtester health: 200 {"status":"ok","timestamp":"2026-07-05T21:48:26.710253Z"}
+[2026-07-05T21:48:26.711074+00:00] [LANE3] Starting forward paper validation
+[2026-07-05T21:48:26.712072+00:00] [LANE4] Starting self-study review
+[2026-07-05T21:48:26.712072+00:00] Sprint controller results: {"lane1": "running_in_background", "lane2": "lane2 complete", "lane3": "lane3 complete", "lane4": "lane4 complete"}
+2026-07-06T08:55:08Z daily_review_complete review=2026-07-05_daily_review briefing=2026-07-07_briefing

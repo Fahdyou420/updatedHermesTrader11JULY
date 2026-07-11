@@ -1,0 +1,10 @@
+{
+  "date": "2026-07-06",
+  "day_start_equity": 98000.03,
+  "halted": false,
+  "processed": {
+    "probe_bl.txt": "probe_bl.txt:1783341911",
+    "probe_output.txt": "probe_output.txt:1783341898",
+    "xau_position_watcher.state.json": "xau_position_watcher.state.json:1783343092"
+  }
+}

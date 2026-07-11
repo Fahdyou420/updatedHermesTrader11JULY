@@ -1,0 +1,16 @@
+{
+  "task_id": "mt5_subagent_backtest_01",
+  "status": "ready",
+  "entry_path": "C:\\Users\\user\\Desktop\\hermes_claude\\data\\run\\jobs\\mt5_subagent_contracts.json",
+  "deliverables": [
+    "Trade log CSV with ticket, direction, entry, SL, TP, exit price, exit reason, profit, bars",
+    "Equity curve JSON",
+    "Summary metrics JSON with win rate, profit factor, max drawdown, expectancy"
+  ],
+  "constraints": [
+    "Only XAUUSD",
+    "Use local history set in MT5",
+    "Run at least 3 parameter variants: OB Bullish requester threshold 0.001 / 0.0015 / 0.002",
+    "Do not place real orders; testing only"
+  ]
+}

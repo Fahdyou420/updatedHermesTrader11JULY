@@ -1,0 +1,65 @@
+2026-07-10 21:05:21,321 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
+INFO:     Started server process [18864]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:7779 (Press CTRL+C to quit)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)
+C:\Users\user\Desktop\hermes_claude\hermes_mcp_server.py:343: FutureWarning: Calling float on a single element Series is deprecated and will raise a TypeError in the future. Use float(ser.iloc[0]) instead
+  return float(v)

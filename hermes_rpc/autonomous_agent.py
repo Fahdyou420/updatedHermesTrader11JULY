@@ -17,6 +17,11 @@ import os, sys, json, time, logging, requests
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Optional, List, Dict, Any
+import pandas as pd
+
+# ── Paths ─────────────────────────────────────────────────────────────────────
+REPO_ROOT = Path(__file__).resolve().parents[1]
+KYBOT_LOGS = REPO_ROOT / "data" / "run" / "outcomes"
 
 # ── Logging ──────────────────────────────────────────────────────────────────
 logging.basicConfig(
@@ -24,7 +29,7 @@ logging.basicConfig(
     format="%(asctime)s [AGENT] %(levelname)s %(message)s",
     handlers=[
         logging.StreamHandler(sys.stdout),
-        logging.FileHandler("hermes_agent.log", encoding="utf-8")
+        logging.FileHandler(str(REPO_ROOT / "hermes_agent.log"), encoding="utf-8")
     ]
 )
 log = logging.getLogger("hermes_agent")
@@ -38,10 +43,11 @@ def _local_url(url: str) -> str:
 
 OLLAMA_URL     = _local_url(os.getenv("OLLAMA_URL",        "http://localhost:11434"))
 MT5_URL        = _local_url(os.getenv("MT5_BRIDGE_URL",    "http://localhost:5558"))
-PAPER_URL      = _local_url(os.getenv("PAPER_TRADER_URL",  "http://localhost:5561"))
-BACKTEST_URL   = _local_url(os.getenv("BACKTESTER_URL",    "http://localhost:5560"))
-MCP_URL        = _local_url(os.getenv("MCP_BRIDGE_URL",    "http://localhost:5562"))
+MCP_URL        = _local_url(os.getenv("MCP_BRIDGE_URL",     "http://localhost:5562"))
+PAPER_URL      = _local_url(os.getenv("PAPER_TRADER_URL",   "http://localhost:5561"))
+BACKTEST_URL   = _local_url(os.getenv("BACKTESTER_URL",     "http://localhost:5560"))
 VAULT_ROOT     = os.getenv("OBSIDIAN_VAULT_ROOT", os.path.join(os.environ.get("LOCALAPPDATA", os.path.join(os.path.expanduser("~"), "AppData", "Local")), "hermes", "obsidian"))
+SYSTEM_PYTHON  = os.getenv("SYSTEM_PYTHON", sys.executable)
 
 # ── LLM Fallback Chain: Nous Portal → Gemini → Ollama ────────────────────────
 NOUS_API_KEY   = os.getenv("NOUS_API_KEY", "")
@@ -210,23 +216,37 @@ def get_bars(instrument: str = None, tf: str = None, n: int = 200) -> List[Dict]
         df = yf.download(ticker, period=period, interval=yf_tf,
                          progress=False, auto_adjust=True)
         if df.empty:
-            log.warning(f"yfinance returned no data for {ticker}")
             return []
-
         bars = []
+        def _scalar(v):
+            if hasattr(v, 'iloc'):
+                v = v.iloc[0]
+            try:
+                return float(v)
+            except Exception:
+                return 0.0
         for ts, row in df.tail(n).iterrows():
+            try:
+                timestamp = int(ts.timestamp())
+            except Exception:
+                timestamp = int(ts.value // 10**9) if hasattr(ts, 'value') else int(ts)
+            op = _scalar(row['Open'])
+            hi = _scalar(row['High'])
+            lo = _scalar(row['Low'])
+            cl = _scalar(row['Close'])
+            vol = int(_scalar(row.get('Volume', 0)))
             bars.append({
-                "timestamp": int(ts.timestamp()),
-                "instrument": instr,
-                "timeframe": timeframe,
-                "open":  float(row["Open"]),
-                "high":  float(row["High"]),
-                "low":   float(row["Low"]),
-                "close": float(row["Close"]),
-                "volume": int(row.get("Volume", 0)),
-                "source": "yfinance"
+                'timestamp': timestamp,
+                'instrument': instr,
+                'timeframe': timeframe,
+                'open': op,
+                'high': hi,
+                'low': lo,
+                'close': cl,
+                'volume': vol,
+                'source': 'yfinance'
             })
-        log.info(f"yfinance: got {len(bars)} bars for {ticker}")
+        log.info(f'yfinance: got {len(bars)} bars for {ticker}')
         return bars
     except ImportError:
         log.warning("yfinance not installed. Run: pip install yfinance")

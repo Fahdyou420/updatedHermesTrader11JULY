@@ -24,6 +24,10 @@ from services.shared import redis_channels
 from services.shared.error_bus import publish_error
 from services.shared.kill_switch import is_kill_switch_active
 from services.paper_trader.db import PaperTradeDB
+from services.execution.feed_guard import feed_guard
+from services.execution.signal_validator import validate as validate_signal
+from services.execution.position_manager import position_manager
+from services.execution.bridge_watchdog import start_watchdog_thread
 
 logger = get_logger("paper_trader")
 
@@ -40,6 +44,7 @@ app.add_middleware(
 # Configuration
 REDIS_URL = os.getenv("REDIS_URL", "redis://redis:6379")
 MT5_BRIDGE_URL = os.getenv("MT5_BRIDGE_URL", "http://mt5_bridge:5558")
+NATIVE_MT5_URL = os.getenv("NATIVE_MT5_URL", "http://localhost:7779")
 SIM_REJECT_RATE = float(os.getenv("SIM_REJECT_RATE", "0.015"))
 
 # Redis configuration block
@@ -87,6 +92,31 @@ def get_point_size(instrument: str) -> float:
     return 0.00001
 
 
+def _http_get_json(url: str, timeout: int = 5):
+    try:
+        resp = requests.get(url, timeout=timeout)
+        if resp.status_code == 200:
+            return resp.json()
+    except Exception:
+        pass
+    return None
+
+
+def _get_latest_bar(instrument: str, timeframe: str = "M15", n: int = 1):
+    url_bridge = f"{MT5_BRIDGE_URL}/latest_bars?instrument={instrument}&tf={timeframe}&n={n}"
+    url_native = f"{NATIVE_MT5_URL}/api/native/latest_bars?instrument={instrument}&tf={timeframe}&n={n}"
+
+    data = _http_get_json(url_bridge)
+    if data is not None:
+        return data
+
+    data = _http_get_json(url_native)
+    if data is not None:
+        return data
+
+    return None
+
+
 async def check_active_positions():
     """
     Checks if active positions have hit SL/TP targets using latest bars from mt5_bridge.
@@ -103,21 +133,25 @@ async def check_active_positions():
     for pos in open_positions:
         instrument = pos["instrument"]
         pos_id = pos["id"]
-        
+
         try:
-            # Query mt5_bridge for latest price bar
-            url = f"{MT5_BRIDGE_URL}/latest_bars?instrument={instrument}&tf=M15&n=1"
-            resp = await asyncio.get_event_loop().run_in_executor(
-                None, lambda: requests.get(url, timeout=5)
-            )
-            
-            if resp.status_code != 200:
-                raise requests.RequestException(f"MT5 Bridge returned status code {resp.status_code}")
-                
-            bars = resp.json()
+            # Query latest bar via bridge -> native fallback
+            bars = _get_latest_bar(instrument, "M15", 1)
+
             if not bars:
+                logger.warning(f"Unmonitored position {pos_id} ({instrument}): no market data from mt5_bridge or native MT5 API.")
+                try:
+                    redis_client.publish(redis_channels.PAPER_TRADE_UPDATE, json.dumps({
+                        "id": pos_id,
+                        "instrument": instrument,
+                        "status": pos.get("status"),
+                        "monitor_status": "unmonitored",
+                        "reason": "no_latest_bars",
+                    }))
+                except Exception as pub_err:
+                    logger.error(f"Failed to publish unmonitored position alert for {pos_id}: {pub_err}")
                 continue
-                
+
             # Successfully connected and retrieved data — reset failures
             bridge_fail_since = None
             
@@ -174,17 +208,37 @@ async def check_active_positions():
                 close_time = int(latest_bar.get("timestamp", 0)) or int(datetime.utcnow().timestamp())
                 logger.info(f"[!] Trigger check hit. Closing Position: {pos_id} ({instrument}) at {exit_price}. Reason: {reason}")
                 db.close_position(pos_id, exit_price, reason, close_time=close_time)
-                
+
                 # Fetch closed record to publish event update
                 with db._get_conn() as conn:
                     cur = conn.cursor()
                     cur.execute("SELECT * FROM positions WHERE id = ?", (pos_id,))
                     updated_row = cur.fetchone()
-                    
+
                 if updated_row:
                     updated_dict = dict(updated_row)
                     redis_client.publish(redis_channels.PAPER_TRADE_UPDATE, json.dumps(updated_dict))
-                    
+            else:
+                # Position manager: evaluate breakeven/trail/invalidation/session-close
+                try:
+                    if latest_bar:
+                        pm_outcome = position_manager.update(pos, close, latest_bar)
+                        if pm_outcome.get("action") == "close":
+                            close_time = int(latest_bar.get("timestamp", 0)) or int(datetime.utcnow().timestamp())
+                            logger.info(f"[!] Position manager closing {pos_id}: {pm_outcome.get('reason')}")
+                            db.close_position(pos_id, close, pm_outcome.get("reason", "position_manager"), close_time=close_time)
+                            with db._get_conn() as conn:
+                                cur = conn.cursor()
+                                cur.execute("SELECT * FROM positions WHERE id = ?", (pos_id,))
+                                updated_row = cur.fetchone()
+                            if updated_row:
+                                redis_client.publish(redis_channels.PAPER_TRADE_UPDATE, json.dumps(dict(updated_row)))
+                        elif pm_outcome.get("new_sl") not in (None, current_sl):
+                            # Persist new SL only if DB supports it; otherwise log for observability
+                            logger.info(f"[position_manager] {pos_id} new_sl={pm_outcome['new_sl']}")
+                except Exception as pm_ex:
+                    logger.debug(f"Position manager skip for {pos_id}: {pm_ex}")
+
         except Exception as e:
             logger.error(f"Error checking targets for position {pos_id}: {e}")
             
@@ -217,6 +271,12 @@ async def startup_event():
     """Kicks off the core background monitor tasks."""
     logger.info("Initializing Hermes Paper Trader loops...")
     asyncio.create_task(paper_trader_background_loop())
+    start_watchdog_thread()
+    try:
+        from services.execution.loop_supervisor import start_thread as start_loop_supervisor
+        start_loop_supervisor()
+    except Exception as ex:
+        logger.error("Failed to start loop supervisor: %s", ex)
 
 
 @app.get("/health")
@@ -261,11 +321,21 @@ async def receive_signal(signal: TradeSignalInput):
     # 2. Check Idempotency (prevent duplicate trade execution)
     payload = model_to_dict(signal)
     pos_id = payload.get("signal_id") or f"pos_{int(time.time())}_{payload.get('instrument')}"
-    
+
     existing = db.get_position(pos_id)
     if existing:
         logger.info(f"Signal ID {pos_id} already exists. Returning existing position state.")
         return {"status": "exists", "position_id": pos_id, "data": existing}
+
+    # 2b. Feed integrity guard — reject/queue if market data is stale/sparse/malformed
+    if not feed_guard.check(payload.get("instrument", "XAUUSD"), payload.get("timeframe", "M15")):
+        reason = feed_guard.reason or "feed_unhealthy"
+        raise HTTPException(status_code=503, detail=f"Feed guard rejected signal: {reason}")
+
+    # 2c. Signal validator — enforce deterministic 11-gate logic
+    approved, reason = validate_signal(signal, {}, db.get_open_positions())
+    if not approved:
+        raise HTTPException(status_code=422, detail=reason)
 
     logger.info(f"Broker received signal: Instrument {signal.instrument}, Side {signal.direction}, Lots {signal.lots}")
     
@@ -336,19 +406,13 @@ async def manual_close_position(trade_id: str):
         return {"status": "already_closed", "trade_id": trade_id, "close_price": pos["close_price"], "data": pos}
         
     instrument = pos["instrument"]
-    close_price = float(pos["entry_price"]) # default fallback
-    
-    # Gather ticks
-    try:
-        url = f"{MT5_BRIDGE_URL}/latest_bars?instrument={instrument}&tf=M15&n=1"
-        loop = asyncio.get_event_loop()
-        resp = await loop.run_in_executor(None, lambda: requests.get(url, timeout=5))
-        if resp.status_code == 200:
-            bars = resp.json()
-            if bars:
-                close_price = float(bars[-1].get("close", close_price))
-    except Exception as e:
-        logger.warning(f"Could not reach bridge to read close price for {instrument}: {e}. Closing at entry fallback.")
+
+    bars = _get_latest_bar(instrument, "M15", 1)
+    if not bars:
+        logger.warning(f"Manual close aborted for {trade_id} ({instrument}): no market data from mt5_bridge or native MT5 API.")
+        raise HTTPException(status_code=503, detail="bridge_unavailable")
+
+    close_price = float(bars[-1].get("close", pos["entry_price"]))
 
     # Commit Close
     db.close_position(trade_id, close_price, reason="manual")

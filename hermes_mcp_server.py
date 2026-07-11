@@ -29,12 +29,34 @@ except ImportError:
 
 app = FastAPI(title="Hermes Trading MCP Server", version="1.1")
 
+_mt5_initialized = False
+
 def _ensure_mt5():
+    global _mt5_initialized
+    if _mt5_initialized:
+        return True, "OK"
     if mt5 is None:
         return False, "MetaTrader5 Python package is not installed."
-    if not mt5.initialize():
-        return False, f"MT5 initialize() failed, error code: {mt5.last_error()}"
-    return True, "OK"
+    try:
+        if mt5.initialize(portable=True):
+            _mt5_initialized = True
+            return True, "OK"
+    except Exception as exc:
+        print(f"[DEBUG] portable=True init attempt raised: {exc!r}")
+    err = mt5.last_error() if mt5 is not None else None
+    if err:
+        print(f"[INFO] Native terminal path init failed: {err}")
+    try:
+        if mt5.initialize(path=MT5_TERMINAL_PATH):
+            _mt5_initialized = True
+            return True, "OK"
+    except Exception as exc:
+        print(f"[DEBUG] configured terminal path init attempt raised: {exc!r}")
+    err = mt5.last_error() if mt5 is not None else None
+    if err:
+        print(f"[WARN] MT5 initialize() failed, error code: {err}")
+    return False, f"MT5 initialize() failed, error code: {err}"
+
 
 # ── Full configuration surface — every knob overridable via .env ─────────────
 # When running natively on the Windows host, internal Docker DNS (e.g. mt5_bridge) 
@@ -44,6 +66,7 @@ def _local_url(url: str) -> str:
     return re.sub(r'http://([a-zA-Z0-9_]+):', r'http://localhost:', url)
 
 MT5_URL     = _local_url(os.getenv("MT5_BRIDGE_URL",   "http://localhost:5558"))
+MT5_TERMINAL_PATH = os.getenv("MT5_TERMINAL_PATH", str(Path(r"C:\Users\user\AppData\Roaming\MetaQuotes\Terminal\D0E8209F77C8CF37AD8BF550E51FF075")))
 PAPER_URL   = _local_url(os.getenv("PAPER_TRADER_URL", "http://localhost:5561"))
 PREPROC_URL = _local_url(os.getenv("PREPROCESSOR_URL", "http://localhost:5559"))
 BACKTEST_URL= _local_url(os.getenv("BACKTESTER_URL",   "http://localhost:5560"))
@@ -465,6 +488,18 @@ def handle_tool(name, args):
         tp = float(args.get("tp", 0))
         comment = args.get("comment", "hermes_native")
         ticket = int(args.get("ticket", 0))
+        pending_price = args.get("entry_price")
+
+        # Map action string to MT5 constants
+        _ACTION = {
+            "BUY":        (mt5.TRADE_ACTION_DEAL, mt5.ORDER_TYPE_BUY),
+            "SELL":       (mt5.TRADE_ACTION_DEAL, mt5.ORDER_TYPE_SELL),
+            "BUY_LIMIT":  (mt5.TRADE_ACTION_PENDING, mt5.ORDER_TYPE_BUY_LIMIT),
+            "SELL_LIMIT": (mt5.TRADE_ACTION_PENDING, mt5.ORDER_TYPE_SELL_LIMIT),
+            "BUY_STOP":   (mt5.TRADE_ACTION_PENDING, mt5.ORDER_TYPE_BUY_STOP),
+            "SELL_STOP":  (mt5.TRADE_ACTION_PENDING, mt5.ORDER_TYPE_SELL_STOP),
+            "CLOSE":      (None, None),
+        }
 
         if action_str == "CLOSE":
             if not ticket:
@@ -474,28 +509,39 @@ def handle_tool(name, args):
                 return {"error": f"No open position with ticket {ticket}"}
             p = pos[0]
             close_type = mt5.ORDER_TYPE_SELL if p.type == 0 else mt5.ORDER_TYPE_BUY
-            price = mt5.symbol_info_tick(p.symbol).bid if p.type == 0 else mt5.symbol_info_tick(p.symbol).ask
+            price = args.get("entry_price") or (mt5.symbol_info_tick(p.symbol).bid if p.type == 0 else mt5.symbol_info_tick(p.symbol).ask)
+            if price is None:
+                return {"error": f"Cannot get tick for {p.symbol}"}
             request_obj = {
                 "action": mt5.TRADE_ACTION_DEAL,
                 "symbol": p.symbol,
                 "volume": p.volume,
                 "type": close_type,
                 "position": ticket,
-                "price": price,
+                "price": float(price),
                 "deviation": 20,
                 "magic": 123456,
                 "comment": comment,
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": mt5.ORDER_FILLING_IOC,
             }
+        elif action_str not in _ACTION:
+            return {"error": f"Unsupported action: {action_str}. Use BUY, SELL, CLOSE, BUY_LIMIT, SELL_LIMIT, BUY_STOP, SELL_STOP."}
         else:
-            order_type = mt5.ORDER_TYPE_BUY if action_str == "BUY" else mt5.ORDER_TYPE_SELL
-            tick = mt5.symbol_info_tick(symbol)
-            if tick is None:
-                return {"error": f"Cannot get tick for {symbol}. Is it available in Market Watch?"}
-            price = tick.ask if action_str == "BUY" else tick.bid
+            trade_action, order_type = _ACTION[action_str]
+
+            if trade_action == mt5.TRADE_ACTION_PENDING:
+                if pending_price is None:
+                    return {"error": f"entry_price is required for {action_str}"}
+                price = float(pending_price)
+            else:
+                tick = mt5.symbol_info_tick(symbol)
+                if tick is None:
+                    return {"error": f"Cannot get tick for {symbol}. Is it available in Market Watch?"}
+                price = tick.ask if action_str == "BUY" else tick.bid
+
             request_obj = {
-                "action": mt5.TRADE_ACTION_DEAL,
+                "action": trade_action,
                 "symbol": symbol,
                 "volume": volume,
                 "type": order_type,
@@ -508,12 +554,20 @@ def handle_tool(name, args):
                 "type_time": mt5.ORDER_TIME_GTC,
                 "type_filling": mt5.ORDER_FILLING_IOC,
             }
+            if action_str in {"BUY_LIMIT", "SELL_LIMIT", "BUY_STOP", "SELL_STOP"}:
+                request_obj["type_filling"] = mt5.ORDER_FILLING_RETURN
 
         result = mt5.order_send(request_obj)
         if result is None:
             return {"error": f"order_send returned None, error: {mt5.last_error()}"}
         result_dict = result._asdict()
         if result.retcode != mt5.TRADE_RETCODE_DONE:
+            if trade_action == mt5.TRADE_ACTION_PENDING and result.retcode in (10015, 10030):
+                for fallback_filling in (mt5.ORDER_FILLING_IOC, mt5.ORDER_FILLING_FOK):
+                    request_obj["type_filling"] = fallback_filling
+                    result = mt5.order_send(request_obj)
+                    if result and result.retcode == mt5.TRADE_RETCODE_DONE:
+                        return {"success": True, "order": result._asdict()}
             return {"error": f"Order failed: retcode={result.retcode}, comment={result.comment}", "details": result_dict}
         return {"success": True, "order": result_dict}
 

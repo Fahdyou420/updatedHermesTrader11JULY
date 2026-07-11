@@ -1,0 +1,55 @@
+{
+  "columns": {
+    "todo": [],
+    "in_progress": [
+      {
+        "id": 1,
+        "text": "[SUBBOARD] MT5 Historical Tester \u2014 smc_ob_m15 optimization",
+        "dept": "execution",
+        "status": "in_progress",
+        "status_detail": "running",
+        "tags": [
+          "subagent",
+          "launched",
+          "mt5_subagent_backtest_01"
+        ],
+        "task_id": "mt5_subagent_backtest_01",
+        "createdAt": 1783766768.585749,
+        "pid": 9856
+      },
+      {
+        "id": 2,
+        "text": "[SUBBOARD] Pattern Analysis Subagent \u2014 OB vs FVG vs Breaker recurrence",
+        "dept": "execution",
+        "status": "in_progress",
+        "status_detail": "running",
+        "tags": [
+          "subagent",
+          "launched",
+          "mt5_subagent_pattern_01"
+        ],
+        "task_id": "mt5_subagent_pattern_01",
+        "createdAt": 1783766768.5933206,
+        "pid": 20148
+      },
+      {
+        "id": 3,
+        "text": "[SUBBOARD] Killzone Execution Study \u2014 London/NY overlap vs off-hours",
+        "dept": "execution",
+        "status": "in_progress",
+        "status_detail": "running",
+        "tags": [
+          "subagent",
+          "launched",
+          "mt5_subagent_killzone_01"
+        ],
+        "task_id": "mt5_subagent_killzone_01",
+        "createdAt": 1783766768.6010954,
+        "pid": 1420
+      }
+    ],
+    "review": [],
+    "done": []
+  },
+  "next_id": 4
+}

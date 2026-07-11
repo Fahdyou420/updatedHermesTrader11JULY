@@ -39,11 +39,16 @@ def ensure_mt5_available() -> None:
 
 def initialize_terminal(path: Optional[str] = None) -> bool:
     ensure_mt5_available()
-    terminal_path = path or os.getenv("MT5_TERMINAL_PATH", DEFAULT_MT5_PATH)
-    initialized = mt5.initialize(terminal_path)
-    if not initialized:
-        raise MT5HistoryError(f"mt5.initialize() failed: {mt5.last_error()}")
-    return True
+    candidates = [path, os.getenv("MT5_TERMINAL_PATH"), r"C:\Program Files\MetaTrader 5\terminal64.exe"]
+    seen = set()
+    for candidate in candidates:
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        if mt5.initialize(candidate):
+            return True
+        logger.warning("mt5.initialize(path=%s) failed: %s", candidate, mt5.last_error())
+    raise MT5HistoryError(f"mt5.initialize() failed on all candidates: {seen}")
 
 
 def shutdown_terminal() -> None:

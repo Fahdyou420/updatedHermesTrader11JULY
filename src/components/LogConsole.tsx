@@ -25,15 +25,18 @@ export default function LogConsole({ logs }: LogConsoleProps) {
 
   return (
     <div className="flex flex-col h-[600px] bg-[#05070a] border border-white/10 rounded overflow-hidden">
-      <div className="bg-slate-900/40 p-3 border-b border-white/10 flex items-center space-x-2">
-        <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
-        <span className="text-[11px] font-mono font-bold tracking-widest text-slate-300 uppercase">
-          Live System & LLM Logs
-        </span>
+      <div className="bg-slate-900/40 p-3 border-b border-white/10 flex items-center justify-between">
+        <div className="flex items-center space-x-2">
+          <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
+          <span className="text-[11px] font-mono font-bold tracking-widest text-slate-300 uppercase">
+            System & LLM Logs
+          </span>
+        </div>
+        <span className="text-[10px] text-slate-500 font-mono">view-only stream</span>
       </div>
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto p-4 space-y-2 font-mono text-[10px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/20 to-black"
+        className="flex-1 overflow-y-auto p-4 space-y-2 font-mono text-[10px] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900/20 to-black select-text"
       >
         {logs.map((log) => (
           <div key={log.id} className="border-b border-white/5 pb-2 mb-2 last:border-0 hover:bg-white/[0.02] p-1 transition-colors rounded">

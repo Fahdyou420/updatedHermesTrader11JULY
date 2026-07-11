@@ -32,11 +32,11 @@ var import_redis = require("redis");
 var import_dotenv = __toESM(require("dotenv"), 1);
 import_dotenv.default.config();
 var app = (0, import_express.default)();
-var PORT = 3e3;
+var PORT = parseInt(process.env.PORT || "3000", 10) || 3e3;
 app.use(import_express.default.json());
 var SMC_SYSTEM_INSTRUCTION = "You are the Hermes Trading Agent \u2014 a precise SMC/ICT specialist for XAUUSD. Demand rigorous risk management in every analysis.";
 var nousClient = null;
-var nousModel = process.env.NOUS_MODEL || "stepfun/step-3.7-flash";
+var nousModel = process.env.NOUS_MODEL || "stepfun/step-3.7-flash:free";
 try {
   if (process.env.NOUS_API_KEY) {
     nousClient = new import_openai.default({
@@ -80,7 +80,13 @@ try {
 } catch (err) {
   console.error("[LLM] Ollama client init failed:", err);
 }
-var redisUrl = process.env.REDIS_URL || "redis://localhost:6379";
+var redisUrl = (() => {
+  const isWindows = process.platform === "win32";
+  const envUrl = process.env.REDIS_URL;
+  if (!envUrl) return isWindows ? "redis://127.0.0.1:6379" : "redis://redis:6379";
+  if (isWindows && envUrl.includes("redis://redis:")) return "redis://127.0.0.1:6379";
+  return envUrl;
+})();
 var redisClient = (0, import_redis.createClient)({ url: redisUrl });
 var redisSub = (0, import_redis.createClient)({ url: redisUrl });
 redisClient.on("error", (err) => console.error("[Redis] Client Error", err));
@@ -261,17 +267,17 @@ app.get("/api/status", async (_req, res) => {
   };
   let mt5EaConnected = false;
   try {
-    const mt5r = await fetchWithTimeout("http://mt5_bridge:5558/health", {}, 1500);
+    const mt5r = await fetchWithTimeout("http://host.docker.internal:7779/health", {}, 1500);
     if (mt5r.ok) {
       const mt5data = await mt5r.json();
-      mt5EaConnected = mt5data.ea_connected === true;
+      mt5EaConnected = mt5data.ea_connected === true || mt5data.terminal_connected === true;
     }
   } catch {
     mt5EaConnected = false;
   }
   const [ollama, rpc, chroma] = await Promise.all([
-    check("http://host.docker.internal:11434/api/tags"),
-    check("http://host.docker.internal:7778/health"),
+    check("http://host.docker.internal:11434/api/tags").then((ok) => ok ? true : check("http://market-ollama:11434/api/tags")),
+    check("http://host.docker.internal:7779/health"),
     check("http://chromadb:8000/api/v1/heartbeat")
   ]);
   const mt5s = mt5EaConnected ? "connected" : "disconnected";
@@ -293,7 +299,7 @@ app.get("/api/market", async (_req, res) => {
   let liqList = liquidityPools;
   const [smcResult, barsResult] = await Promise.allSettled([
     fetchWithTimeout("http://preprocessor:5559/smc_analysis?instrument=XAUUSD&tf=M15&n=300", {}, 5e3),
-    fetchWithTimeout("http://mt5_bridge:5558/latest_bars?instrument=XAUUSD&tf=M15&n=50", {}, 6e3)
+    fetchWithTimeout("http://host.docker.internal:7779/api/native/latest_bars?instrument=XAUUSD&tf=M15&n=50", {}, 6e3)
   ]);
   try {
     if (smcResult.status === "fulfilled" && smcResult.value.ok) {
@@ -670,6 +676,60 @@ app.get("/api/errors", async (_req, res) => {
   }
   res.json([]);
 });
+app.get("/api/strategies", async (_req, res) => {
+  try {
+    const packPath = import_path.default.join(process.cwd(), "data", "rnd", "xau_native_strategy_pack.json");
+    const fs2 = await import("fs");
+    if (fs2.existsSync(packPath)) {
+      const raw = JSON.parse(fs2.readFileSync(packPath, "utf-8"));
+      const cards = Array.isArray(raw) ? raw : ((raw.strategies && Array.isArray(raw.strategies)) ? raw.strategies : ((raw.cards && Array.isArray(raw.cards)) ? raw.cards : [raw]));
+      res.json({ items: cards.map((card) => ({ ...card, source: "local", status: card.status || "ready" })) });
+      return;
+    }
+  } catch {
+  }
+  res.json({ items: [] });
+});
+app.get("/api/trades/stats", async (_req, res) => {
+  try {
+    const r = await fetchWithTimeout("http://paper_trader:5561/history?n=500", {}, 3e3);
+    if (!r.ok) return res.json({ totalTrades: 0, wins: 0, losses: 0, net: 0, winsR: "0%", lossesR: "0%" });
+    const history = await r.json();
+    const trades2 = Array.isArray(history) ? history : [];
+    const closed = trades2.filter((t) => t.close_price && t.entry_price);
+    const wins = closed.filter((t) => t.close_price > t.entry_price);
+    const losses = closed.filter((t) => t.close_price <= t.entry_price);
+    const net = closed.reduce((sum, t) => sum + (t.close_price - t.entry_price) * (t.direction === "short" ? -1 : 1) * 100, 0);
+    res.json({
+      totalTrades: closed.length,
+      wins: wins.length,
+      losses: losses.length,
+      net,
+      winsR: closed.length ? `${(wins.length / closed.length * 100).toFixed(1)}%` : "0%",
+      lossesR: closed.length ? `${(losses.length / closed.length * 100).toFixed(1)}%` : "0%"
+    });
+  } catch {
+    res.json({ totalTrades: 0, wins: 0, losses: 0, net: 0, winsR: "0%", lossesR: "0%" });
+  }
+});
+app.get("/api/logs/system", async (_req, res) => {
+  try {
+    const { execSync } = await import("child_process");
+    const dockerLogs = execSync("docker compose logs --tail 100 hermes_mcp_server pill_bridge mt5_bridge 2>/dev/null || true", { encoding: "utf-8" });
+    const mt5Log = import_fs.default.existsSync(import_path.default.join(process.cwd(), "HermesLogs", "hermes_mcp_server.log")) ? import_fs.default.readFileSync(import_path.default.join(process.cwd(), "HermesLogs", "hermes_mcp_server.log"), "utf-8").slice(-1e3) : "";
+    res.json({ docker: dockerLogs.split("\n").slice(-50), mt5: mt5Log.split("\n").slice(-50), app: [] });
+  } catch (err) {
+    res.json({ docker: [], mt5: [], app: [String(err)] });
+  }
+});
+app.get("/api/kanban/state", async (_req, res) => {
+  try {
+    const r = await fetchWithTimeout("http://dashboard:8080/api/kanban/state", {}, 3e3);
+    if (r.ok) return res.json(await r.json());
+  } catch (_) {
+  }
+  res.json({ columns: { todo: [], in_progress: [], review: [], done: [] }, next_id: 1 });
+});
 function buildAnalysisPrompt(prompt, type) {
   if (type === "smc-audit") {
     return `You are the Hermes Trading Agent analyzing XAUUSD.
@@ -729,10 +789,17 @@ async function executeDashboardTool(name, args) {
       return JSON.stringify({ error: "Could not fetch price" });
     }
     if (name === "get_account_state") {
-      const r = await fetchWithTimeout("http://mt5_bridge:5558/account_state", {}, 5e3);
-      if (r.ok) {
-        const data = await r.json();
-        return JSON.stringify(data);
+      try {
+        const nativeUrl = process.env.NATIVE_MT5_URL || "http://host.docker.internal:7779";
+        const nativeRes = await fetchWithTimeout(`${nativeUrl}/api/native/account`, {}, 3e3);
+        if (nativeRes.ok) {
+          const d = await nativeRes.json();
+          if (!d.error) return JSON.stringify(d);
+        }
+        const r = await fetchWithTimeout("http://mt5_bridge:5558/account_state", {}, 5e3);
+        if (r.ok) return JSON.stringify(await r.json());
+      } catch (e) {
+        console.log("Error fetching account state:", e);
       }
       return JSON.stringify({ error: "Could not fetch account state" });
     }
@@ -893,3 +960,4 @@ async function startServer() {
   app.listen(PORT, "0.0.0.0", () => console.log(`Hermes React server running on port ${PORT}`));
 }
 startServer();
+//# sourceMappingURL=server.cjs.map

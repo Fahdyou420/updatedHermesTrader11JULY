@@ -1,0 +1,15 @@
+{
+  "task_id": "mt5_subagent_pattern_01",
+  "status": "ready",
+  "entry_path": "C:\\Users\\user\\Desktop\\hermes_claude\\data\\run\\jobs\\mt5_subagent_contracts.json",
+  "deliverables": [
+    "Pattern frequency CSV by month",
+    "Win rate by pattern type if tradeable zone can be defined",
+    "Markdown findings summary"
+  ],
+  "constraints": [
+    "No live trading",
+    "Use MT5 history and optional Python post-processing",
+    "Return numeric evidence, not narrative only"
+  ]
+}

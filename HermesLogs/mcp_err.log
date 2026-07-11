@@ -1,0 +1,5 @@
+2026-07-11 11:28:57,560 [MCP] INFO Config loaded — vault: C:\Users\user\AppData\Local\hermes\obsidian | skills: C:\Users\user\AppData\Local\hermes\skills | risk: 1.0% | dd_halt: 3.0% | instrument: XAUUSD | mtf: ['M5', 'M15', 'H1', 'H4', 'D1']
+INFO:     Started server process [15640]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:7779 (Press CTRL+C to quit)

@@ -1,0 +1,462 @@
+{"ts": "2026-07-05T22:29:06.255547+00:00", "text": "lane1_started"}
+{"ts": "2026-07-05T22:29:06.451347+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:29:06.533646+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783290546454\",\"data\":{\"id\":\"lane1_1783290546454\",\"signal_id\":\"lane1_1783290546454\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4184.991186166218,\"sl\""}
+{"ts": "2026-07-05T22:29:06.545116+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:29:40.718150+00:00", "text": "lane1_started"}
+{"ts": "2026-07-05T22:29:40.877332+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:29:40.912648+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783290580881\",\"data\":{\"id\":\"lane1_1783290580881\",\"signal_id\":\"lane1_1783290580881\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4185.590744001641,\"sl\""}
+{"ts": "2026-07-05T22:29:40.923768+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:39:35.328323+00:00", "text": "cycle_start 2026-07-05T22:39:35.328323+00:00"}
+{"ts": "2026-07-05T22:39:35.444782+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:39:35.450657+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4190.72,\"sl\":4181.864642857144,\"tp\":4208.430714285714,\"lots\":0.83,\"notes\":\"{\\\"b"}
+{"ts": "2026-07-05T22:39:35.462014+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:43:58.125137+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:43:58.132804+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4186.62,\"sl\":4177.764642857143,\"tp\":4204.330714285714,\"l"}
+{"ts": "2026-07-05T22:43:58.146066+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:44:41.102804+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:44:41.133638+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783291481105\",\"data\":{\"id\":\"lane1_1783291481105\",\"signal_id\":\"lane1_1783291481105\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.4267132742025,\"sl"}
+{"ts": "2026-07-05T22:44:41.143734+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:54:35.486424+00:00", "text": "cycle_start 2026-07-05T22:54:35.486424+00:00"}
+{"ts": "2026-07-05T22:54:35.606059+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:54:35.611626+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4186.47,\"sl\":4177.498928571429,\"tp\":4204.4121428571425,\"lots\":0.82,\"notes\":\"{\\\""}
+{"ts": "2026-07-05T22:54:35.623393+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:58:58.373352+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:58:58.380940+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4188.78,\"sl\":4179.808928571429,\"tp\":4206.722142857142,\"l"}
+{"ts": "2026-07-05T22:58:58.392527+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T22:59:41.319674+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T22:59:41.354392+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783292381321\",\"data\":{\"id\":\"lane1_1783292381321\",\"signal_id\":\"lane1_1783292381321\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4189.00734036762,\"sl\":"}
+{"ts": "2026-07-05T22:59:41.365658+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:09:35.646491+00:00", "text": "cycle_start 2026-07-05T23:09:35.646491+00:00"}
+{"ts": "2026-07-05T23:09:35.759852+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:09:35.764794+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4190.12,\"sl\":4181.2132142857145,\"tp\":4207.933571428571,\"lots\":0.82,\"notes\":\"{\\\""}
+{"ts": "2026-07-05T23:09:35.776276+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:13:58.562809+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:13:58.570535+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4188.8,\"sl\":4179.893214285715,\"tp\":4206.613571428571,\"lo"}
+{"ts": "2026-07-05T23:13:58.582739+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:14:41.520303+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:14:41.552807+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783293281523\",\"data\":{\"id\":\"lane1_1783293281523\",\"signal_id\":\"lane1_1783293281523\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.907139982489,\"sl\""}
+{"ts": "2026-07-05T23:14:41.562794+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:24:35.798824+00:00", "text": "cycle_start 2026-07-05T23:24:35.798824+00:00"}
+{"ts": "2026-07-05T23:24:35.886011+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:24:35.891620+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4189.66,\"sl\":4180.924642857143,\"tp\":4207.130714285714,\"lots\":0.84,\"notes\":\"{\\\"b"}
+{"ts": "2026-07-05T23:24:35.902114+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:28:58.758300+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:28:58.765545+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4200.83,\"sl\":4190.96,\"tp\":4220.57,\"lots\":0.74,\"notes\":\"b"}
+{"ts": "2026-07-05T23:28:58.777451+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:29:41.742283+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:29:41.785909+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783294181744\",\"data\":{\"id\":\"lane1_1783294181744\",\"signal_id\":\"lane1_1783294181744\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4200.98571911939,\"sl\":"}
+{"ts": "2026-07-05T23:29:41.801473+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:39:35.922906+00:00", "text": "cycle_start 2026-07-05T23:39:35.922906+00:00"}
+{"ts": "2026-07-05T23:39:36.011105+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:39:36.016005+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4197.83,\"sl\":4187.7189285714285,\"tp\":4218.052142857143,\"lots\":0.73,\"notes\":\"{\\\""}
+{"ts": "2026-07-05T23:39:36.030449+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:43:58.953611+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:43:58.962054+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4198.1,\"sl\":4187.988928571429,\"tp\":4218.322142857143,\"lo"}
+{"ts": "2026-07-05T23:43:58.975022+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:44:41.949396+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:44:41.980442+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783295081952\",\"data\":{\"id\":\"lane1_1783295081952\",\"signal_id\":\"lane1_1783295081952\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4197.546717233007,\"sl\""}
+{"ts": "2026-07-05T23:44:41.991009+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:54:36.051938+00:00", "text": "cycle_start 2026-07-05T23:54:36.051938+00:00"}
+{"ts": "2026-07-05T23:54:36.143694+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-05T23:54:36.154251+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-05T23:58:59.182610+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:58:59.190967+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4184.14,\"sl\":4172.7357142857145,\"tp\":4206.948571428571,\""}
+{"ts": "2026-07-05T23:58:59.202221+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-05T23:59:42.187470+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-05T23:59:42.231145+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783295982190\",\"data\":{\"id\":\"lane1_1783295982190\",\"signal_id\":\"lane1_1783295982190\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4183.879384279879,\"sl\""}
+{"ts": "2026-07-05T23:59:42.245869+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T00:09:36.176464+00:00", "text": "cycle_start 2026-07-06T00:09:36.176464+00:00"}
+{"ts": "2026-07-06T00:09:36.288384+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:09:36.299342+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:13:59.402642+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:13:59.418555+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:14:42.435708+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:14:42.450907+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:24:36.319686+00:00", "text": "cycle_start 2026-07-06T00:24:36.319686+00:00"}
+{"ts": "2026-07-06T00:24:36.430476+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:24:36.441503+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:28:59.612081+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:28:59.624088+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:29:42.629783+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:29:42.643398+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:39:36.460773+00:00", "text": "cycle_start 2026-07-06T00:39:36.460773+00:00"}
+{"ts": "2026-07-06T00:39:36.576461+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:39:36.590424+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:43:59.769789+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:43:59.794232+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:44:42.816437+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T00:44:42.830835+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T00:54:36.610797+00:00", "text": "cycle_start 2026-07-06T00:54:36.610797+00:00"}
+{"ts": "2026-07-06T00:54:36.697042+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T00:54:36.702756+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4183.34,\"sl\":4168.642142857143,\"tp\":4212.7357142857145,\"lots\":0.5,\"notes\":\"{\\\"b"}
+{"ts": "2026-07-06T00:54:36.714402+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T00:58:59.947511+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T00:58:59.954482+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4175.32,\"sl\":4159.87,\"tp\":4206.219999999999,\"lots\":0.47,"}
+{"ts": "2026-07-06T00:58:59.966231+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T00:59:43.006377+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T00:59:43.041982+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783299583008\",\"data\":{\"id\":\"lane1_1783299583008\",\"signal_id\":\"lane1_1783299583008\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4179.833218557718,\"sl\""}
+{"ts": "2026-07-06T00:59:43.052560+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:09:36.734815+00:00", "text": "cycle_start 2026-07-06T01:09:36.734815+00:00"}
+{"ts": "2026-07-06T01:09:36.867233+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:09:36.871939+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4179.86,\"sl\":4162.67,\"tp\":4214.24,\"lots\":0.43,\"notes\":\"{\\\"bars\\\": {\\\"m1\\\": 2000"}
+{"ts": "2026-07-06T01:09:36.883241+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:14:00.197811+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:14:00.206072+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.23,\"sl\":4170.04,\"tp\":4221.61,\"lots\":0.43,\"notes\":\"b"}
+{"ts": "2026-07-06T01:14:00.221001+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:14:43.198530+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:14:43.235260+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783300483201\",\"data\":{\"id\":\"lane1_1783300483201\",\"signal_id\":\"lane1_1783300483201\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.850102260323,\"sl\""}
+{"ts": "2026-07-06T01:14:43.245945+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:24:36.903656+00:00", "text": "cycle_start 2026-07-06T01:24:36.903656+00:00"}
+{"ts": "2026-07-06T01:24:37.006390+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:24:37.010351+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4184.29,\"sl\":4166.521428571428,\"tp\":4219.8271428571425,\"lots\":0.41,\"notes\":\"{\\\""}
+{"ts": "2026-07-06T01:24:37.020976+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:29:00.423109+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:29:00.429925+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.51,\"sl\":4169.741428571429,\"tp\":4223.047142857143,\"l"}
+{"ts": "2026-07-06T01:29:00.442369+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:29:43.448569+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:29:43.481117+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783301383451\",\"data\":{\"id\":\"lane1_1783301383451\",\"signal_id\":\"lane1_1783301383451\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4188.830134343271,\"sl\""}
+{"ts": "2026-07-06T01:29:43.491237+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:39:37.054172+00:00", "text": "cycle_start 2026-07-06T01:39:37.054172+00:00"}
+{"ts": "2026-07-06T01:39:37.178251+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:39:37.202322+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4196.5,\"sl\":4178.518214285715,\"tp\":4232.463571428571,\"lots\":0.41,\"notes\":\"{\\\"ba"}
+{"ts": "2026-07-06T01:39:37.212299+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:44:00.693853+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:44:00.701624+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4199.47,\"sl\":4181.488214285715,\"tp\":4235.433571428572,\"l"}
+{"ts": "2026-07-06T01:44:00.713368+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:44:43.680272+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:44:43.715112+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783302283682\",\"data\":{\"id\":\"lane1_1783302283682\",\"signal_id\":\"lane1_1783302283682\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4198.135663930488,\"sl\""}
+{"ts": "2026-07-06T01:44:43.729548+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:54:37.273544+00:00", "text": "cycle_start 2026-07-06T01:54:37.273544+00:00"}
+{"ts": "2026-07-06T01:54:37.421134+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:54:37.427631+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4191.68,\"sl\":4173.367142857143,\"tp\":4228.305714285714,\"lots\":0.4,\"notes\":\"{\\\"ba"}
+{"ts": "2026-07-06T01:54:37.439799+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:54:57.324681+00:00", "text": "lane1_started"}
+{"ts": "2026-07-06T01:54:57.463949+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:54:57.506676+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783302897467\",\"data\":{\"id\":\"lane1_1783302897467\",\"signal_id\":\"lane1_1783302897467\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4190.953272050102,\"sl\""}
+{"ts": "2026-07-06T01:54:57.519994+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:57:21.616005+00:00", "text": "lane1_started"}
+{"ts": "2026-07-06T01:57:21.794427+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:57:21.833973+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303041796\",\"data\":{\"id\":\"lane1_1783303041796\",\"signal_id\":\"lane1_1783303041796\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4192.488306352404,\"sl\""}
+{"ts": "2026-07-06T01:57:21.846955+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:59:00.987868+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:59:00.996265+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4187.61,\"sl\":4168.818214285714,\"tp\":4225.193571428571,\"l"}
+{"ts": "2026-07-06T01:59:01.009010+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:59:43.951332+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:59:44.010943+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303183953\",\"data\":{\"id\":\"lane1_1783303183953\",\"signal_id\":\"lane1_1783303183953\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4186.023058561653,\"sl\""}
+{"ts": "2026-07-06T01:59:44.023351+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T01:59:57.708086+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T01:59:57.749844+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303197712\",\"data\":{\"id\":\"lane1_1783303197712\",\"signal_id\":\"lane1_1783303197712\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4185.904107566339,\"sl\""}
+{"ts": "2026-07-06T01:59:57.760827+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:01:01.745748+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:01:01.784962+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303261748\",\"data\":{\"id\":\"lane1_1783303261748\",\"signal_id\":\"lane1_1783303261748\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4186.268623978279,\"sl\""}
+{"ts": "2026-07-06T02:01:01.796423+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:02:36.724908+00:00", "text": "lane1_started"}
+{"ts": "2026-07-06T02:02:36.882736+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:02:36.920178+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303356886\",\"data\":{\"id\":\"lane1_1783303356886\",\"signal_id\":\"lane1_1783303356886\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4184.17734363061,\"sl\":"}
+{"ts": "2026-07-06T02:02:36.937828+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:03:52.805376+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:03:52.844087+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303432807\",\"data\":{\"id\":\"lane1_1783303432807\",\"signal_id\":\"lane1_1783303432807\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4183.199907022307,\"sl\""}
+{"ts": "2026-07-06T02:03:52.857836+00:00", "text": "open_positions=0 bias=bullish"}
+{"ts": "2026-07-06T02:03:53.089869+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:03:53.138011+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783303433092\",\"data\":{\"id\":\"lane1_1783303433092\",\"signal_id\":\"lane1_1783303433092\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4183.339577918463,\"sl\""}
+{"ts": "2026-07-06T02:03:53.159028+00:00", "text": "open_positions=0 bias=bullish"}
+{"ts": "2026-07-06T02:09:37.500043+00:00", "text": "cycle_start 2026-07-06T02:09:37.500043+00:00"}
+{"ts": "2026-07-06T02:09:37.647268+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:09:37.655657+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"instrument\"],\"msg\":\"Field required\",\"input\":{\"direction\":\"BUY\",\"entry_price\":4179.55,\"sl\":4160.476428571429,\"tp\":4217.697142857143,\"lots\":0.38,\"notes\":\"{\\\"b"}
+{"ts": "2026-07-06T02:09:37.674177+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:14:01.228323+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:14:01.235209+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4179.98,\"sl\":4160.746785714286,\"tp\":4218.4464285714275,\""}
+{"ts": "2026-07-06T02:14:01.245779+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:14:44.264430+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:14:44.293304+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783304084267\",\"data\":{\"id\":\"lane1_1783304084267\",\"signal_id\":\"lane1_1783304084267\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4179.966352605585,\"sl\""}
+{"ts": "2026-07-06T02:14:44.303317+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:24:37.713448+00:00", "text": "cycle_start 2026-07-06T02:24:37.713448+00:00"}
+{"ts": "2026-07-06T02:24:37.796688+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:24:37.806446+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T02:29:01.491460+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:29:01.496330+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4177.9,\"sl\":4158.288571428571,\"tp\":4217.122857142856,\"lo"}
+{"ts": "2026-07-06T02:29:01.504898+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:29:44.505025+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T02:29:44.557051+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783304984508\",\"data\":{\"id\":\"lane1_1783304984508\",\"signal_id\":\"lane1_1783304984508\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4177.307254001821,\"sl\""}
+{"ts": "2026-07-06T02:29:44.566440+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T02:39:37.843990+00:00", "text": "cycle_start 2026-07-06T02:39:37.843990+00:00"}
+{"ts": "2026-07-06T02:39:37.969082+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:39:37.981720+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T02:44:01.695555+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:44:01.707476+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T02:44:44.770702+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T02:44:44.804497+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783305884774\",\"data\":{\"id\":\"lane1_1783305884774\",\"signal_id\":\"lane1_1783305884774\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4171.424988648652,\"sl"}
+{"ts": "2026-07-06T02:44:44.833314+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T02:54:38.012220+00:00", "text": "cycle_start 2026-07-06T02:54:38.012220+00:00"}
+{"ts": "2026-07-06T02:54:38.108901+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:54:38.117481+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T02:59:01.920950+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:59:01.931334+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T02:59:44.990441+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T02:59:44.999442+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T03:09:38.145677+00:00", "text": "cycle_start 2026-07-06T03:09:38.145677+00:00"}
+{"ts": "2026-07-06T03:09:38.230849+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T03:09:38.242873+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T03:14:02.155924+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:14:02.162407+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4166.21,\"sl\":4185.670357142857,\"tp\":4127.289285714286,\""}
+{"ts": "2026-07-06T03:14:02.172847+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:14:45.225660+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:14:45.255238+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783307685227\",\"data\":{\"id\":\"lane1_1783307685227\",\"signal_id\":\"lane1_1783307685227\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4166.439493547611,\"sl"}
+{"ts": "2026-07-06T03:14:45.264683+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:24:38.268998+00:00", "text": "cycle_start 2026-07-06T03:24:38.268998+00:00"}
+{"ts": "2026-07-06T03:24:38.367554+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T03:24:38.395559+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T03:29:02.421487+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:29:02.428677+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4165.34,\"sl\":4183.364642857143,\"tp\":4129.290714285715,\""}
+{"ts": "2026-07-06T03:29:02.439759+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:29:45.440122+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:29:45.471841+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783308585443\",\"data\":{\"id\":\"lane1_1783308585443\",\"signal_id\":\"lane1_1783308585443\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4165.9985885485485,\"s"}
+{"ts": "2026-07-06T03:29:45.480776+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:39:38.419112+00:00", "text": "cycle_start 2026-07-06T03:39:38.419112+00:00"}
+{"ts": "2026-07-06T03:39:38.523816+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T03:39:38.534370+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T03:44:02.606894+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:44:02.613516+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4161.77,\"sl\":4178.998571428572,\"tp\":4127.312857142858,\""}
+{"ts": "2026-07-06T03:44:02.624844+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:44:45.655348+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:44:45.688537+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783309485656\",\"data\":{\"id\":\"lane1_1783309485656\",\"signal_id\":\"lane1_1783309485656\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4162.731728443396,\"sl"}
+{"ts": "2026-07-06T03:44:45.698758+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:54:38.558009+00:00", "text": "cycle_start 2026-07-06T03:54:38.558009+00:00"}
+{"ts": "2026-07-06T03:54:38.669231+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T03:54:38.677747+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T03:59:02.769071+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:59:02.797789+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4164.88,\"sl\":4181.615714285715,\"tp\":4131.408571428572,\""}
+{"ts": "2026-07-06T03:59:02.808432+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T03:59:45.875830+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T03:59:45.904796+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783310385877\",\"data\":{\"id\":\"lane1_1783310385877\",\"signal_id\":\"lane1_1783310385877\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4165.232932388476,\"sl"}
+{"ts": "2026-07-06T03:59:45.913652+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:09:38.700334+00:00", "text": "cycle_start 2026-07-06T04:09:38.700334+00:00"}
+{"ts": "2026-07-06T04:09:38.800348+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T04:09:38.809348+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T04:14:02.956799+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:14:02.963168+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4163.51,\"sl\":4179.419642857143,\"tp\":4131.690714285714,\""}
+{"ts": "2026-07-06T04:14:02.992770+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:14:46.086760+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:14:46.118754+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783311286089\",\"data\":{\"id\":\"lane1_1783311286089\",\"signal_id\":\"lane1_1783311286089\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4163.500575583302,\"sl"}
+{"ts": "2026-07-06T04:14:46.130373+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:24:38.832059+00:00", "text": "cycle_start 2026-07-06T04:24:38.832059+00:00"}
+{"ts": "2026-07-06T04:24:38.997934+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T04:24:39.006828+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T04:29:03.172733+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:29:03.180792+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4162.1,\"sl\":4176.960714285715,\"tp\":4132.378571428571,\"l"}
+{"ts": "2026-07-06T04:29:03.192476+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:29:46.311438+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:29:46.346509+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783312186315\",\"data\":{\"id\":\"lane1_1783312186315\",\"signal_id\":\"lane1_1783312186315\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4161.044280686331,\"sl"}
+{"ts": "2026-07-06T04:29:46.357634+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:39:39.028041+00:00", "text": "cycle_start 2026-07-06T04:39:39.028041+00:00"}
+{"ts": "2026-07-06T04:39:39.125798+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T04:39:39.159686+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T04:44:03.390823+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:44:03.396997+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4160.38,\"sl\":4173.631428571429,\"tp\":4133.877142857143,\""}
+{"ts": "2026-07-06T04:44:03.407519+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:44:46.515018+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:44:46.572989+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783313086516\",\"data\":{\"id\":\"lane1_1783313086516\",\"signal_id\":\"lane1_1783313086516\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4160.006134554372,\"sl"}
+{"ts": "2026-07-06T04:44:46.582361+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:54:39.181488+00:00", "text": "cycle_start 2026-07-06T04:54:39.181488+00:00"}
+{"ts": "2026-07-06T04:54:39.310234+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T04:54:39.320748+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T04:59:03.565823+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:59:03.571200+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4159.6,\"sl\":4171.867857142857,\"tp\":4135.064285714286,\"l"}
+{"ts": "2026-07-06T04:59:03.580106+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T04:59:46.738908+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T04:59:46.756095+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"error\",\"error\":\"Order rejected by simulated broker\"}"}
+{"ts": "2026-07-06T04:59:46.767300+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:09:39.342212+00:00", "text": "cycle_start 2026-07-06T05:09:39.342212+00:00"}
+{"ts": "2026-07-06T05:09:39.479722+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T05:09:39.488326+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T05:14:03.778331+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:14:03.785909+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4152.29,\"sl\":4164.193571428572,\"tp\":4128.482857142857,\""}
+{"ts": "2026-07-06T05:14:03.795319+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:14:46.920408+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:14:46.970239+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783314886923\",\"data\":{\"id\":\"lane1_1783314886923\",\"signal_id\":\"lane1_1783314886923\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4151.424877604559,\"sl"}
+{"ts": "2026-07-06T05:14:46.980907+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:24:39.509137+00:00", "text": "cycle_start 2026-07-06T05:24:39.509137+00:00"}
+{"ts": "2026-07-06T05:24:39.675644+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T05:24:39.687780+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T05:29:03.969466+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:29:03.976797+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4154.02,\"sl\":4164.410714285715,\"tp\":4133.238571428571,\""}
+{"ts": "2026-07-06T05:29:03.986320+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:29:47.202847+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:29:47.235858+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783315787205\",\"data\":{\"id\":\"lane1_1783315787205\",\"signal_id\":\"lane1_1783315787205\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4153.201525191385,\"sl"}
+{"ts": "2026-07-06T05:29:47.246509+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:39:39.708685+00:00", "text": "cycle_start 2026-07-06T05:39:39.708685+00:00"}
+{"ts": "2026-07-06T05:39:39.799283+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T05:39:39.808794+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T05:44:04.283567+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:44:04.291478+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4156.45,\"sl\":4166.840714285714,\"tp\":4135.668571428571,\""}
+{"ts": "2026-07-06T05:44:04.321588+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:44:47.426216+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:44:47.474479+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783316687428\",\"data\":{\"id\":\"lane1_1783316687428\",\"signal_id\":\"lane1_1783316687428\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4155.261576621695,\"sl"}
+{"ts": "2026-07-06T05:44:47.484938+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:54:39.829668+00:00", "text": "cycle_start 2026-07-06T05:54:39.829668+00:00"}
+{"ts": "2026-07-06T05:54:39.909870+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T05:54:39.917871+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T05:59:04.522714+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:59:04.532352+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4149.84,\"sl\":4159.969285714286,\"tp\":4129.581428571429,\""}
+{"ts": "2026-07-06T05:59:04.543963+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T05:59:47.669802+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T05:59:47.705952+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783317587673\",\"data\":{\"id\":\"lane1_1783317587673\",\"signal_id\":\"lane1_1783317587673\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4145.0269863316535,\"s"}
+{"ts": "2026-07-06T05:59:47.716125+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T06:09:39.943015+00:00", "text": "cycle_start 2026-07-06T06:09:39.943015+00:00"}
+{"ts": "2026-07-06T06:09:40.036303+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:09:40.047455+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:14:04.760323+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T06:14:04.768165+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4150.47,\"sl\":4160.645357142857,\"tp\":4130.119285714285,\""}
+{"ts": "2026-07-06T06:14:04.778739+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T06:14:47.888991+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T06:14:47.933822+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783318487891\",\"data\":{\"id\":\"lane1_1783318487891\",\"signal_id\":\"lane1_1783318487891\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4151.895956688329,\"sl"}
+{"ts": "2026-07-06T06:14:47.965344+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T06:24:40.101158+00:00", "text": "cycle_start 2026-07-06T06:24:40.101158+00:00"}
+{"ts": "2026-07-06T06:24:40.205285+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:24:40.233959+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:29:04.962222+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T06:29:04.968159+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4156.35,\"sl\":4166.875714285715,\"tp\":4135.298571428571,\""}
+{"ts": "2026-07-06T06:29:04.977494+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T06:29:48.157152+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T06:29:48.182279+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783319388159\",\"data\":{\"id\":\"lane1_1783319388159\",\"signal_id\":\"lane1_1783319388159\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4155.50419449822,\"sl\""}
+{"ts": "2026-07-06T06:29:48.191707+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T06:39:40.287125+00:00", "text": "cycle_start 2026-07-06T06:39:40.287125+00:00"}
+{"ts": "2026-07-06T06:39:40.381615+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:39:40.391817+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:44:05.180525+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:44:05.189526+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:44:48.414695+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:44:48.425060+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:54:40.445228+00:00", "text": "cycle_start 2026-07-06T06:54:40.445228+00:00"}
+{"ts": "2026-07-06T06:54:40.542225+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T06:54:40.550752+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T06:59:05.397944+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T06:59:05.404116+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4150.21,\"sl\":4139.908214285714,\"tp\":4170.813571428572,\"l"}
+{"ts": "2026-07-06T06:59:05.415162+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T06:59:48.708102+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T06:59:48.736144+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783321188710\",\"data\":{\"id\":\"lane1_1783321188710\",\"signal_id\":\"lane1_1783321188710\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4150.955442358444,\"sl\""}
+{"ts": "2026-07-06T06:59:48.745205+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T07:09:40.600813+00:00", "text": "cycle_start 2026-07-06T07:09:40.600813+00:00"}
+{"ts": "2026-07-06T07:09:40.723312+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:09:40.733768+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:14:05.622590+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T07:14:05.644163+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4148.32,\"sl\":4138.15,\"tp\":4168.66,\"lots\":0.72,\"notes\":\"b"}
+{"ts": "2026-07-06T07:14:05.654653+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T07:14:48.931999+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T07:14:48.975152+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783322088935\",\"data\":{\"id\":\"lane1_1783322088935\",\"signal_id\":\"lane1_1783322088935\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4148.814539381784,\"sl\""}
+{"ts": "2026-07-06T07:14:49.003750+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T07:24:40.755237+00:00", "text": "cycle_start 2026-07-06T07:24:40.755237+00:00"}
+{"ts": "2026-07-06T07:24:40.853279+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:24:40.863793+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:29:05.830706+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T07:29:05.837787+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4153.9,\"sl\":4164.04,\"tp\":4133.619999999999,\"lots\":0.72,"}
+{"ts": "2026-07-06T07:29:05.849006+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T07:29:49.192495+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T07:29:49.245760+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783322989194\",\"data\":{\"id\":\"lane1_1783322989194\",\"signal_id\":\"lane1_1783322989194\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4152.879581592351,\"sl"}
+{"ts": "2026-07-06T07:29:49.255376+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T07:39:40.885986+00:00", "text": "cycle_start 2026-07-06T07:39:40.885986+00:00"}
+{"ts": "2026-07-06T07:39:41.022377+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:39:41.045363+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:44:06.026300+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:44:06.035831+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:44:49.430330+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:44:49.439842+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:54:41.067325+00:00", "text": "cycle_start 2026-07-06T07:54:41.067325+00:00"}
+{"ts": "2026-07-06T07:54:41.172799+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T07:54:41.180803+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T07:59:06.247128+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T07:59:06.257636+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4164.64,\"sl\":4153.706071428572,\"tp\":4186.507857142858,\"l"}
+{"ts": "2026-07-06T07:59:06.267391+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T07:59:49.608232+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T07:59:49.638698+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783324789610\",\"data\":{\"id\":\"lane1_1783324789610\",\"signal_id\":\"lane1_1783324789610\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4164.36079558672,\"sl\":"}
+{"ts": "2026-07-06T07:59:49.647581+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T08:09:41.202850+00:00", "text": "cycle_start 2026-07-06T08:09:41.202850+00:00"}
+{"ts": "2026-07-06T08:09:41.282155+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T08:09:41.291754+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T08:14:06.482246+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T08:14:06.488427+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4158.09,\"sl\":4146.732857142857,\"tp\":4180.804285714286,\"l"}
+{"ts": "2026-07-06T08:14:06.500724+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T08:14:49.826054+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T08:14:49.881673+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783325689829\",\"data\":{\"id\":\"lane1_1783325689829\",\"signal_id\":\"lane1_1783325689829\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4158.43265134165,\"sl\":"}
+{"ts": "2026-07-06T08:14:49.891279+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T08:24:41.313779+00:00", "text": "cycle_start 2026-07-06T08:24:41.313779+00:00"}
+{"ts": "2026-07-06T08:24:41.401784+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T08:24:41.430755+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T08:29:06.663709+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T08:29:06.670829+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4154.48,\"sl\":4142.907499999999,\"tp\":4177.625,\"lots\":0.63"}
+{"ts": "2026-07-06T08:29:06.680149+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T08:29:50.040657+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T08:29:50.089399+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783326590043\",\"data\":{\"id\":\"lane1_1783326590043\",\"signal_id\":\"lane1_1783326590043\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4155.5034505438425,\"sl"}
+{"ts": "2026-07-06T08:29:50.099070+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T08:39:41.452556+00:00", "text": "cycle_start 2026-07-06T08:39:41.452556+00:00"}
+{"ts": "2026-07-06T08:39:41.553691+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T08:39:41.584495+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T08:44:06.836167+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T08:44:06.843411+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4150.28,\"sl\":4161.493571428571,\"tp\":4127.852857142857,\""}
+{"ts": "2026-07-06T08:44:06.855586+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T08:44:50.281006+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T08:44:50.324848+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783327490285\",\"data\":{\"id\":\"lane1_1783327490285\",\"signal_id\":\"lane1_1783327490285\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4148.83286646959,\"sl\""}
+{"ts": "2026-07-06T08:44:50.357939+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T08:54:41.606122+00:00", "text": "cycle_start 2026-07-06T08:54:41.606122+00:00"}
+{"ts": "2026-07-06T08:54:41.729889+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T08:54:41.742152+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T08:59:07.080785+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T08:59:07.088672+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4151.02,\"sl\":4162.566785714286,\"tp\":4127.926428571429,\""}
+{"ts": "2026-07-06T08:59:07.101759+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T08:59:50.499675+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T08:59:50.529833+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783328390501\",\"data\":{\"id\":\"lane1_1783328390501\",\"signal_id\":\"lane1_1783328390501\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4150.443275359371,\"sl"}
+{"ts": "2026-07-06T08:59:50.540159+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:09:41.763296+00:00", "text": "cycle_start 2026-07-06T09:09:41.763296+00:00"}
+{"ts": "2026-07-06T09:09:41.932328+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T09:09:41.944591+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T09:14:07.299281+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:14:07.307238+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4149.55,\"sl\":4160.3092857142865,\"tp\":4128.0314285714285"}
+{"ts": "2026-07-06T09:14:07.322315+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:14:50.721405+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:14:50.758906+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783329290725\",\"data\":{\"id\":\"lane1_1783329290725\",\"signal_id\":\"lane1_1783329290725\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4149.485506787932,\"sl"}
+{"ts": "2026-07-06T09:14:50.770126+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:24:41.965827+00:00", "text": "cycle_start 2026-07-06T09:24:41.965827+00:00"}
+{"ts": "2026-07-06T09:24:42.107324+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T09:24:42.119884+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T09:29:08.015422+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:29:08.137894+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4142.25,\"sl\":4152.558214285715,\"tp\":4121.633571428571,\""}
+{"ts": "2026-07-06T09:29:08.153377+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:29:51.689306+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:29:51.836656+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783330191694\",\"data\":{\"id\":\"lane1_1783330191694\",\"signal_id\":\"lane1_1783330191694\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4142.750051227947,\"sl"}
+{"ts": "2026-07-06T09:29:51.850684+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:39:42.152842+00:00", "text": "cycle_start 2026-07-06T09:39:42.147811+00:00"}
+{"ts": "2026-07-06T09:39:42.301511+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T09:39:42.313206+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T09:44:08.397091+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:44:08.408818+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4140.6,\"sl\":4151.035714285715,\"tp\":4119.728571428572,\"l"}
+{"ts": "2026-07-06T09:44:08.442065+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:44:52.075286+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:44:52.115965+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783331092079\",\"data\":{\"id\":\"lane1_1783331092079\",\"signal_id\":\"lane1_1783331092079\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4140.726071710321,\"sl"}
+{"ts": "2026-07-06T09:44:52.126944+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:54:42.334828+00:00", "text": "cycle_start 2026-07-06T09:54:42.334828+00:00"}
+{"ts": "2026-07-06T09:54:42.471101+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T09:54:42.490209+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T09:59:08.713487+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:59:08.722897+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4143.12,\"sl\":4153.204285714286,\"tp\":4122.951428571429,\""}
+{"ts": "2026-07-06T09:59:08.736774+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T09:59:52.306476+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T09:59:52.341345+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783331992310\",\"data\":{\"id\":\"lane1_1783331992310\",\"signal_id\":\"lane1_1783331992310\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4143.2115006123195,\"s"}
+{"ts": "2026-07-06T09:59:52.352428+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T10:09:42.512580+00:00", "text": "cycle_start 2026-07-06T10:09:42.512580+00:00"}
+{"ts": "2026-07-06T10:09:42.778173+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T10:09:42.789256+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T10:14:08.982610+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T10:14:08.990745+00:00", "text": "paper_signal SELL status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4146.37,\"sl\":4156.278571428571,\"tp\":4126.552857142857,\""}
+{"ts": "2026-07-06T10:14:09.002297+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T10:14:52.814015+00:00", "text": "decision action=SELL setup=bearish_ob bias=bearish"}
+{"ts": "2026-07-06T10:14:52.849995+00:00", "text": "paper_signal SELL status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783332892816\",\"data\":{\"id\":\"lane1_1783332892816\",\"signal_id\":\"lane1_1783332892816\",\"instrument\":\"XAUUSD\",\"direction\":\"SELL\",\"entry_price\":4148.154674210098,\"sl"}
+{"ts": "2026-07-06T10:14:52.861555+00:00", "text": "open_positions=2 bias=bearish"}
+{"ts": "2026-07-06T10:24:42.810820+00:00", "text": "cycle_start 2026-07-06T10:24:42.810820+00:00"}
+{"ts": "2026-07-06T10:24:42.984619+00:00", "text": "decision action=REJECT setup=none bias=neutral"}
+{"ts": "2026-07-06T10:24:42.999831+00:00", "text": "open_positions=2 bias=neutral"}
+{"ts": "2026-07-06T10:29:09.511837+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T10:29:09.519356+00:00", "text": "paper_signal BUY status=422 resp={\"detail\":[{\"type\":\"missing\",\"loc\":[\"body\",\"strategy_id\"],\"msg\":\"Field required\",\"input\":{\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4148.92,\"sl\":4139.296428571429,\"tp\":4168.1671428571435,\""}
+{"ts": "2026-07-06T10:29:09.531271+00:00", "text": "open_positions=2 bias=bullish"}
+{"ts": "2026-07-06T10:29:53.041594+00:00", "text": "decision action=BUY setup=bullish_ob bias=bullish"}
+{"ts": "2026-07-06T10:29:53.099470+00:00", "text": "paper_signal BUY status=200 resp={\"status\":\"opened\",\"position_id\":\"lane1_1783333793046\",\"data\":{\"id\":\"lane1_1783333793046\",\"signal_id\":\"lane1_1783333793046\",\"instrument\":\"XAUUSD\",\"direction\":\"BUY\",\"entry_price\":4148.9244837380775,\"sl"}
+{"ts": "2026-07-06T10:29:53.119923+00:00", "text": "open_positions=2 bias=bullish"}

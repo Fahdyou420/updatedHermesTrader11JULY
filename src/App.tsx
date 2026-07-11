@@ -15,10 +15,10 @@ import StrategyStudio from './components/StrategyStudio';
 import TradeMonitor from './components/TradeMonitor';
 import AutonomousLoops from './components/AutonomousLoops';
 import LogConsole from './components/LogConsole';
-import { Terminal, LineChart, Cpu, BookOpen, Settings2, Shield, Activity, RefreshCw, Layers } from 'lucide-react';
+import { Terminal, LineChart, Cpu, BookOpen, Settings2, Shield, Activity, RefreshCw, Layers, GitBranch } from 'lucide-react';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'terminal' | 'trades' | 'strategies' | 'vault' | 'loops' | 'logs'>('terminal');
+  const [activeTab, setActiveTab] = useState<'terminal' | 'trades' | 'strategies' | 'vault' | 'loops' | 'logs' | 'kanban'>('terminal');
   
   // App states
   const [llmStatus, setLlmStatus] = useState<{tier: string, model: string}>({tier: 'none', model: 'none'});
@@ -62,6 +62,8 @@ export default function App() {
     hypothesisRandD: { lastRun: '', status: 'IDLE', outcome: 'Idle' }
   });
 
+  const [kanban, setKanban] = useState<any>({columns: {todo: [], in_progress: [], review: [], done: []}, next_id: 1});
+
   const [loading, setLoading] = useState(false);
 
   // Strategy Card states
@@ -70,7 +72,7 @@ export default function App() {
   // Load backend telemetry data
   const fetchAllData = async () => {
     try {
-      const [resStatus, resMarket, resTrades, resVault, resSkills, resLoops, resStrategies, resLlmStatus] = await Promise.all([
+      const [resStatus, resMarket, resTrades, resVault, resSkills, resLoops, resStrategies, resLlmStatus, resKanban] = await Promise.all([
         fetch('/api/status').then(r => r.json()),
         fetch('/api/market').then(r => r.json()),
         fetch('/api/trades').then(r => r.json()),
@@ -78,7 +80,8 @@ export default function App() {
         fetch('/api/skills').then(r => r.json()),
         fetch('/api/loops').then(r => r.json()),
         fetch('/api/strategy/list').then(r => r.json()).catch(() => []),
-        fetch('/api/llm/status').then(r => r.json())
+        fetch('/api/llm/status').then(r => r.json()),
+        fetch('/api/kanban/state').then(r => r.json()).catch(() => ({columns:{todo:[],in_progress:[],review:[],done:[]},next_id:1}))
       ]);
 
       setStatus(resStatus);
@@ -99,7 +102,8 @@ export default function App() {
 
       setNotes(resVault);
       setSkills(resSkills);
-      setLoops(resLoops);
+      setLoops(resLoops.loops || resLoops);
+      setKanban(resKanban || {columns:{todo:[],in_progress:[],review:[],done:[]},next_id:1});
 
       if (resStrategies && Array.isArray(resStrategies) && resStrategies.length > 0) {
         const mappedCards: StrategyCard[] = resStrategies.map((s: any) => ({
@@ -210,6 +214,28 @@ export default function App() {
     return data;
   };
 
+  const handleLaunchBoard = async (mode: string = 'all') => {
+    const res = await fetch('/api/kanban/launch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode })
+    });
+    const data = await res.json();
+    fetchAllData();
+    return data;
+  };
+
+  const handleStopBoardTask = async (id: number) => {
+    const res = await fetch('/api/kanban/stop', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id })
+    });
+    const data = await res.json();
+    fetchAllData();
+    return data;
+  };
+
   const handlePromoteCard = (id: string, nextStage: TrustStage) => {
     setStrategyCards(prev => prev.map(c => c.id === id ? { ...c, stage: nextStage } : c));
   };
@@ -229,7 +255,7 @@ export default function App() {
   };
 
   return (
-    <div id="dashboard-canvas" className="min-h-screen bg-[#05070a] text-slate-300 font-sans selection:bg-cyan-500/30 select-none pb-12 antialiased border-4 border-slate-900 bg-[radial-gradient(circle_at_50%_0%,_rgba(15,23,42,0.65)_0%,_rgba(5,7,10,1)_100%)]">
+    <div id="dashboard-canvas" className="min-h-screen bg-[#05070a] text-slate-300 font-sans selection:bg-cyan-500/30 pb-12 antialiased border-4 border-slate-900 bg-[radial-gradient(circle_at_50%_0%,_rgba(15,23,42,0.65)_0%,_rgba(5,7,10,1)_100%)]">
       
       {/* Premium Immersive Header Layout */}
       <header id="dashboard-navbar" className="h-18 flex items-center justify-between px-6 border-b border-white/5 bg-slate-900/20 backdrop-blur-md sticky top-0 z-50">
@@ -379,13 +405,26 @@ export default function App() {
             id="tab-btn-logs"
             onClick={() => setActiveTab('logs')}
             className={`flex items-center space-x-2 py-2 px-4 rounded font-mono text-[11px] font-semibold tracking-wider cursor-pointer transition-all ${
-              activeTab === 'logs' 
-                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.15)] font-bold' 
+              activeTab === 'logs'
+                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_12px_rgba(6,182,212,0.15)] font-bold'
                 : 'bg-slate-900/20 text-slate-450 border border-white/5 hover:text-slate-200 hover:bg-slate-900/40'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
             <span>SYSTEM LOGS</span>
+          </button>
+
+          <button
+            id="tab-btn-kanban"
+            onClick={() => setActiveTab('kanban')}
+            className={`flex items-center space-x-2 py-2 px-4 rounded font-mono text-[11px] font-semibold tracking-wider cursor-pointer transition-all ${
+              activeTab === 'kanban'
+                ? 'bg-amber-500/10 text-amber-400 border border-amber-500/30 shadow-[0_0_12px_rgba(245,158,11,0.15)] font-bold'
+                : 'bg-slate-900/20 text-slate-450 border border-white/5 hover:text-slate-200 hover:bg-slate-900/40'
+            }`}
+          >
+            <GitBranch className="w-3.5 h-3.5" />
+            <span>SUBAGENT BOARD</span>
           </button>
         </div>
 
@@ -401,7 +440,6 @@ export default function App() {
 
           {activeTab === 'trades' && (
             <TradeMonitor
-              metrics={marketMetrics}
               activeTrades={activeTrades}
               closedTrades={closedTrades}
               balance={balance}
@@ -432,6 +470,41 @@ export default function App() {
               onTriggerLoop={handleTriggerLoop}
               onAddSkill={handleAddSkill}
             />
+          )}
+
+          {activeTab === 'kanban' && (
+            <div className="rounded-xl border border-white/5 bg-gray-900/40 p-3 space-y-3">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="font-mono text-xs font-bold text-amber-400 uppercase">Subagent Board</h2>
+                  <p className="text-[10px] text-gray-500">Tasks: { (kanban?.columns?.in_progress || []).length } running / { (kanban?.columns?.todo || []).length } todo</p>
+                </div>
+                <div className="space-x-2">
+                  <button onClick={()=>handleLaunchBoard('all')} className="px-3 py-1.5 rounded bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono hover:bg-amber-500/20">Launch All</button>
+                </div>
+              </div>
+              <div className="grid grid-cols-4 gap-3">
+                {['todo','in_progress','review','done'].map(col => (
+                  <div key={col} className="rounded-lg border border-white/5 bg-gray-900/40 p-2">
+                    <div className="text-[10px] font-mono font-bold text-gray-300 uppercase mb-2">{col} · {( (kanban?.columns || {})[col] || []).length}</div>
+                    <div className="space-y-2">
+                      {( (kanban?.columns || {})[col] || []).map((card:any) => (
+                        <div key={card.id} className="rounded border border-white/5 bg-gray-900/60 p-2 space-y-1">
+                          <div className="text-[11px] font-mono leading-snug break-words">{card.text}</div>
+                          <div className="flex items-center justify-between">
+                            <span className="text-[9px] font-mono text-gray-400">{card.task_id || 'task'}</span>
+                            <span className="text-[9px] font-mono text-gray-400">{card.status_detail || card.status} {card.pid ? 'PID '+card.pid : ''}</span>
+                          </div>
+                          {col === 'in_progress' && (
+                            <button onClick={()=>handleStopBoardTask(card.id)} className="text-[10px] font-mono text-rose-300 hover:text-rose-200">Stop</button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           )}
         </div>
 

@@ -46,8 +46,10 @@ app.add_middleware(
 OLLAMA_HOST = os.getenv("OLLAMA_HOST", "http://localhost:11434")
 VAULT_ROOT  = os.getenv("OBSIDIAN_VAULT_ROOT", os.path.join(os.environ.get("LOCALAPPDATA", os.path.join(os.path.expanduser("~"), "AppData", "Local")), "hermes", "obsidian"))
 
-# Discover the actual model names installed in Ollama at startup
-# rather than hardcoding names that may not match
+# Discover the actual model names installed in Ollama on demand,
+# only after Nous Portal + Gemini have failed for a real request.
+_ollama_model_cache: Dict[str, str] = {}
+
 def _discover_ollama_model(preference_keywords: list, fallback: str) -> str:
     """Return the first installed Ollama model whose name contains any preference keyword."""
     try:
@@ -56,39 +58,55 @@ def _discover_ollama_model(preference_keywords: list, fallback: str) -> str:
             models = [m["name"] for m in r.json().get("models", [])]
             if not models:
                 return fallback
-            # Try preference keywords in order
             for kw in preference_keywords:
                 for m in models:
                     if kw.lower() in m.lower():
                         return m
-            # Nothing matched — return first available model
             return models[0]
     except Exception:
         pass
     return fallback
 
-# Resolved at import time — picks the right model name whatever Ollama has installed
-_ANALYSIS_MODEL = os.getenv("MODEL_ANALYSIS") or _discover_ollama_model(
-    ["hermes", "llama3", "mistral", "qwen"], "hermes3:latest")
-_CODE_MODEL     = os.getenv("MODEL_CODE")     or _discover_ollama_model(
-    ["qwen2.5-coder", "qwen", "codellama", "deepseek-coder"], _ANALYSIS_MODEL)
-_BULK_MODEL     = os.getenv("MODEL_BULK")     or _discover_ollama_model(
-    ["qwen-coder:latest", "llama-3-8b:latest", "phi3", "gemma"], _ANALYSIS_MODEL)
 
+def get_ollama_model(task_type: str) -> str:
+    key = str(task_type or "analysis")
+    if key in _ollama_model_cache:
+        return _ollama_model_cache[key]
+    mapping = {
+        "analysis": ["hermes", "llama3", "mistral", "qwen"],
+        "research": ["hermes", "llama3", "mistral", "qwen"],
+        "execution": ["hermes", "llama3", "mistral", "qwen"],
+        "monitoring": ["hermes", "llama3", "mistral", "qwen"],
+        "review": ["hermes", "llama3", "mistral", "qwen"],
+        "initialization": ["hermes", "llama3", "mistral", "qwen"],
+        "code": ["qwen2.5-coder", "qwen", "codellama", "deepseek-coder"],
+        "bulk": ["qwen-coder:latest", "llama-3-8b:latest", "phi3", "gemma"],
+    }
+    fallback = _ollama_model_cache.get("analysis") or os.getenv("MODEL_ANALYSIS") or "hermes3:latest"
+    model = os.getenv({
+        "analysis": "MODEL_ANALYSIS",
+        "code": "MODEL_CODE",
+        "bulk": "MODEL_BULK",
+    }.get(key, "")) or _discover_ollama_model(mapping.get(key, ["hermes", "llama3", "mistral", "qwen"]), fallback)
+    if key == "analysis":
+        fallback = model
+    _ollama_model_cache[key] = model
+    return model
+
+
+active_llm_tier = "nous"
+try:
+    _tmp_nous = bool(NOUS_API_KEY)
+except Exception:
+    _tmp_nous = False
+if _tmp_nous:
+    active_llm_tier = "nous"
+else:
+    active_llm_tier = "gemini"
 logging.getLogger(__name__).info(
-    f"Ollama models resolved — analysis:{_ANALYSIS_MODEL} code:{_CODE_MODEL} bulk:{_BULK_MODEL}")
+    f"LLM cascade: Nous Portal ({NOUS_MODEL}) → Gemini ({GEMINI_MODEL}) → Ollama [lazy fallback, offline by design]"
+)
 
-# Task -> Ollama model selection mappings
-MODEL_MAP = {
-    "analysis":    _ANALYSIS_MODEL,
-    "research":    _ANALYSIS_MODEL,
-    "execution":   _ANALYSIS_MODEL,
-    "monitoring":  _ANALYSIS_MODEL,
-    "review":      _ANALYSIS_MODEL,
-    "initialization": _ANALYSIS_MODEL,
-    "code":        _CODE_MODEL,
-    "bulk":        _BULK_MODEL,
-}
 
 class ChatPayload(BaseModel):
     message: str
@@ -605,7 +623,7 @@ async def stream_chat_endpoint(payload: ChatPayload):
                     data = resp.json()
                     text = data.get("choices", [{}])[0].get("message", {}).get("content", "").strip()
                     logger.info(f"[LLM] Nous Portal ({NOUS_MODEL}) responded successfully")
-                    return text
+                    return f"[via nous-portal] {text}"
                 logger.warning(f"[LLM] Nous Portal failed ({resp.status_code}): {resp.text[:200]}")
         except Exception as e:
             logger.warning(f"[LLM] Nous Portal exception: {e}")
@@ -651,7 +669,7 @@ async def stream_chat_endpoint(payload: ChatPayload):
             logger.info(f"[LLM] {tier_name} unavailable, trying next tier...")
 
         # ── Tier 3: Ollama (local fallback) ───────────────────────────────────
-        selected_model = MODEL_MAP.get(task, _ANALYSIS_MODEL)
+        selected_model = get_ollama_model(task)
         logger.info(f"[LLM] Falling through to Ollama: {selected_model}")
         target_endpoint = f"{OLLAMA_HOST}/api/chat"
         req_params = {"model": selected_model, "messages": messages, "stream": True}

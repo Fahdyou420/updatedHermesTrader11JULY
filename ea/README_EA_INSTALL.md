@@ -110,5 +110,24 @@ The Hermes EA supports backtesting, where it streams historical bars through the
 * **Fix**: Run `docker-compose ps` to ensure that `hermes_redis` and `hermes_preprocessor` are running. Ensure no other applications are holding port 5555, 5556, or 5557.
 
 ### Case D: "Symbol info not initialized for XAUUSD"
-* **Check**: You attached the EA to an unsupported instrument first.
-* **Fix**: Change chart symbol to `XAUUSD` and re-attach the expert. Make sure `Market Watch` in MT5 includes the symbol `XAUUSD` active.
+- **Check**: You attached the EA to an unsupported instrument first.
+- **Fix**: Change chart symbol to `XAUUSD` and re-attach the expert. Make sure `Market Watch` in MT5 includes the symbol `XAUUSD` active.
+
+---
+
+## 8. Local SMC Modules
+
+The EA tree now ships additional computation modules for SMC detection, risk gating, and trade logging:
+
+| Module | Purpose |
+| --- | --- |
+| `SmcEngine.mqh` | FVG, Order Block with 6-point perfect-OB filter, BOS/CHoCH, liquidity, Fib zoning |
+| `RiskModule.mqh` | 1% risk rule, lot sizing, sniper limit order placement, OB scoring gate ≥5 |
+| `TradeJournal.mqh` | Daily CSV append journal under `MQL5\Files\hermes_journal\trades_YYYY-MM-DD.csv` |
+
+The Python-side processor exposes equivalent logic in:
+- `services/preprocessor/smc_detector.py`
+- `services/preprocessor/indicators.py`
+- `services/backtester/strategies/builtin.py`
+
+These are consumed by `services/backtester/engine.py` for offline validation before live deployment.

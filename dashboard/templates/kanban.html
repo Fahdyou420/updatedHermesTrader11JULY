@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-950">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subagent Board — Hermes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+      body { font-family: 'Inter', sans-serif; }
+      .font-mono { font-family: 'JetBrains Mono', monospace; }
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: #030712; }
+      ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 3px; }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-gray-100 bg-gray-950 overflow-hidden">
+    <header class="flex-none border-b border-gray-900 bg-gray-950 px-6 py-3 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 rounded border border-amber-500/30 flex items-center justify-center bg-amber-500/5">
+                <i data-lucide="kanban" class="w-5 h-5 text-amber-500"></i>
+            </div>
+            <div>
+                <span class="font-mono text-lg font-bold tracking-wider text-amber-500">SUBAGENT BOARD</span>
+                <span class="text-xs font-mono text-gray-500 px-2 py-0.5 rounded bg-gray-900/50 border border-gray-800 ml-2">KANBAN</span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-3 font-mono text-xs">
+            <button id="launch-all" class="px-3 py-2 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 hover:bg-amber-500/20">Launch All</button>
+            <button id="refresh" class="px-3 py-2 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 hover:bg-cyan-500/20">Refresh</button>
+            <a href="/" class="px-3 py-2 rounded bg-gray-900 border border-gray-800 text-gray-300 hover:text-white">Dashboard</a>
+        </div>
+    </header>
+
+    <main class="flex-1 overflow-auto p-4">
+      <div class="grid grid-cols-4 gap-4 min-h-full">
+        {% for col in ['todo','in_progress','review','done'] %}
+        <section class="bg-gray-900/30 border border-white/5 rounded-xl">
+          <div class="px-3 py-2 border-b border-white/5 flex items-center justify-between">
+            <span class="font-mono text-[11px] font-bold uppercase tracking-wider text-gray-300">{{col}}</span>
+            <span class="font-mono text-[10px] text-gray-500" id="count-{{col}}">0</span>
+          </div>
+          <div class="p-2 space-y-2" id="{{col}}" hx-get="/api/kanban/state" hx-trigger="load, refreshKanban from:body" hx-swap="innerHTML">
+          </div>
+        </section>
+        {% endfor %}
+      </div>
+    </main>
+
+    <script>
+      lucide.createIcons();
+      const COLOR = {backtester:'bg-rose-500/10 border-rose-500/20 text-rose-300',research:'bg-cyan-500/10 border-cyan-500/20 text-cyan-300',execution:'bg-amber-500/10 border-amber-500/20 text-amber-300',reliability:'bg-emerald-500/10 border-emerald-500/20 text-emerald-300',general:'bg-gray-500/10 border-gray-500/20 text-gray-300'};
+      function htmlCard(card){
+        const dept = (card.dept||'general').toLowerCase();
+        const theme = COLOR[dept] || COLOR.general;
+        const status = card.status_detail || card.status || '';
+        const meta = [status, card.pid ? 'PID '+card.pid : ''].filter(Boolean).join(' · ');
+        return `<div class="rounded-lg border ${theme} p-3 space-y-2" data-id="${card.id}">
+          <div class="font-mono text-xs font-semibold leading-tight break-words">${escapeHtml(card.text)}</div>
+          <div class="flex items-center justify-between">
+            <span class="font-mono text-[10px] text-gray-400">${escapeHtml(card.task_id || 'task')}</span>
+            <span class="font-mono text-[10px] text-gray-400">${escapeHtml(String(meta))}</span>
+          </div>
+        </div>`;
+      }
+      function escapeHtml(s){
+        return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+      }
+      async function render(){
+        const r = await fetch('/api/kanban/state').then(x=>x.json());
+        for(const col of ['todo','in_progress','review','done']){
+          const box = document.getElementById(col);
+          const items = (r && r.columns && r.columns[col]) || [];
+          box.innerHTML = items.map(htmlCard).join('');
+          document.getElementById('count-'+col).textContent = String(items.length);
+        }
+        lucide.createIcons();
+      }
+      document.getElementById('refresh').addEventListener('click', ()=>document.body.dispatchEvent(new Event('refreshKanban')));
+      document.getElementById('launch-all').addEventListener('click', async ()=>{
+        const r = await fetch('/api/kanban/launch', {method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({mode:'all'})}).then(x=>x.json());
+        alert('Launched: ' + JSON.stringify(r, null, 2));
+        render();
+      });
+      render();
+    </script>
+</body>
+</html>

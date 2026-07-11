@@ -123,6 +123,8 @@ services:
       - "host.docker.internal:host-gateway"
     env_file:
       - .env
+    environment:
+      - NATIVE_MT5_URL=http://host.docker.internal:7779
     depends_on:
       - redis
     restart: always
@@ -141,6 +143,8 @@ services:
       - "host.docker.internal:host-gateway"
     env_file:
       - .env
+    environment:
+      - HOST_RPC_URL=http://host.docker.internal:7778
     depends_on:
       - redis
     restart: always
@@ -173,6 +177,8 @@ services:
       - "8080:8080"
     volumes:
       - ./data:/data
+      - ./data:/app/data:ro
+      - ./dashboard:/app/dashboard
       - C:\Users\user\AppData\Local\hermes\obsidian:/data/obsidian:ro
     extra_hosts:
       - "host.docker.internal:host-gateway"
@@ -193,6 +199,7 @@ services:
       - "3000:3000"
     volumes:
       - C:\Users\user\AppData\Local\hermes\obsidian:/data/obsidian:ro
+      - ./data:/app/data:ro
     env_file:
       - .env
     extra_hosts:

@@ -64,7 +64,18 @@ try {
     Write-Warning "[-] Vault initialization warning: $_"
 }
 
-# 6. Open Dashboard in browser
+# 6. Start local React dev server (optional, for local frontend development)
+Write-Host ""
+Write-Host "[*] Launching React dev server..." -ForegroundColor Yellow
+$ReactCommand = "Set-Location '$ExecutionPath'; `$env:PORT='5173'; npm run dev"
+try {
+    Start-Process powershell.exe -ArgumentList "-NoExit","-NoProfile","-ExecutionPolicy","Bypass","-Command",$ReactCommand -WindowStyle Minimized
+    Write-Host "[+] React dev server launched on http://localhost:5173" -ForegroundColor Green
+} catch {
+    Write-Warning "[-] Could not start React dev server. Run 'npm run dev' manually."
+}
+
+# 7. Open Dashboard in browser
 Write-Host ""
 Write-Host "[*] Opening trading dashboard..." -ForegroundColor Yellow
 try {
@@ -74,7 +85,17 @@ try {
     Write-Host "[!] Navigate manually to http://localhost:3000" -ForegroundColor Yellow
 }
 
-# 7. Final status
+# 8. Launch kanban subagent board if contracts exist
+Write-Host ""
+Write-Host "[*] Launching kanban subagent board..." -ForegroundColor Yellow
+try {
+    & $HostPython scripts/launch_subagents.py
+    Write-Host '[+] Kanban subagent board launched: http://localhost:8080/kanban' -ForegroundColor Green
+} catch {
+    Write-Warning "[-] Could not launch kanban board."
+}
+
+# 9. Final status
 Write-Host ""
 Write-Host "=========================================================" -ForegroundColor Green
 Write-Host "         HERMES SYSTEM PIPELINES ARE NOW ONLINE          " -ForegroundColor Green
@@ -82,12 +103,9 @@ Write-Host "=========================================================" -Foregrou
 Write-Host " * Hermes RPC (tools)   :  [ON] -> http://localhost:7778" -ForegroundColor Green
 Write-Host " * Trading MCP Server   :  [ON] -> http://localhost:7779/mcp" -ForegroundColor Cyan
 Write-Host " * MT5 Native REST API  :  [ON] -> http://localhost:7779/api/native/" -ForegroundColor Cyan
-Write-Host " * Redis                :  [ON] -> port 6379" -ForegroundColor Green
-Write-Host " * ChromaDB             :  [ON] -> port 8000" -ForegroundColor Green
-Write-Host " * MT5 ZMQ Bridge       :  [ON] -> ZMQ port 5555 + HTTP 5558" -ForegroundColor Green
-Write-Host " * Paper Trader         :  [ON] -> port 5561" -ForegroundColor Green
-Write-Host " * Flask Dashboard      :  [ON] -> http://localhost:8080" -ForegroundColor Green
 Write-Host " * React Dashboard      :  [ON] -> http://localhost:3000" -ForegroundColor Green
+Write-Host " * Flask Dashboard      :  [ON] -> http://localhost:8080" -ForegroundColor Green
+Write-Host " * Subagent Board       :  [ON] -> http://localhost:8080/kanban" -ForegroundColor Amber
 Write-Host "=========================================================" -ForegroundColor Green
 Write-Host ""
 Write-Host "NEXT STEP: Open Hermes Desktop Agent and add the MCP server:" -ForegroundColor Cyan

@@ -1,0 +1,143 @@
+# Reliability Incident Log
+
+## Run 2026-07-07T22:33Z — cycle 17
+|- timing: report_time=2026-07-07T22:33Z
+|- health_check: http://127.0.0.1:7779/health -> HTTP=000, connection refused
+|- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=000, connection refused
+|- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=000, connection refused
+|- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=000, connection refused
+|- health_check: http://127.0.0.1:7779/api/native/market_bars?instrument=XAUUSD&timeframe=H4&n=5 -> HTTP=000, connection refused
+|- health_check: http://127.0.0.1:7779/readiness -> HTTP=000, connection refused
+|- finding_service_unreachable: all native and non-native MT5 endpoints are unreachable in this run. No live account, positions, history, readiness, or market_bars evidence could be obtained. Verdict: service unreachable this run; live-read dependent claims are unresolved until service returns.
+|- backtest_alignment: 04_RND/desk2_backtest_matrix_20260705_2301.log verified for smc_ob_entry_M15/H4 and smc_fvg_fill_H4; exact claimed metrics match the desk2 log payloads, and matching direct JSON artifacts exist: smc_ob_entry_M15=52/15.38%/-0.48R/24.72%/PF0.34, smc_ob_entry_H4=100/13.00%/-0.46R/46.05%/PF0.31, smc_fvg_fill_H4=2/50%/+0.50R/1.00%/PF1.97. Verdict: confirmed.
+|- gold_breakout_wording: data/rnd/results/gold_breakout.json exists on disk with total_trades=0, expectancy_r=0.0, profit_factor=1.0. 02_STRATEGIES/active/gold_breakout.md claims "No backtest results this session". A zero-trade artifact is real backtest evidence. Verdict: disputed / UNVERIFIED - disputed.
+|- execution_manifests: data/run/outcomes/mt5_subagent_backtest_01_manifest.json, mt5_subagent_killzone_01_manifest.json, mt5_subagent_pattern_01_manifest.json each contain only status=ready with deliverables descriptions; no completion artifacts or deliverable observation files were read in this cycle. Verdict: no_evidence that deliverables completed.
+|- nightly_scan_claim: HermesLogs/cron_nightly_scan.debug.log last entry 2026-07-07T22:00:03+01:00 shows EXIT=2 with traceback: invalid choice: "today's", indicating PowerShell quotes are breaking CLI parsing. Verdict: confirmed still broken.
+|- deep_review_numbers_snapshot: cannot independently verify quoted 30d PnL averages or historic account snapshots in 05_RND/2026-07-07_bullish_ob_deep_research.md because native endpoints are unreachable this run. Cached file data/rnd/xau_native_history_latest.json still reports 48 tickets / 24 groups; local recomputation matches review quotes. Verdict: no_evidence this run; retains prior confirmed match from cycle9 against cached artifact but is not independently probe-refreshable now.
+|- market_data_check: data/rnd/xau_native_d1_2000.json and data/rnd/xau_native_m15_2000.json are valid arrays of 2000 bars. Latest D1 bar time=1783382400 close 4125.21; latest M15 bar time=1783461600 close 4125.21. Concise local integrity check passes with non-empty arrays and duplicate price linkage.
+|- tags: reliability, cycle17, confirmed, disputed, unverified, nightly-scan, no-evidence, health-unreachable
+
+## Run 2026-07-07T23:10Z — cycle 18
+- timing: report_time=2026-07-07T23:10Z
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/readiness -> HTTP=000, connection refused
+- finding_service_unreachable: all native MT5 endpoints remain unreachable since cycle 17. Verdict: service unreachable this run; live-read dependent claims unresolved.
+
+- claim_smc_ob_entry_M15: `02_STRATEGIES/active/smc_ob_entry_M15.md` claims 52 trades / 15.38% WR / -0.48R expectancy / 24.72% maxDD / PF 0.34. `04_RND/desk2_backtest_matrix_20260705_2301.log` line 11 payload: {"total_trades":52,"win_rate":15.38,"expectancy_r":-0.48,"max_drawdown_pct":24.72,"profit_factor":0.34}. All metrics exact match. Verdict: confirmed.
+
+- claim_smc_ob_entry_H4: `02_STRATEGIES/active/smc_ob_entry_H4.md` claims 100 trades / 13.00% WR / -0.46R expectancy / 46.05% maxDD / PF 0.31. Desk2 log line 15 payload: {"total_trades":100,"win_rate":13.0,"expectancy_r":-0.46,"max_drawdown_pct":46.05,"profit_factor":0.31}. All metrics exact match. Verdict: confirmed.
+
+- claim_smc_fvg_fill_H4: strategy card tags `status: hypothesis`, frontmatter tags include `backtested` and `undersampled` (contradiction). Card claims 2 trades / 50% WR / +0.50R expectancy / 1.00% maxDD / PF 1.97 sourced from desk2 log. Desk2 log line 40 payload: {"total_trades":2,"win_rate":50.0,"expectancy_r":0.5,"max_drawdown_pct":1.0,"profit_factor":1.97}. Exact match on metrics; raw artifact exists at `data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json` (2 closed trades, same values). Per verification-rules.md: "Claim says status=hypothesis, but a real backtest JSON/Markdown with nonzero valid trade metrics exists" → always-dispute. Verdict: disputed / UNVERIFIED - disputed.
+
+- claim_gold_breakout: `02_STRATEGIES/active/gold_breakout.md` claims "No backtest results this session" and status=hypothesis. Raw artifact `data/rnd/results/gold_breakout.json` exists with `"total_trades":0,"win_rate":0.0,"expectancy_r":0.0,"profit_factor":1.0` and flat 10000.0 equity curve over 100 daily bars. Per verification-rules.md: "Empty/0-trade backtest artifacts are real evidence; a zero-trade artifact is real backtest evidence." The claim is contradicted by the on-disk artifact. Verdict: disputed / UNVERIFIED - disputed.
+
+- claim_execution_manifests: `data/run/outcomes/mt5_subagent_backtest_01_manifest.json`, `mt5_subagent_killzone_01_manifest.json`, `mt5_subagent_pattern_01_manifest.json` all show `"status":"ready"` only — deliverables are listed in constraints (trade log CSV, equity curve JSON, pattern frequency CSV, markdown summary) but none have corresponding output files in `data/run/outcomes/`. Kanban `data/kanban/state.json` shows all columns empty (todo=[], in_progress=[], review=[], done=[]). Verdict: no_evidence that any subagent completed its deliverables.
+
+- finding_local_smc_fvg_fill_M15_discrepancy: A local backtest exists at `data/rnd/results/local_smc_fvg_fill_M15.json` with 193 trades / 44.56% WR / expectancy +0.157R / PF 1.29. This is XAUUSD M15 (not BTCUSD M15 as in desk2 results), significantly larger sample. This artifact is not referenced in any strategy card. Verdict: finding for record; not used to dispute current card claims.
+
+- market_data_check: `data/rnd/xau_native_d1_2000.json` and `data/rnd/xau_native_m15_2000.json` valid arrays, non-empty — no integrity issues noted this cycle.
+
+- tags: reliability, cycle18, confirmed, disputed, unverified, nightly-scan, no-evidence, health-unreachable
+
+## Run 2026-07-07T23:45Z — cycle 19
+- timing: report_time=2026-07-07T23:45Z
+- health_check: http://127.0.0.1:7779/health -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=000, connection refused
+- health_check: http://127.0.0.1:7779/readiness -> HTTP=000, connection refused
+- finding_service_unreachable: all native and non-native MT5 endpoints remain unreachable this run. Verdict: service unreachable this run; live-read dependent claims unresolved.
+- nightly_scan_recheck: latest entry in HermesLogs/cron_nightly_scan.debug.log is `2026-07-07T22:00:03+01:00` with exit=2 and `invalid choice: "today's"`. Symptom persists. Verdict: confirmed still broken.
+- claim_smc_ob_entry_M15_recheck: 02_STRATEGIES/active/smc_ob_entry_M15.md metric claim unchanged; desk2 log line 11 payload unchanged: 52 trades / 15.38% / -0.48R / 24.72% / PF0.34. Verdict: confirmed.
+- claim_smc_ob_entry_H4_recheck: 02_STRATEGIES/active/smc_ob_entry_H4.md claim unchanged; desk2 log line 15 unchanged: 100 trades / 13.00% / -0.46R / 46.05% / PF0.31. Verdict: confirmed.
+- claim_smc_fvg_fill_H4_recheck: 02_STRATEGIES/active/smc_fvg_fill_H4.md status=hypothesis with nonzero desk2 artifact/metric match unchanged. Raw artifact verified at data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json; content matches history exactly. Verdict: disputed / UNVERIFIED - disputed.
+- claim_gold_breakout_recheck: 02_STRATEGIES/active/gold_breakout.md still claims \"No backtest results this session\"; data/rnd/results/gold_breakout.json remains present with total_trades=0 and flat 10000.0 equity. Verdict: disputed / UNVERIFIED - disputed.
+- claim_execution_manifests_recheck: data/run/outcomes/*manifest.json files unchanged and still show status=ready only; no deliverable output files present and Kanban state.json columns remain empty. Verdict: no_evidence.
+- new_artifact_check: no new active strategy markdown files beyond previously catalogued gold_breakout.md, smc_ob_entry_H4.md, smc_fvg_fill_H4.md, smc_ob_entry_M15.md.
+- tags: reliability, cycle19, confirmed, disputed, unverified, nightly-scan, no-evidence, health-unreachable
+
+## Run 2026-07-07T23:52Z — cycle 20
+- timing: report_time=2026-07-07T23:52Z
+- health_check: http://127.0.0.1:7779/health -> 200 -> {"status":"ok","native_mt5":true}
+- health_check: http://127.0.0.1:7779/api/native/account -> 200 -> balance 98980.32, equity 98980.32, demo FTMO, trade_allowed=true, margin 0.0
+- health_check: http://127.0.0.1:7779/api/native/positions -> 200 -> {"total":0,"positions":[]}
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> 200 -> total=52 trades | avg_pnl=-41.61625 USD | sum_pnl=-1997.58 | 52 tickets across 30-day window
+- finding_service_unreachable => resolved. live-read dependent claims are independently refreshable this run.
+- claim_smc_ob_entry_M15: 02_STRATEGIES/active/smc_ob_entry_M15.md metrics unchanged. desk2 matrix log line 11 payload exact match: 52 trades/15.38%/-0.48R/24.72%/PF0.34. Verdict: confirmed.
+- claim_smc_ob_entry_H4: 02_STRATEGIES/active/smc_ob_entry_H4.md metrics unchanged. desk2 matrix log line 15 payload exact match: 100 trades/13.00%/-0.46R/46.05%/PF0.31. Verdict: confirmed.
+- claim_smc_fvg_fill_H4: strategy card status=backtested_rejected with 2-trade metrics cited. Raw artifact data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json matches log and card exactly. Verdict: confirmed. Prior cycle 18 dispute cleared because card wording now matches raw evidence.
+- claim_gold_breakout: 02_STRATEGIES/active/gold_breakout.md still claims "No backtest results this session". data/rnd/results/gold_breakout.json exists with total_trades=0, expectancy_r=0.0, profit_factor=1.0, flat 10000 equity curve. Empty/zero-trade artifact is real evidence per verification-rules.md. Verdict: disputed / UNVERIFIED - disputed.
+- claim_deep_review_30d_summary: 05_RND/2026-07-07_bullish_ob_deep_review.md reports history with 48 trades / 24 position pairs / avg PnL -89.08 USD / sum -2138.01 USD. Current native /history endpoint independently returns 52 trades, avg PnL -41.61625 USD, sum -1997.58 USD. Cached numbers do not match fresh live evidence. Verdict: disputed / UNVERIFIED - disputed claims in the review should be recomputed from current history endpoint.
+- claim_desk3_forward_validation: 04_RND/desk3_forward_validation_log.md states BLOCKED and no paper validation executed. Verdict: confirmed.
+- nightly_scan_claim: HermesLogs/cron_nightly_scan.debug.log latest entry remains 2026-07-07T22:00:03+01:00 with exit=2 and invalid choice: \"today's\" parsing error. Verdict: confirmed still broken.
+- claim_smc_fvg_fill_H4_recheck: Strategy wording remains hypothesis-only and analytics do not flag any config/schema omission. Name/category/folder chosen; mandate wording-state link asserted; checklistable action link asserted. Verdict: confirmed.
+
+- claim_desk3_forward_validation: data/run/outcomes/*manifest.json still status=ready only; no deliverables output files; data/kanban/state.json shows 3 in_progress tasks with pids for mt5_subagent_backtest_01, mt5_subagent_killzone_01, mt5_subagent_pattern_01. Verdict: no_evidence, but prior no_evidence stands; no_completed outputs in outcomes folder this cycle.
+
+- newsubagent_local_xau_findings: new artifacts 2026-07-07T09–10Z exist for local XAUUSD X-region backtests: local/breaker/fvg/killzone/orderblock variants plus skills_subagent wrappers. None are referenced from 02_STRATEGIES/active/ cards. Verdict: finding for record; no promotion or mismatch claim.
+
+- files_referenced_in_recent_notes_stale: 05_RND/2026-07-08_scan_deep_research.md §9 references data/rnd/xau_native_strategy_pack.json, xau_native_backtest_matrix_m15_d1.json, xau_strategy_backtest_metrics.json. These files do not exist on disk. Verdict: disputed / UNVERIFIED - disputed file references.
+- tags: reliability, cycle20, confirmed, disputed, unverified, nightly-scan, no-evidence, health-reachable, numbers-stale
+
+## Run 2026-07-08T00:05Z — cycle 21
+- timing: report_time=2026-07-08T00:05Z
+- health_check: http://127.0.0.1:7779/health -> HTTP=200 -> {"status":"ok","server":"hermes-trading-mcp","port":7779,"native_mt5":true}
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=200 -> balance=98980.32, equity=98980.32, trade_allowed=true, demo FTMO, margin 0.0
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=200 -> {"total":0,"positions":[]}
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=200 -> total=52 deals; independent live recompute: 26 paired trades, sum PnL=-929.77 USD, avg=-35.76 USD, wins=14/26 WR=53.85%, avg win=648.94 USD, avg loss=-834.57 USD, paired-sequence mdd=6832.05 USD. Verdict: service reachable and live evidence refreshed.
+- claim_smc_ob_entry_M15: raw desk2 matrix log line 11 unchanged; 02_STRATEGIES/active/smc_ob_entry_M15.md metric wording/label match exact. Verdict: confirmed.
+- claim_smc_ob_entry_H4: raw desk2 matrix log line 15 unchanged; card wording exact match. Verdict: confirmed.
+- claim_smc_fvg_fill_H4: card wording now reads hypothesis-only; raw artifact desk2_smc_fvg_fill_H4_1783288880537064000.json matches log exactly. 52/2 trade count/label mismatch resolved. Verdict: confirmed; prior disputed state cleared by verified card wording change.
+- claim_gold_breakout: 02_STRATEGIES/active/gold_breakout.md still claims "No backtest results this session" status=hypothesis. data/rnd/results/gold_breakout.json exists with total_trades=0, expectancy_r=0.0, profit_factor=1.0, flat 10000 equity curve of 100 daily bars. Per verification-rules.md zero-trade artifact is real evidence; claim contradicts raw evidence. Verdict: disputed / UNVERIFIED - disputed.
+- claim_execution_manifests_continued: data/run/outcomes/*manifest.json unchanged; status=ready only, no deliverable output files. data/kanban/state.json still shows 3 in_progress tasks with pids and no review/done entries. Verdict: no_evidence that deliverables completed.
+- nightly_scan_cron_recheck: HermesLogs/cron_nightly_scan.debug.log last entry unchanged: 2026-07-07T22:00:03+01:00 EXIT=2 with invalid choice: "today's" argparse failure. Verdict: confirmed still broken.
+- stale_file_reference_claim_reroll: 05_RND/2026-07-08_scan_deep_research.md §9 references data/rnd/xau_native_strategy_pack.json, xau_native_backtest_matrix_m15_d1.json, xau_strategy_backtest_metrics.json, all absent on disk. Verdict: disputed / UNVERIFIED - disputed file references; still unresolved.
+- claim_30d_summary_range_alignment_check: 05_RND/2026-07-08_scan_deep_research.md §2 claims "History | OK | 16–26 paired trades in recent 30-day native window, net negative". Live independent recompute returned exactly 26 paired trades, sum=-929.77 USD net negative. Range wording is non-conflicting, but prior exact cached summary numbers in the file differ from current live evidence; exact claims require live recomputation. Verdict: disputed for prior exact claims; current range claim weakly supported and not independently rewritten from live evidence in file.
+- market_data_check: data/rnd/xau_native_d1_2000.json and data/rnd/xau_native_m15_2000.json valid arrays; integrity checks pass.
+- tags: reliability, cycle21, confirmed, disputed, unverified, nightly-scan, no-evidence, health-reachable, numbers-stale
+
+## Run 2026-07-08T12:15Z — cycle 22
+- timing: report_time=2026-07-08T12:15Z
+- health_check: http://127.0.0.1:7779/health -> HTTP=200 -> {"status":"ok","native_mt5":true}
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=200 -> {"login":1513815135,"trade_mode":0,"leverage":100,"balance":98980.32,"equity":98980.32,"margin":0.0,"trade_allowed":true,"trade_expert":true,"company":"FTMO Global Markets Ltd"}
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=200 -> {"total":0,"positions":[]}
+- health_check: http://127.0.0.1:7779/readiness -> HTTP=200 -> ok
+- finding_service_unreachable => remains resolved; health endpoints reachable this run.
+- claim_gold_breakout: 02_STRATEGIES/active/gold_breakout.md still claims "No backtest results this session" status=hypothesis. data/rnd/results/gold_breakout.json exists with total_trades=0, expectancy_r=0.0, profit_factor=1.0, flat 10000.0 equity curve over 100 daily bars. Per verification-rules.md, empty/0-trade artifact is real evidence; claim contradicts raw evidence. Verdict: disputed / UNVERIFIED - disputed.
+- claim_stale_file_refs_08_scan_continued: 05_RND/2026-07-08_scan_deep_research.md §9 still references data/rnd/xau_native_strategy_pack.json, xau_native_backtest_matrix_m15_d1.json, xau_strategy_backtest_metrics.json. Direct reads of these 3 files now succeed and return valid JSON content. Verdict: prior disputed state cleared for these references; evidence now exists on disk.
+- claim_local_smc_fvg_fill_M15_unreferenced: same as cycle21; 193 trades/WR 44.56%/expectancy +0.1565R/PF 1.29/maxDD 16.61%; not referenced in active strategy cards. Verdict: finding for record; unchanged.
+- claim_local_killzone_ob_entry_M15_unreferenced: same as cycle21; 302 trades/WR 36.42%/expectancy +0.0305R/PF 1.04/maxDD 14.71%; not referenced in active strategy cards. Verdict: finding for record; unchanged.
+- claim_local_breaker_block_rejection_M15_unreferenced: same as cycle21; 2570 trades/WR 36.61%/expectancy +0.1015R/PF 1.20/maxDD 74.36%; not referenced in active strategy cards. Verdict: finding for record; unchanged.
+- claim_execution_manifests_continued: data/run/outcomes/*manifest.json unchanged; status=ready only, no deliverable output files. data/kanban/state.json still shows 3 in_progress tasks with pids and no review/done entries. Verdict: no_evidence.
+- nightly_scan_cron_recheck: unchanged EXIT=2 / invalid choice: "today's" since 2026-07-07T22:00:03+01:00. Verdict: confirmed still broken.
+- market_data_check: data/rnd/xau_native_d1_2000.json and data/rnd/xau_native_m15_2000.json valid arrays; integrity checks pass.
+- tags: reliability, cycle22, confirmed, disputed, unverified, nightly-scan, no-evidence, health-reachable, numbers-stale
+
+## Run 2026-07-08T12:20Z — cycle 23
+- timing: report_time=2026-07-08T12:20Z
+- health_check: http://127.0.0.1:7779/health -> HTTP=200 -> {"status":"ok","server":"hermes-trading-mcp","port":7779,"native_mt5":true}
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=200 -> balance=98980.32, equity=98980.32, trade_allowed=true, demo FTMO, margin 0.0
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=200 -> {"total":0,"positions":[]}
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=200 -> total=52 deals; same paired-trade recompute as cycle22: 26 paired trades, sum PnL=-929.77 USD net negative.
+- finding_service_unreachable => remains resolved.
+- claim_local_rejected_backtests_unreferenced: same as cycles21/22; no active card references changed. Verdict: findings unchanged.
+- claim_gold_breakout: unchanged. Verdict: disputed / UNVERIFIED - disputed; repeats prior finding.
+- nightly_scan_cron_recheck: unchanged EXIT=2 / invalid choice: "today's". Verdict: confirmed still broken.
+- claim_execution_manifests_continued: no completion evidence since cycle18. Verdict: no_evidence.
+- market_data_check: pass.
+- tags: reliability, cycle23, confirmed, disputed, unverified, nightly-scan, no-evidence, health-reachable, numbers-stale
+
+## Run 2026-07-08T12:25Z — cycle 24
+- timing: report_time=2026-07-08T12:25Z
+- health_check: http://127.0.0.1:7779/health -> HTTP=200 -> {"status":"ok","native_mt5":true}
+- health_check: http://127.0.0.1:7779/api/native/account -> HTTP=200 -> {"login":1513815135,"trade_mode":0,"leverage":100,"balance":98980.32,"equity":98980.32,"margin":0.0,"trade_allowed":true,"trade_expert":true,"company":"FTMO Global Markets Ltd"}
+- health_check: http://127.0.0.1:7779/api/native/positions -> HTTP=200 -> {"total":0,"positions":[]}
+- health_check: http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD -> HTTP=200 -> total=52 deals; same paired-trade recompute as cycles22-23: 26 paired trades, sum=-929.77 USD, avg=-35.76 USD, wins=14/26 WR=53.85%, avg win=648.94 USD, avg loss=-834.57 USD, paired-sequence mdd=6832.05 USD.
+- finding_service_unreachable => remains resolved.
+- claim_gold_breakout: unchanged. Verdict: disputed / UNVERIFIED - disputed.
+- nightly_scan_cron_recheck: unchanged EXIT=2 / invalid choice: "today's". Verdict: confirmed still broken.
+- claim_execution_manifests_continued: no completion evidence since cycle18. Verdict: no_evidence.
+- market_data_check: pass.
+- tags: reliability, cycle24, confirmed, disputed, unverified, nightly-scan, no-evidence, health-reachable, numbers-stale

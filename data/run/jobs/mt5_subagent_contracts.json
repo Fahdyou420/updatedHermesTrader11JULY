@@ -1,0 +1,58 @@
+[
+  {
+    "task_id": "mt5_subagent_backtest_01",
+    "title": "MT5 Historical Tester \u2014 smc_ob_m15 optimization",
+    "objective": "Run Strategy Tester historical backtests for smc_ob_m15 across 2018-2026 on XAUUSD M15.",
+    "deliverables": [
+      "Trade log CSV with ticket, direction, entry, SL, TP, exit price, exit reason, profit, bars",
+      "Equity curve JSON",
+      "Summary metrics JSON with win rate, profit factor, max drawdown, expectancy"
+    ],
+    "constraints": [
+      "Only XAUUSD",
+      "Use local history set in MT5",
+      "Run at least 3 parameter variants: OB Bullish requester threshold 0.001 / 0.0015 / 0.002",
+      "Do not place real orders; testing only"
+    ],
+    "accepted_sources": [
+      "MT5 Strategy Tester",
+      "MMPy/VectorBT if available"
+    ],
+    "validation": {
+      "win_rate_gte_52": false,
+      "expectancy_r_gte_0.4": false,
+      "max_drawdown_lte_10_percent": false,
+      "profit_factor_gte_1_5": false
+    },
+    "status": "pending"
+  },
+  {
+    "task_id": "mt5_subagent_pattern_01",
+    "title": "Pattern Analysis Subagent \u2014 OB vs FVG vs Breaker recurrence",
+    "objective": "Count and classify OB, FVG, breaker blocks, BOS/CHoCH occurrences in 2018-2026 XAUUSD M15 history.",
+    "deliverables": [
+      "Pattern frequency CSV by month",
+      "Win rate by pattern type if tradeable zone can be defined",
+      "Markdown findings summary"
+    ],
+    "constraints": [
+      "No live trading",
+      "Use MT5 history and optional Python post-processing",
+      "Return numeric evidence, not narrative only"
+    ]
+  },
+  {
+    "task_id": "mt5_subagent_killzone_01",
+    "title": "Killzone Execution Study \u2014 London/NY overlap vs off-hours",
+    "objective": "Measure OB entry performance filtered by London 07:00-10:00 UTC and NY 13:30-16:00 UTC.",
+    "deliverables": [
+      "Session-based trade breakdown",
+      "Statistical comparison: killzone vs non-killzone",
+      "Recommendation whether this filter should be mandatory"
+    ],
+    "constraints": [
+      "Only historical analysis",
+      "Do not create new MT5 expert advisor without user approval"
+    ]
+  }
+]

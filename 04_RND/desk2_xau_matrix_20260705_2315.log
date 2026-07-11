@@ -1,0 +1,73 @@
+Desk2 XAUUSD backtest matrix 2026-07-05T22:15:22Z
+--- smc_ob_entry M1 ---
+start=2026-07-05T22:15:22Z end=2026-07-05T22:15:23Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M1)"}
+
+--- smc_ob_entry M5 ---
+start=2026-07-05T22:15:23Z end=2026-07-05T22:15:24Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M5)"}
+
+--- smc_ob_entry M15 ---
+start=2026-07-05T22:15:24Z end=2026-07-05T22:15:25Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M15)"}
+
+--- smc_ob_entry H4 ---
+start=2026-07-05T22:15:25Z end=2026-07-05T22:15:26Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (H4)"}
+
+--- smc_ob_entry D1 ---
+start=2026-07-05T22:15:26Z end=2026-07-05T22:15:27Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (D1)"}
+
+--- smc_ob_entry W1 ---
+start=2026-07-05T22:15:27Z end=2026-07-05T22:15:28Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (W1)"}
+
+--- smc_fvg_fill M1 ---
+start=2026-07-05T22:15:28Z end=2026-07-05T22:15:29Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M1)"}
+
+--- smc_fvg_fill M5 ---
+start=2026-07-05T22:15:29Z end=2026-07-05T22:15:30Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M5)"}
+
+--- smc_fvg_fill M15 ---
+start=2026-07-05T22:15:30Z end=2026-07-05T22:15:31Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M15)"}
+
+--- smc_fvg_fill H4 ---
+start=2026-07-05T22:15:31Z end=2026-07-05T22:15:32Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (H4)"}
+
+--- smc_fvg_fill D1 ---
+start=2026-07-05T22:15:32Z end=2026-07-05T22:15:33Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (D1)"}
+
+--- smc_fvg_fill W1 ---
+start=2026-07-05T22:15:33Z end=2026-07-05T22:15:34Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (W1)"}
+
+--- smc_liquidity_sweep M1 ---
+start=2026-07-05T22:15:34Z end=2026-07-05T22:15:35Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M1)"}
+
+--- smc_liquidity_sweep M5 ---
+start=2026-07-05T22:15:35Z end=2026-07-05T22:15:36Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M5)"}
+
+--- smc_liquidity_sweep M15 ---
+start=2026-07-05T22:15:36Z end=2026-07-05T22:15:37Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (M15)"}
+
+--- smc_liquidity_sweep H4 ---
+start=2026-07-05T22:15:37Z end=2026-07-05T22:15:38Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (H4)"}
+
+--- smc_liquidity_sweep D1 ---
+start=2026-07-05T22:15:38Z end=2026-07-05T22:15:39Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (D1)"}
+
+--- smc_liquidity_sweep W1 ---
+start=2026-07-05T22:15:39Z end=2026-07-05T22:15:40Z status=404
+{"detail":"No matching bar data available for symbol XAUUSD (W1)"}
+

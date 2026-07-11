@@ -1,0 +1,88 @@
+# watch_smc_ob_entry_H4
+
+Monitor-only watchlist for BTCUSD H4 order-block retest setups.
+
+## Log
+- `2026-07-07T08:41:23Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T08:29:08Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T08:12:09Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T07:55:18Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T07:38:14Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T07:21:04Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T07:04:05Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T06:47:02Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T06:30:17Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T06:13:00Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T05:56:03Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T05:39:00Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T05:21:57Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T05:04:58Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T04:47:57Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T04:31:02Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T04:13:55Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T03:57:14Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T03:39:54Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T03:22:59Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T03:05:56Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T02:49:08Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T02:31:51Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T02:14:56Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T01:57:52Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T01:40:52Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T01:23:57Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T01:06:49Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T00:49:55Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T00:32:52Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-07T00:15:49Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T23:58:47Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T23:41:43Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T23:24:43Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T23:07:42Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T22:50:56Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T22:33:33Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T22:15:41Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T21:58:44Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T21:41:55Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T21:25:14Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T21:07:46Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T20:51:12Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T20:34:13Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T20:25:11Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T20:08:54Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T19:52:05Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T19:35:47Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T19:18:40Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T19:02:08Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T18:45:49Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T18:29:05Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T18:12:40Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T17:55:37Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T17:39:05Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T17:22:36Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T17:06:01Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T16:49:48Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T16:32:02Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T16:15:34Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T15:59:00Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T15:41:47Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T15:23:15Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T15:08:08Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T14:51:05Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T14:34:04Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T14:17:01Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T14:00:01Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T13:43:04Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T13:25:49Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T13:07:13Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T12:49:44Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T12:33:06Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T12:20:58Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T12:08:58Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T11:52:23Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T11:35:17Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T11:31:00Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T11:14:27Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+- `2026-07-06T10:57:43Z` | no setup | SMC keys=[] OB_objs=0 FVG_objs=0; native MCP monitor-only
+
+- `2026-07-06T00-00-00Z` | no setup | neutral stub pending live market assessment.
+- `2026-07-06T02-34-00Z` | potential OBs in proximity | price ~62646, recent bullish OB 62548.64-62865.88, bearish OB 62132-62800.84, distance to nearest OB trigger ~98pts from bullish OB low; no confirmed retest validation bar yet. | source=toolcall monitor-only — no action

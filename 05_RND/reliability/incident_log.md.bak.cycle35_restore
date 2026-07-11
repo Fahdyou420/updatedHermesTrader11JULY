@@ -1,0 +1,172 @@
+# Reliability Incident Log
+
+## Schema
+- `ISO timestamp`
+- `Department/claim reference`
+- `Evidence inspected`
+- `Verdict`
+- `Owner/reviewer`
+
+---
+
+## Prior-history preservation notice
+**ISO timestamp:** 2026-07-10T22:07:00Z
+- Previous incident log contents were found truncated in the `06:41Z–22:01Z` window because the live file was overwritten between reads. Cycle26 findings are preserved below, but earlier cycle history should be restored from `05_RND/reliability/incident_log.md.bak`/other snapshot if available.
+
+---
+
+## Cycle-27 findings (2026-07-10T22:33Z)
+
+| ISO timestamp | Department / claim reference | Evidence inspected | Verdict | Owner/reviewer |
+|---|---|---|---|---|
+| 2026-07-10T22:33Z | Strategy card `smc_fvg_fill H4`: metrics hard-cited in `02_STRATEGIES/active/smc_fvg_fill_H4.md` (2 trades, 50% WR, 0.50R expectancy, 1.00% maxDD, PF 1.97, source `04_RND/desk2_backtest_matrix_20260705_2301.log`) | Raw strategy block at log lines 38-40 | `confirmed` | Reliability Dept |
+| 2026-07-10T22:33Z | Strategy cards `smc_ob_entry H4` and `smc_ob_entry M15`: cited metrics vs same raw log | Log lines 14-16 and 10-12 | `confirmed` | Reliability Dept |
+| 2026-07-10T22:33Z | Strategy card `gold_breakout.md`: "No backtest results this session" + prior-2024 proxy claims | `04_RND/desk2_backtest_matrix_20260705_2301.log` contains desk2 zero-trade block; `data/rnd/results/2026-07-06_desk2_rejection_summary.json` present | `disputed` / `no_evidence` | Reliability Dept |
+| 2026-07-10T22:33Z | `04_RND/desk2_backtest_log.md`: desk2 cross-timeframe table values | Raw `/api/run_backtest` blocks in `04_RND/desk2_backtest_matrix_20260705_2301.log` | `confirmed` | Reliability Dept |
+| 2026-07-10T22:33Z | `04_RND/desk5_verification.md`: port health expectation | Current live native probes: `/api/native/account` HTTP 200, `/positions` HTTP 200 (0 positions), `/history?days=30&instrument=XAUUSD` HTTP 200 (8 closed trades) | `confirmed` (partial) | Reliability Dept |
+| 2026-07-10T22:33Z | `data/rnd/xau_native_strategy_pack.json` (2026-07-08) and `05_RND/2026-07-10_cron_research_update.md`: 30-day native paired history claims of **28 pairs, net -2416.69 USD, 14 wins / 14 losses, WR 50%** | Live `/api/native/history?days=30&instrument=XAUUSD` returned `total=8` closed trades; no open positions | `disputed` | Reliability Dept |
+| 2026-07-10T22:33Z | `05_RND/2026-07-10_cron_research_deep_validation.md`: same history window claims **8 paired trades, net -3435.09 USD, WR 0%** | Live `/api/native/history?days=30&instrument=XAUUSD` returned `total=8` closed trades | `disputed` | Reliability Dept |
+
+---
+
+## Cycle-27 incident details
+
+### gold_breakout status contradiction
+
+**ISO:** 2026-07-10T22:33Z
+**Claim:** `02_STRATEGIES/active/gold_breakout.md` states: "No backtest results this session" and "untested in current live data path; hypothesis only", while also referencing prior-2024 proxy GC=F backtests not on disk or in `data/rnd/results/`.
+**Raw evidence:**
+- Existing artifact with BTCUSD D1 zero-trade block in `04_RND/desk2_backtest_matrix_20260705_2301.log` shows the strategy research tree produced a backtest branch this session, contradicting "No backtest results this session".
+- No `gold_breakout` artifact was observed under `data/rnd/results/`.
+**Verdict:** `no_evidence` for the claim's positive assertions; the card should be updated to state actual result explicitly (likely `0-trade BTCUSD/derived` per desk matrix) rather than claim absence.
+
+---
+
+### live 30-day history mismatch
+
+**ISO:** 2026-07-10T22:33Z
+**Claim references:** `data/rnd/xau_native_strategy_pack.json` (28 pairs, net -2416.69), `05_RND/2026-07-10_cron_research_update.md` (same numbers), and `05_RND/2026-07-10_cron_research_deep_validation.md` (8 pairs, net -3435.09, 0% WR).
+**Raw evidence:** Live endpoint returned exactly 8 closed trades for the same query. The three cited documents are mutually inconsistent on trade count and PnL.
+**Verdict:** `disputed` — cannot confirm claimed statistics from a stable, shared baseline. Next live health check should re-capture a signed snapshot into `05_RND/reliability/history_snapshots/` with timestamp and `total` count before these numbers are reused in decisions.
+
+---
+
+## Recommended owner actions
+
+1. Update `02_STRATEGIES/active/gold_breakout.md` to reflect actual session evidence or mark `no_evidence` explicitly.
+2. Reconcile `data/rnd/xau_native_strategy_pack.json`, `05_RND/2026-07-10_cron_research_update.md`, and `05_RND/2026-07-10_cron_research_deep_validation.md` against the live endpoint baseline; add a stable checksum or signed snapshot step.
+3. Continue monitoring `/api/native/history` as the single source of truth for live metrics.
+
+---
+
+## Evidence appendix
+
+### Live endpoint probes (2026-07-10T22:33Z)
+
+```
+$ curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:7779/api/native/account
+HTTP 200
+
+$ curl -s -o /dev/null -w "%{http_code}\n" http://127.0.0.1:7779/api/native/positions
+HTTP 200
+{"total":0,"positions":[]}
+
+$ curl -s "http://127.0.0.1:7779/api/native/history?days=30&instrument=XAUUSD"
+{"total":8,"trades":[...]}
+```
+
+---
+
+## Cycle-28 findings (2026-07-11T06:39Z)
+
+| ISO timestamp | Department / claim reference | Evidence inspected | Verdict | Owner/reviewer |
+|---|---|---|---|---|
+| 2026-07-11T06:39Z | Kanban state: 3 execution subagents `mt5_subagent_backtest_01/pattern_01/killzone_01` shown `running` with PIDs | `data/run/outcomes/*manifest.json` created 2026-07-07 only; no deliverables on disk; launch logs do not resume on 2026-07-10 | `disputed` | Reliability Dept |
+| 2026-07-11T06:39Z | `02_STRATEGIES/active/smc_fvg_fill_H4.md`: 2 trades, 50% WR, +0.50R expectancy, PF 1.97 | `data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json`; raw log `/api/run_backtest` block | `confirmed` | Reliability Dept |
+| 2026-07-11T06:39Z | `02_STRATEGIES/active/smc_ob_entry_H4.md`: 100 trades, 13% WR, expectancy -0.46R, PF 0.31, MDD 46.05% | raw JSON + log lines | `confirmed` | Reliability Dept |
+| 2026-07-11T06:39Z | `02_STRATEGIES/active/smc_ob_entry_M15.md`: 52 trades, 15.38% WR, expectancy -0.48R, PF 0.34, MDD 24.72% | raw JSON + log lines | `confirmed` | Reliability Dept |
+| 2026-07-11T06:39Z | `02_STRATEGIES/active/gold_breakout.md`: "No backtest results this session" + prior GC=F proxy | No `gold_breakout` artifact under `data/rnd/results`; desk2 matrix contains only BTCUSD strategies | `no_evidence` | Reliability Dept |
+| 2026-07-11T06:39Z | `05_RND/2026-07-10_cron_research_update.md`: 30-day native paired history 28 pairs / net -2416.69 / WR 50% | Live `/api/native/history?days=30&instrument=XAUUSD` returned 8 trades / net -3415.00 / WR 0% | `disputed` | Reliability Dept |
+| 2026-07-11T06:39Z | `05_RND/2026-07-10_cron_research_deep_validation.md`: 8 pairs / net -3435.09 / WR 0% | Same live endpoint returned 8 trades / net -3415.00; claimed PnL differs (-3435.09 vs -3415.00) | `disputed` | Reliability Dept |
+| 2026-07-11T06:39Z | MT5/paper stack: native service health expectations | `:7779/api/native/account` HTTP 200 valid JSON; `/positions` HTTP 200 0 positions; `/api/health` returned 404 | `confirmed` (partial) | Reliability Dept |
+| 2026-07-11T06:39Z | SMC live tagger / history live refresh expectation | `/api/native/smc_analysis?instrument=XAUUSD&timeframe=M15&n=200` returned `404`; `/native/history` returned 8 closed trades total | `no_evidence` | Reliability Dept |
+
+---
+
+## Cycle-28 incident details
+
+### Kanban subagent claim vs no-deliverable reality
+
+**ISO:** 2026-07-11T06:39Z
+**Claim:** `data/kanban/state.json` shows 3 execution subagents `in_progress` with active PIDs and tags `running`.
+**Raw evidence:** Active processes list shows no child processes by those names. `data/run/outcomes` contains only manifest stubs dated 2026-07-07 and **zero** deliverables: no CSV/JSON equity/trade outputs.
+**Verdict:** `disputed`; Kanban self-reported runtime state is not corroborated.
+
+---
+
+### Strategy card metric verifications
+
+**ISO:** 2026-07-11T06:39Z
+**Claim:** `smc_fvg_fill_H4` card metrics (2 trades, 50% WR, +0.50R expectancy, PF 1.97, MDD 1.00%).
+**Raw evidence:** `data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json` contains `total_trades=2`, `win_rate=50.0`, `profit_factor=1.97`, matching card.
+**Verdict:** `confirmed`.
+
+**ISO:** 2026-07-11T06:39Z
+**Claim:** `smc_ob_entry_H4` card metrics (100 trades, 13% WR, expectancy -0.46R, PF 0.31, MDD 46.05%).
+**Raw evidence:** JSON artifact shows `total_trades=100`, `win_rate=13.0`, `profit_factor=0.31`.
+**Verdict:** `confirmed`.
+
+**ISO:** 2026-07-11T06:39Z
+**Claim:** `smc_ob_entry_M15` card metrics (52 trades, 15.38% WR, expectancy -0.48R, PF 0.34, MDD 24.72%).
+**Raw evidence:** JSON artifact shows `total_trades=52`, `win_rate=15.38`, `profit_factor=0.34`.
+**Verdict:** `confirmed`.
+
+---
+
+### gold_breakout claimed status contradiction
+
+**ISO:** 2026-07-11T06:39Z
+**Claim:** `02_STRATEGIES/active/gold_breakout.md`: "No backtest results this session" and "untested in current live data path; hypothesis only", plus prior 2024 proxy GC=F reference.
+**Raw evidence:** No `gold_breakout` artifact exists in `data/rnd/results/`. Desk2 matrix and JSON result set are exclusively BTCUSD strategies. Prior 2024 proxy evidence is not present on disk under cited paths.
+**Verdict:** `disputed` / `no_evidence`; card should be updated to reflect actual absence.
+
+---
+
+### 30-day live history contradiction
+
+**ISO:** 2026-07-11T06:39Z
+**Claim references:** `05_RND/2026-07-10_cron_research_update.md` (28 pairs, net -2416.69 USD, WR 50%, PF inf) and `05_RND/2026-07-10_cron_research_deep_validation.md` (8 pairs, net -3435.09 USD, WR 0%).
+**Raw evidence:** Live `/api/native/history?days=30&instrument=XAUUSD` now returns exactly 8 closed trades, net `-3415.00` USD, 0 wins / 8 losses, 0% WR. Multiple claimed documents are mutually inconsistent and do not match live baseline.
+**Verdict:** `disputed`; history claims in published roundups must not be reused without re-capture from the live endpoint.
+
+---
+
+## Cycle-30 findings (2026-07-10T23:31Z)
+
+| ISO timestamp | Department / claim reference | Evidence inspected | Verdict | Owner/reviewer |
+|---|---|---|---|---|
+| 2026-07-10T23:31Z | `02_STRATEGIES/active/smc_fvg_fill_H4.md`: 2 trades, 50% WR, +0.50R expectancy, PF 1.97, MDD 1.00% | `data/rnd/results/desk2_smc_fvg_fill_H4_1783288880537064000.json` | `confirmed` | Reliability Dept |
+| 2026-07-10T23:31Z | `02_STRATEGIES/active/smc_ob_entry_H4.md`: 100 trades, 13% WR, expectancy -0.46R, PF 0.31, MDD 46.05% | `data/rnd/results/desk2_smc_ob_entry_H4_1783288871612131100.json` | `confirmed` | Reliability Dept |
+| 2026-07-10T23:31Z | `02_STRATEGIES/active/smc_ob_entry_M15.md`: 52 trades, 15.38% WR, expectancy -0.48R, PF 0.34, MDD 24.72% | `data/rnd/results/desk2_smc_ob_entry_M15_1783288869669950000.json` | `confirmed` | Reliability Dept |
+| 2026-07-10T23:31Z | `02_STRATEGIES/active/gold_breakout.md`: "No backtest results this session"; hypothesis only + prior GC=F proxy | No `gold_breakout` artifact under `data/rnd/results/`; positive-metric xau artifacts found are local XAUUSD M15 variants, not `gold_breakout` or GC=F proxy | `no_evidence` | Reliability Dept |
+| 2026-07-10T23:31Z | Native MT5 API health and live history claims dependent on `:7779` | Live probes: `/health` HTTP 200; `/api/native/account` HTTP 200; `/positions` HTTP 200 0 positions; `/api/native/history?days=30&instrument=XAUUSD` HTTP 200 `{"total":8,"trades":[...]}` | `confirmed` | Reliability Dept |
+| 2026-07-10T23:31Z | Prior history claims in docs versus live endpoint baseline | Recalculated live 30-day XAUUSD exits for 8 trades: net PnL **-3415.00 USD**, 0 wins / 8 losses, 0% WR; cited docs `xau_native_strategy_pack.json` (-2416.69), `2026-07-10_cron_research_update.md` (-2416.69), and `2026-07-10_cron_research_deep_validation.md` (-3435.09) are stale/inconsistent with live source | `disputed` | Reliability Dept |
+
+## Cycle-30 incident details
+
+### Recomputed live 30-day XAUUSD history
+
+**Exits:** 8 closed XAUUSD trades returned by `/api/native/history?days=30&instrument=XAUUSD`. Recalculated from `profit`: **-3415.00 USD**, **0 wins, 8 losses**, **WR 0%**. This supersedes stale cites; any decision logic using the prior roundup numbers must be regenerated from this baseline.
+
+### gold_breakout remains unverified
+
+No `gold_breakout` artifact exists in `data/rnd/results`. The positive-metric xau/gold artifacts in that directory are local XAUUSD M15 tests and do not substantiate the prior-year GC=F proxy claim. Card should be updated or trace supplied.
+
+## Cycle-30 recommended owner actions
+1. Mark `05_RND/2026-07-10_cron_research_update.md` and `05_RND/2026-07-10_cron_research_deep_validation.md` history figures as `UNVERIFIED - disputed` until regenerated from `/api/native/history`.
+2. Update `02_STRATEGIES/active/gold_breakout.md` to remove or trace the GC=F proxy assertion.
+3. Capture a signed `05_RND/reliability/history_snapshots/` artifact from the live endpoint before reuse in decisions.
+4. Continue monitoring `/api/native/history` as the single source of truth for live history metrics.
+
+---
+

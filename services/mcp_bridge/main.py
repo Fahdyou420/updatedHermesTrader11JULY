@@ -101,18 +101,21 @@ async def health():
     """Health check - verify hermes_rpc reachability."""
     loop = asyncio.get_event_loop()
     rpc_ok = False
+    probe_detail = "not_run"
     try:
         resp = await loop.run_in_executor(
-            None, lambda: requests.get(f"{HOST_RPC_URL}/health", timeout=2)
+            None, lambda: requests.get(f"{HOST_RPC_URL}/health", timeout=5)
         )
         rpc_ok = resp.status_code == 200
-    except Exception:
-        pass
+        probe_detail = f"{resp.status_code}:{resp.text[:120]}"
+    except Exception as exc:
+        probe_detail = repr(exc)
 
     return {
         "status": "ok" if rpc_ok else "degraded",
         "timestamp": datetime.utcnow().isoformat() + "Z",
         "host_rpc": "online" if rpc_ok else "offline",
+        "host_rpc_probe": probe_detail,
         "redis": "connected"
     }
 

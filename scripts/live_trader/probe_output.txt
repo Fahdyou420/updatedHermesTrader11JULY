@@ -1,0 +1,9 @@
+TRY SELL_LIMIT_4167.5
+RES SELL_LIMIT_4167.5 10009 Request executed last (1, 'Success')
+TRY SELL_LIMIT_4167
+RES SELL_LIMIT_4167 10009 Request executed last (1, 'Success')
+TRY BUY_LIMIT_4157
+RES BUY_LIMIT_4157 10015 Invalid price last (1, 'Success')
+TRY BUY_LIMIT_4157_int
+RES BUY_LIMIT_4157_int None None last (-2, 'Invalid "price" argument')
+total 2
