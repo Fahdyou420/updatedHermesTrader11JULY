@@ -132,6 +132,13 @@ Dialectic profile of risk tolerance, instrument/session preferences, and interve
 |||- no_new_learning: no risk-tolerance, instrument/session preference, or intervention-pattern changes observed relative to prior cycles; XAUUSD primary execution on D1/H4/M15, BTCUSD evidence-only, promotion gate WR≥45% / PF≥1.15 / maxDD≤4%, discovery-driven repair posture retained, kanban stale-PID pattern persists without manual escalation.
 |||- tags: user, profile, 2026-07-11, no-new-learning
 
+<!-- 2026-07-11T21:02:00Z — memory-department sync cycle 27 -->
+|- no_new_learning: no risk-tolerance, instrument/session preference, or intervention-pattern changes observed relative to prior cycles; XAUUSD primary execution on D1/H4/M15, BTCUSD evidence-only, promotion gate WR≥45% / PF≥1.15 / maxDD≤4%, discovery-driven repair posture retained, kanban-launched subagent generations with unresolved root causes treated as monitor output not progress, and cycle44/cycle46 math-integrity findings reinforce that cached aggregate backtest metrics must be recomputed from raw ticket evidence before reuse.
+|- risk_tolerance_signals: unchanged.
+|- instrument_session_signals: unchanged.
+|- intervention_patterns: unchanged.
+|- tags: user, profile, 2026-07-11, no-new-learning
+
 <!-- 2026-07-11T11:45Z — memory-department sync cycle 24 -->
 |- no_new_learning: no risk-tolerance, instrument/session preference, or intervention-pattern changes observed relative to prior cycles; XAUUSD primary execution on D1/H4/M15, BTCUSD evidence-only, promotion gate WR≥45% / PF≥1.15 / maxDD≤4%, discovery-driven repair posture retained, kanban-launched subagent generations with unresolved root causes treated as monitor output not progress.
 |- risk_tolerance_signals: unchanged.
